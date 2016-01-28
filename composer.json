@@ -1,5 +1,5 @@
 {
-    "name": "tbl0605/PHPYAM",
+    "name": "tbl0605/phpyam",
     "type": "library",
     "description": "Really simple, yet easily extendable, MVC framework for PHP developers that helps you quickly write simple yet powerful web applications and APIs",
     "keywords": ["framework","micro","api","router"],
@@ -12,8 +12,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/tbl0605/PHPYAM/issues",
-        "source": "https://github.com/tbl0605/PHPYAM"
+        "issues": "https://github.com/tbl0605/phpyam/issues",
+        "source": "https://github.com/tbl0605/phpyam"
     },
     "require": {
         "php": ">=5.4.0",
