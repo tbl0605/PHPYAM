@@ -1,0 +1,4 @@
+- configure "composer" config file for log4php
+- unit tests
+- license headers
+- location ---> department ?

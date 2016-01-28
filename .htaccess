@@ -1,0 +1,29 @@
+php_value include_path ".\include"
+
+# Necessary to prevent problems when using a controller named "index" and having a root index.php
+# more here: http://httpd.apache.org/docs/2.2/content-negotiation.html
+Options -MultiViews
+
+# Prevent people from looking directly into folders
+Options -Indexes
+
+# Activates URL rewriting (like myproject.com/controller/action/1/2/3)
+Options +FollowSymlinks
+RewriteEngine On
+
+# Remove duplicate "/" so that next Symfony2-like rule works correctly.
+RewriteCond %{REQUEST_URI} ^(.*?)(/{2,})(.*)$
+RewriteRule . %1/%3 [R=301,END]
+
+# Determine the RewriteBase automatically and set it as environment variable.
+RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+RewriteRule ^(.*) - [E=HTTP_BASE:%1]
+
+RewriteRule ^public(/.*)?$ - [END]
+
+# - REDIRECT_ environment variables are created from the environment variables which existed prior to the redirect.
+#   They are renamed with a REDIRECT_ prefix.
+# - / is always added at the end of HTTP_YAM_REWRITEBASE.
+# - Final environment name available in PHP : REDIRECT_HTTP_YAM_REWRITEBASE
+RewriteRule ^index\.php$ %{ENV:HTTP_BASE}/index.php [E=HTTP_YAM_REWRITEBASE:%{ENV:HTTP_BASE}/,QSA,END]
+RewriteRule ^(.*)$ %{ENV:HTTP_BASE}/index.php?route=$1 [E=HTTP_YAM_REWRITEBASE:%{ENV:HTTP_BASE}/,QSA,END]
