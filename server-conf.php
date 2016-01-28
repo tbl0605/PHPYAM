@@ -5,12 +5,14 @@
  * so every web application could share this file and use it by doing:
  * <code>require_once 'server-conf.php';</code>
  *
- * There are at least 2 ways to achieve that:
+ * There are at least 3 ways to achieve that:
  * <ul>
  * <li>redefine the include path at application level, inside of each "index.php"
  * <code>ini_set('include_path', '/path/to/this/file');</code>
  * <li>redefine the include path at server level, inside of the "php.ini" configuration file (it's the better option)
  * <code>include_path="C:\path\to\this\file;.;C:\xampp\php\PEAR"</code>
+ * <li>redefine the include path at application level, inside of each htaccess file (if you're using an Apache server)
+ * <code>php_value include_path "/path/to/this/file"</code>
  * <ul>
  *
  * Main purpose of this file is to give a unique environment name (stored in constant YAM_ENVIRONNEMENT)
