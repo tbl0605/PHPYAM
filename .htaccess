@@ -17,7 +17,7 @@ RewriteRule . %1/%3 [R=301,END]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
 RewriteRule ^(.*) - [E=HTTP_BASE:%1]
 
-RewriteRule ^public(/.*)?$ - [END]
+RewriteRule ^public-demo(/.*)?$ - [END]
 
 # - REDIRECT_ environment variables are created from the environment variables which existed prior to the redirect.
 #   They are renamed with a REDIRECT_ prefix.

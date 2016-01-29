@@ -36,10 +36,11 @@ if (USE_LOG4PHP) {
 
 /**
  * URL to this application base directory.<br />
- * Note: The value of URL will always be ended by a "/".
+ * Note: the value of URL will always be ended by a "/".
  * Note 2: The environment variable REDIRECT_HTTP_YAM_REWRITEBASE
  * is defined in the htaccess file. If you don't use htaccess files,
- * you have to manually set the value of URL.
+ * you have to manually set the value of URL.<br />
+ * For example: <code>define('URL', '/path/to/the/appbasedir/');</code>
  *
  * @var string
  * @see the htaccess file
@@ -48,30 +49,32 @@ define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
 
 /**
  * URL to this application "public" directory.<br />
- * Note: The value of URL_PUB will always be ended by a "/".
+ * Note: the value of URL_PUB will always be ended by a "/".
+ * Warning: be careful to update your htaccess file accordingly
+ * (when using them) if you change the location of the "public" directory.
  *
  * @var string
  */
-define('URL_PUB', URL . 'public/');
+define('URL_PUB', URL . 'public-demo/');
 
 /**
  * Full path of this application "public" directory.<br />
- * Note: The value of SYS_PUB will always be ended by a "/".
+ * Note: the value of SYS_PUB will always be ended by a "/".
  *
  * @var string
  */
-define('SYS_PUB', __DIR__ . '/../public/');
+define('SYS_PUB', __DIR__ . '/../public-demo/');
 
 /**
  * Full path of the "application" directory.
  * Necessary to the router to determinate the base directory for a resource
  * that has to be checked by {@link PHPYAM\core\interfaces\IRouter::isResource($pathName, $resourceName)}
  * or loaded by {@link PHPYAM\core\interfaces\IRouter::loadResource($pathName, $resourceName)}.<br />
- * Note: The value of SYS_APP will always be ended by a "/".
+ * Note: the value of SYS_APP will always be ended by a "/".
  *
  * @var string
  */
-define('SYS_APP', __DIR__ . '/../application/');
+define('SYS_APP', __DIR__ . '/../application-demo/');
 
 /**
  * Defines how PHPYAM should store the parameters extracted
