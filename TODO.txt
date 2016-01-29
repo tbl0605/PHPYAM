@@ -1,4 +1,3 @@
-- configure "composer" config file for log4php
-- unit tests
-- license headers
-- location ---> department ?
+- create some PHPUnit tests
+- provide a better demo application
+- provide a better README with some project documentation
