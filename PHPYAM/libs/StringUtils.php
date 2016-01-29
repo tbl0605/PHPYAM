@@ -16,7 +16,7 @@ namespace PHPYAM\libs;
  * All methods here can be used as parameter of the function {link PHP_MANUAL#array_walk()}.
  *
  * @author Thierry BLIND
- * @todo do a multi-bytes version (YAM_MB_StringUtils)
+ * @todo create a multi-bytes version of this class
  */
 class StringUtils
 {
