@@ -18,7 +18,7 @@
 use \PHPYAM\core\Core as Core;
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 	<meta charset="<?=CLIENT_CHARSET?>">
 	<meta http-equiv="Content-Type" content="text/html; charset=<?=CLIENT_CHARSET?>">

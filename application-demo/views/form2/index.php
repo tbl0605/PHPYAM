@@ -15,12 +15,13 @@
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
+use \PHPYAM\core\Core as Core;
 ?>
 <h2>Form input</h2>
 
 <form id="formulaire-id" name="formulaire" method="post"
 	action="<?=URL.'form2/index'?>">
-	<fieldset>
+	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
 		<legend>Please provide your name, email address (won't be published)
@@ -44,13 +45,14 @@
 		</p>
 	</fieldset>
 
-	<input type="submit" name="submit-button" id="submit-button-id"
-		style="margin-top: 6px;" value="Validate">
+	<input type="submit" name="submit-button" id="submit-button-id" value="Validate">
 
-	<div style="display:<?=$_logs !== '' ? 'block' : 'none'?>">
+	<div style="display: <?=$_logs !== '' ? 'block' : 'none'?>;">
 		<div id="feedback-panel-id"><?=$_logs?></div>
 	</div>
 </form>
+
+<div style="position: fixed; bottom: 0;"><a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to home page</a></div>
 
 <script type="text/javascript">
 $(document).ready(function() {

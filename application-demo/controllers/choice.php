@@ -2,7 +2,7 @@
 use \PHPYAM\core\Controller as Controller;
 
 /**
- * Class Home
+ * Class Choice
  *
  * Please note:
  * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
@@ -12,7 +12,7 @@ use \PHPYAM\core\Controller as Controller;
  * we will not be able to insert a second time templates used before
  * redirection (on error, for example).
  */
-class Home extends Controller
+class Choice extends Controller
 {
 
     // This controller does not need to access the database(s),
@@ -33,7 +33,10 @@ class Home extends Controller
      */
     public function index(array $infos)
     {
-        // For our PHPYAM demo, we show how to forward a web request to another controller:
-        $this->getRouter()->forward('choice', 'index', $infos);
+        // load views.
+        $_pageTitle = 'DEMOS PHPYAM';
+        require __DIR__ . '/../views/__templates/header.php';
+        require __DIR__ . '/../views/choice/index.php';
+        require __DIR__ . '/../views/__templates/footer.php';
     }
 }

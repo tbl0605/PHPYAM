@@ -24,27 +24,27 @@ use \PHPYAM\core\Core as Core;
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
-	<table>
+	<table border="1" style="margin-bottom: 6px;">
 		<thead>
 			<tr>
-				<th><span>Key</span></th>
-				<th><span>Value</span></th>
+				<th>Key</th>
+				<th>Value</th>
 			</tr>
 		</thead>
 		<tbody>
 <?php foreach ($_POST as $key => $value) { ?>
-							<tr>
-				<td><span><?=Core::html($key)?></span></td>
-				<td><span><?=Core::html($value)?></span></td>
+			<tr>
+				<td><?=Core::html($key)?></td>
+				<td><?=Core::html($value)?></td>
 			</tr>
 <?php } ?>
 		</tbody>
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Annuler" onclick="location.href='<?=URL?>'"> <input
+		value="Cancel" onclick="location.href='<?=URL?>'"> <input
 		type="submit" name="submit-button" id="submit-button-id"
-		value="Valider">
+		value="Submit">
 </form>
 
 <script type="text/javascript">

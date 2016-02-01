@@ -85,6 +85,7 @@ class Form1 extends Controller
         Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
         Assert::isTrue($this->checkFormValues() && $this->processForm(), 'The form data has not been processed correctly.');
 
-        $this->getRouter()->forward('form1', 'index');
+        // Back to homepage...
+        $this->getRouter()->forward(DEFAULT_CONTROLLER, DEFAULT_ACTION);
     }
 }
