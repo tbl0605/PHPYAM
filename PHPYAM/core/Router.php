@@ -91,13 +91,13 @@ final class Router implements IRouter
         }
 
         // Prevent accidental submitting by refresh or back-button.
-        // Use after session_start() and before any output to the browser (it uses header redirection)
+        // Use after session_start() and before any output to the browser (it uses header redirection).
         IntelliForm::antiRepost($_SERVER['REQUEST_URI']);
 
         // Clear expired form data.
         IntelliForm::purge();
 
-        // Create array with URL parts in $url
+        // Create array with URL parts in $url.
         $this->splitUrl();
 
         $this->loadResource(SYS_APP . '/security', SECURITY_POLICY);
@@ -116,7 +116,7 @@ final class Router implements IRouter
      */
     private function endRouter()
     {
-        // We "flush" all buffers to output remaining data
+        // We "flush" all buffers to output remaining data.
         while (ob_get_level() > 0) {
             ob_end_flush();
         }
@@ -152,7 +152,7 @@ final class Router implements IRouter
             } catch (Exception $ex) {
                 // Do not send this exception, simply print it.
                 // We're on the error page, there's not much to do when the error
-                // page itself contains errors !
+                // page itself contains errors!
                 if (USE_LOG4PHP) {
                     \Logger::getLogger(__CLASS__)->error($ex);
                 }
@@ -170,7 +170,7 @@ final class Router implements IRouter
         } catch (Exception $ex) {
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
-            // page itself contains errors !
+            // page itself contains errors!
             if (USE_LOG4PHP) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }

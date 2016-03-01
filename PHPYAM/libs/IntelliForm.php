@@ -179,6 +179,7 @@ class IntelliForm
         }
 
         $seed = $_POST[self::ANTZ_KEY];
+
         if (! isset($_SESSION[self::ANTZ_KEY]) || ! is_array($_SESSION[self::ANTZ_KEY])) {
             $_SESSION[self::ANTZ_KEY] = array();
         }
