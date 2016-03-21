@@ -9,7 +9,7 @@ Based on Mini, rewritten to add following features:
 - session support
 - output buffering support
 - user authentication support
+- internationalization of the PHPYAM error messages
 
 PHPYam doesn't do yet:
-- internationalization
 - form validation
