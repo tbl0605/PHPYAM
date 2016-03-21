@@ -94,7 +94,7 @@ class Authentication implements IAuthentication
             $this->userId = null;
             return false;
         }
-        if (! key_exists($this->locationId, AppConfig::$locations)) {
+        if (! array_key_exists($this->locationId, AppConfig::$locations)) {
             if (USE_LOG4PHP) {
                 Logger::getLogger(__CLASS__)->debug('User: ' . $this->userId . ', undefined location: ' . $this->locationId);
             }

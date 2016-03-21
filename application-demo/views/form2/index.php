@@ -19,7 +19,7 @@ use \PHPYAM\core\Core as Core;
 ?>
 <h2>Form input</h2>
 
-<form id="formulaire-id" name="formulaire" method="post"
+<form id="form-id" name="form" method="post"
 	action="<?=URL.'form2/index'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
@@ -45,19 +45,23 @@ use \PHPYAM\core\Core as Core;
 		</p>
 	</fieldset>
 
-	<input type="submit" name="submit-button" id="submit-button-id" value="Validate">
+	<input type="submit" name="submit-button" id="submit-button-id"
+		value="Validate">
 
 	<div style="display: <?=$_logs !== '' ? 'block' : 'none'?>;">
 		<div id="feedback-panel-id"><?=$_logs?></div>
 	</div>
 </form>
 
-<div style="position: fixed; bottom: 0;"><a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to home page</a></div>
+<div style="position: fixed; bottom: 0;">
+	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
+		home page</a>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	// Initialization of the form validation plugin
-	$("#formulaire-id").validate();
+	$("#form-id").validate();
 
 	// Attach a submit handler to the form
 	$("#submit-button-id").click(function(event) {
@@ -65,17 +69,19 @@ $(document).ready(function() {
 		// Stop form from submitting normally
 		event.preventDefault();
 
-		if (!$("#formulaire-id").valid()) {
+		var jqForm = $("#form-id");
+		if (!jqForm.valid()) {
 			return;
 		}
 
-		var input = $("#submit-button-id")[0];
+		var input = this;
 		input.disabled = true;
 		input.value = "In progress...";
 
-		$("#feedback-panel-id").parent().hide();
+		var jqFeedbackPanel = $("#feedback-panel-id");
+		jqFeedbackPanel.parent().hide();
 		// Clear result div
-		$("#feedback-panel-id").html("");
+		jqFeedbackPanel.html("");
 		var jqLoadPanel = $("body");
 		jqLoadPanel.resize();
 		jqLoadPanel.loading({
@@ -88,8 +94,8 @@ $(document).ready(function() {
 			url: "<?=URL.'form2/ajaxValidate'?>",
 			// The type of request
 			type: "post",
-			// Get values from elements in the formular
-			data: $("#formulaire-id").serialize(),
+			// Get values from elements in the form
+			data: jqForm.serialize(),
 			// The type of data that is getting returned
 			dataType: "html",
 			// Never cache url
@@ -100,16 +106,16 @@ $(document).ready(function() {
 					input.disabled = false;
 					input.value = "Validate";
 					jqLoadPanel.loading("stop");
-					$("#feedback-panel-id").html("").html(strData).parent().show();
+					jqFeedbackPanel.html("").html(strData).parent().show();
 				} else {
-					$("#formulaire-id").submit();
+					jqForm.submit();
 				}
 			},
 			error: function() {
 				input.disabled = false;
 				input.value = "Validate";
 				jqLoadPanel.loading("stop");
-				$("#feedback-panel-id").html("").html("An error has occurred. Please retry later.").parent().show();
+				jqFeedbackPanel.html("").html("An error has occurred. Please retry later.").parent().show();
 			}
 		});
 

@@ -19,7 +19,7 @@ use \PHPYAM\core\Core as Core;
 ?>
 <h2>Form input</h2>
 
-<form id="formulaire-id" name="formulaire" method="post"
+<form id="form-id" name="form" method="post"
 	action="<?=URL.'form1/create'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
@@ -45,19 +45,23 @@ use \PHPYAM\core\Core as Core;
 		</p>
 	</fieldset>
 
-	<input type="submit" name="submit-button" id="submit-button-id" value="Validate and submit">
+	<input type="submit" name="submit-button" id="submit-button-id"
+		value="Validate and submit">
 
 	<div style="display: <?=$_logs !== '' ? 'block' : 'none'?>;">
 		<div id="feedback-panel-id"><?=$_logs?></div>
 	</div>
 </form>
 
-<div style="position: fixed; bottom: 0;"><a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to home page</a></div>
+<div style="position: fixed; bottom: 0;">
+	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
+		home page</a>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	// Initialization of the form validation plugin
-	$("#formulaire-id").validate();
+	$("#form-id").validate();
 
 	// Attach a submit handler to the form
 	$("#submit-button-id").click(function(event) {
@@ -65,7 +69,7 @@ $(document).ready(function() {
 		// Stop form from submitting normally
 		event.preventDefault();
 
-		var jqForm = $("#formulaire-id");
+		var jqForm = $("#form-id");
 
 		if (!jqForm.valid()) {
 			return;

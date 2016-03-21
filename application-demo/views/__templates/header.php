@@ -18,7 +18,7 @@
 use \PHPYAM\core\Core as Core;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?=CLIENT_LANGUAGE?>">
 <head>
 	<meta charset="<?=CLIENT_CHARSET?>">
 	<meta http-equiv="Content-Type" content="text/html; charset=<?=CLIENT_CHARSET?>">
@@ -31,7 +31,7 @@ use \PHPYAM\core\Core as Core;
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/jquery-loading/1.1.0/jquery.loading<?=YAM_MIN?>.css" />
+	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
 
 	<!-- local -->
 	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/common.css" />
@@ -39,10 +39,10 @@ use \PHPYAM\core\Core as Core;
 	<!-- javaScript -->
 	<!-- jQuery -->
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.11.3/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.12.2/jquery<?=YAM_MIN?>.js"></script>
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.1.4/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.2.2/jquery<?=YAM_MIN?>.js"></script>
 	<!--<![endif]-->
 </head>
 <body>

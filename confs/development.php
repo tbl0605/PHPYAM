@@ -181,6 +181,14 @@ define('ERROR_AJAX_ACTION', 'indexAjax');
 define('CLIENT_CHARSET', 'ISO-8859-1');
 
 /**
+ * Server-side language AND client-side language (web browser).
+ * Anyway, developers should always use same language on both side...
+ *
+ * @var string
+ */
+define('CLIENT_LANGUAGE', 'en');
+
+/**
  * Title of all web pages (if used).
  *
  * @var string

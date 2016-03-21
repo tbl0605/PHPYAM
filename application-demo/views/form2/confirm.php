@@ -19,7 +19,7 @@ use \PHPYAM\core\Core as Core;
 ?>
 <h2>Confirmation of data entry</h2>
 
-<form id="formulaire-id" name="formulaire" method="post"
+<form id="form-id" name="form" method="post"
 	action="<?=URL.'form2/create'?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
@@ -54,7 +54,7 @@ $(document).ready(function() {
 		// Stop form from submitting normally
 		event.preventDefault();
 
-		var input = $("#submit-button-id")[0];
+		var input = this;
 		input.disabled = true;
 		input.value = "In progress...";
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
 		jqLoadPanel.loading({
 			message: "Processing..."
 		});
-		$("#formulaire-id").submit();
+		$("#form-id").submit();
 
 		// Prevent default click.
 		return false;

@@ -21,7 +21,7 @@ class RouterException extends \Exception
      */
     public function __construct($message = null, $code = null)
     {
-        parent::__construct(trim($message) === '' ? "Treatment interrupted. Please restart the application." : $message, $code);
+        parent::__construct(trim($message) === '' ? dgettext('Treatment interrupted. Please restart the application.', 'PHPYAM') : $message, $code);
     }
 }
 ?>
