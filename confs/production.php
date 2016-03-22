@@ -186,7 +186,7 @@ define('CLIENT_CHARSET', 'ISO-8859-1');
  *
  * @var string
  */
-define('CLIENT_LANGUAGE', 'en');
+define('CLIENT_LANGUAGE', 'en_GB');
 
 /**
  * Title of all web pages (if used).
