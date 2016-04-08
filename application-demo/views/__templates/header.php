@@ -39,10 +39,10 @@ use \PHPYAM\core\Core as Core;
 	<!-- javaScript -->
 	<!-- jQuery -->
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.12.2/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.12.3/jquery<?=YAM_MIN?>.js"></script>
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.2.2/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.2.3/jquery<?=YAM_MIN?>.js"></script>
 	<!--<![endif]-->
 </head>
 <body>
