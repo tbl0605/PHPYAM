@@ -6,6 +6,7 @@ use \PHPYAM\core\Core as Core;
 use \PHPYAM\libs\IntelliForm as IntelliForm;
 use \PHPYAM\libs\Assert as Assert;
 use \PHPYAM\libs\RouterException as RouterException;
+use \PHPYAM\libs\StringUtils as StringUtils;
 
 /**
  * Class used to translate the URL of a web request into a call to a class and a method
@@ -114,7 +115,7 @@ final class Router implements IRouter
 
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
-        Assert::isFalse(headers_sent(), dgettext('PHPYAM', 'HTTP headers have already been sent.'));
+        Assert::isFalse(headers_sent(), StringUtils::gettext('HTTP headers have already been sent.'));
 
         ob_start();
     }
@@ -286,7 +287,7 @@ final class Router implements IRouter
      */
     public final function loadResource($pathName, $resourceName)
     {
-        Assert::isTrue($this->isResource($pathName, $resourceName), dgettext('PHPYAM', "The resource '%s' cannot be found in '%s'."), $resourceName, $pathName);
+        Assert::isTrue($this->isResource($pathName, $resourceName), StringUtils::gettext("The resource '%s' cannot be found in '%s'."), $resourceName, $pathName);
         require_once $pathName . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
     }
 
@@ -297,8 +298,8 @@ final class Router implements IRouter
      */
     public final function call($urlController, $urlAction, array $urlParameters = array())
     {
-        Assert::isTrue(is_string($urlController), dgettext('PHPYAM', 'The parameter %s is not of type string.'), $urlController);
-        Assert::isTrue(is_string($urlAction), dgettext('PHPYAM', 'The parameter %s is not of type string.'), $urlAction);
+        Assert::isTrue(is_string($urlController), StringUtils::gettext('The parameter %s is not of type string.'), $urlController);
+        Assert::isTrue(is_string($urlAction), StringUtils::gettext('The parameter %s is not of type string.'), $urlAction);
 
         if ($this->isResource(SYS_APP . '/controllers', $urlController)) {
             // If so, then load this file and create this controller.
@@ -328,7 +329,7 @@ final class Router implements IRouter
         }
 
         // Invalid URL.
-        throw new RouterException(dgettext('PHPYAM', 'URL is invalid.'));
+        throw new RouterException(StringUtils::gettext('URL is invalid.'));
     }
 
     /**
@@ -347,7 +348,7 @@ final class Router implements IRouter
 
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
-        Assert::isFalse(headers_sent(), dgettext('PHPYAM', 'HTTP headers have already been sent.'));
+        Assert::isFalse(headers_sent(), StringUtils::gettext('HTTP headers have already been sent.'));
 
         header('location:' . Core::url($urlController, $urlAction, $urlParameters));
     }
@@ -374,7 +375,7 @@ final class Router implements IRouter
             $this->initRouter();
 
             if (! $this->authentication->authenticate($this->urlController, $this->urlAction, $this->urlParameters)) {
-                throw new RouterException(dgettext('PHPYAM', 'You are not authorized to access this page.'));
+                throw new RouterException(StringUtils::gettext('You are not authorized to access this page.'));
             }
 
             $this->call($this->urlController, $this->urlAction, $this->urlParameters);
@@ -389,7 +390,7 @@ final class Router implements IRouter
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
             $this->endRouterOnError(array(
-                dgettext('PHPYAM', 'Internal error. Please restart the application.'),
+                StringUtils::gettext('Internal error. Please restart the application.'),
                 $ex
             ));
             $this->cleanupOnFatalError();

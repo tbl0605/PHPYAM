@@ -22,6 +22,18 @@ class StringUtils
 {
 
     /**
+     * Returns a translated gettext message.
+     *
+     * @param string $message
+     *            message to translate (from the PHPYAM domain)
+     * @return string translated message
+     */
+    public final static function gettext($message)
+    {
+        return mb_convert_encoding(dgettext('PHPYAM', $message), CLIENT_CHARSET, 'UTF-8');
+    }
+
+    /**
      * Escapes a string by converting the characters that have a special meaning in HTML 4.01.
      * Warning: the parameter $value is first "casted" as "string" before being processed.
      * Also be aware that if the input string contains an invalid code unit sequence within
