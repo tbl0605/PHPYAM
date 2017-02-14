@@ -72,7 +72,6 @@ class Form1 extends Controller
 
         //Core::htmlize($_logs);
 
-
         // load views.
         $_pageTitle = 'DEMO FORM 1';
         require __DIR__ . '/../views/__templates/header.php';
