@@ -158,7 +158,7 @@ final class Router implements IRouter
             // by the Ajax error manager.
             try {
                 $this->call(ERROR_CONTROLLER, ERROR_AJAX_ACTION, $msgs);
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 // Do not send this exception, simply print it.
                 // We're on the error page, there's not much to do when the error
                 // page itself contains errors!
@@ -176,7 +176,7 @@ final class Router implements IRouter
         }
         try {
             $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
@@ -385,7 +385,7 @@ final class Router implements IRouter
             $this->endRouterOnError(array(
                 $ex->getMessage()
             ));
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             if (USE_LOG4PHP) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
