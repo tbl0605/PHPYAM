@@ -19,7 +19,7 @@ use \PHPYAM\core\Core as Core;
 ?>
 <h2>Form input</h2>
 
-<form id="form-id" name="form" method="post"
+<form id="form-id" name="form-id" method="post"
 	action="<?=URL.'form2/index'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
