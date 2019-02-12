@@ -56,7 +56,7 @@ class StringUtils
         // Note 2: ENT_HTML401 is only available since PHP 5.4.0
         // Note 3: ENT_QUOTES will convert both double and single quotes for HTML and Javascript values so they
         // can be injected into HTML tag attributes.
-        $value = htmlentities((string) $value, ENT_COMPAT | ENT_QUOTES /*| ENT_HTML401*/, $encodingTo);
+        $value = htmlentities((string) $value, ENT_QUOTES /*| ENT_HTML401*/, $encodingTo);
     }
 
     /**
