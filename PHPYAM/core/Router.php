@@ -81,7 +81,7 @@ final class Router implements IRouter
         // Can be overridden later again, for example
         // in the object constructor of $this->authentication.
         putenv('LC_ALL=' . CLIENT_LANGUAGE);
-        Assert::isTrue(setlocale(LC_ALL, CLIENT_LANGUAGE) !== false, StringUtils::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
+        $locale = setlocale(LC_ALL, CLIENT_LANGUAGE);
         bindtextdomain('PHPYAM', __DIR__ . '/../locales');
         bind_textdomain_codeset('PHPYAM', CLIENT_CHARSET);
 
@@ -116,6 +116,9 @@ final class Router implements IRouter
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
         Assert::isFalse(headers_sent(), StringUtils::gettext('HTTP headers have already been sent.'));
+
+        // We check that all non-critical resources have been successfully set (or loaded) once the security policy was set.
+        Assert::isTrue($locale !== false, StringUtils::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
 
         ob_start();
     }
