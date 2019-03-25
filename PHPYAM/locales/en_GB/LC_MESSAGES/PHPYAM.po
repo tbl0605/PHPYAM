@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PHPYAM\n"
+"POT-Creation-Date: 2019-03-25 14:32+0100\n"
+"PO-Revision-Date: 2019-03-25 14:33+0100\n"
+"Last-Translator: \n"
+"Language-Team: Thierry Blind <tbl0605@gmail.com>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SearchPath-0: ../../../core\n"
+"X-Poedit-SearchPath-1: ../../../core/interfaces\n"
+"X-Poedit-SearchPath-2: ../../../libs\n"
+
+#: ../../../core/Router.php:84
+#, php-format
+msgid "The locale '%s' could not be set."
+msgstr "The locale '%s' could not be set."
+
+#: ../../../core/Router.php:118 ../../../core/Router.php:351
+msgid "HTTP headers have already been sent."
+msgstr "HTTP headers have already been sent."
+
+#: ../../../core/Router.php:290
+#, php-format
+msgid "The resource '%s' cannot be found in '%s'."
+msgstr "The resource '%s' cannot be found in '%s'."
+
+#: ../../../core/Router.php:301 ../../../core/Router.php:302
+#, php-format
+msgid "The parameter %s is not of type string."
+msgstr "The parameter %s is not of type string."
+
+#: ../../../core/Router.php:332
+msgid "URL is invalid."
+msgstr "URL is invalid."
+
+#: ../../../core/Router.php:378
+msgid "You are not authorized to access this page."
+msgstr "You are not authorized to access this page."
+
+#: ../../../core/Router.php:393
+msgid "Internal error. Please restart the application."
+msgstr "Internal error. Please restart the application."
+
+#: ../../../libs/RouterException.php:24
+msgid "Treatment interrupted. Please restart the application."
+msgstr "Treatment interrupted. Please restart the application."

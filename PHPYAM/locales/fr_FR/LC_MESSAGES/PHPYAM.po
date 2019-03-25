@@ -1,48 +1,53 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PHPYAM\n"
-"POT-Creation-Date: 2016-03-21 14:12+0100\n"
-"PO-Revision-Date: 2016-03-21 14:20+0100\n"
+"POT-Creation-Date: 2019-03-25 14:33+0100\n"
+"PO-Revision-Date: 2019-03-25 14:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: Thierry Blind <tbl0605@gmail.com>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Poedit-SearchPath-0: core\n"
-"X-Poedit-SearchPath-1: core/interfaces\n"
-"X-Poedit-SearchPath-2: libs\n"
+"X-Poedit-SearchPath-0: ../../../core\n"
+"X-Poedit-SearchPath-1: ../../../core/interfaces\n"
+"X-Poedit-SearchPath-2: ../../../libs\n"
 
-#: core/Router.php:109 core/Router.php:342
+#: ../../../core/Router.php:84
+#, php-format
+msgid "The locale '%s' could not be set."
+msgstr "La locale '%s' n'a pu être définie."
+
+#: ../../../core/Router.php:118 ../../../core/Router.php:351
 msgid "HTTP headers have already been sent."
 msgstr "Les en-têtes HTTP ont déjà été envoyées."
 
-#: core/Router.php:281
+#: ../../../core/Router.php:290
 #, php-format
 msgid "The resource '%s' cannot be found in '%s'."
 msgstr "La ressource '%s' n'a pu être trouvée dans '%s'."
 
-#: core/Router.php:292 core/Router.php:293
+#: ../../../core/Router.php:301 ../../../core/Router.php:302
 #, php-format
 msgid "The parameter %s is not of type string."
 msgstr "Le paramètre %s n'est pas de type string."
 
-#: core/Router.php:323
+#: ../../../core/Router.php:332
 msgid "URL is invalid."
 msgstr "L'URL est invalide."
 
-#: core/Router.php:369
+#: ../../../core/Router.php:378
 msgid "You are not authorized to access this page."
 msgstr "Vous n'êtes pas autorisé à accéder à cette page."
 
-#: core/Router.php:384
+#: ../../../core/Router.php:393
 msgid "Internal error. Please restart the application."
 msgstr "Erreur interne. Veuillez redémarrer l'application."
 
-#: libs/RouterException.php:24
+#: ../../../libs/RouterException.php:24
 msgid "Treatment interrupted. Please restart the application."
 msgstr "Traitement interrompu. Veuillez redémarrer l'application."

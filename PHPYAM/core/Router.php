@@ -81,7 +81,7 @@ final class Router implements IRouter
         // Can be overridden later again, for example
         // in the object constructor of $this->authentication.
         putenv('LC_ALL=' . CLIENT_LANGUAGE);
-        setlocale(LC_ALL, CLIENT_LANGUAGE);
+        Assert::isTrue(setlocale(LC_ALL, CLIENT_LANGUAGE) !== false, StringUtils::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
         bindtextdomain('PHPYAM', __DIR__ . '/../locales');
         bind_textdomain_codeset('PHPYAM', CLIENT_CHARSET);
 
