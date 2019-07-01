@@ -28,7 +28,7 @@ use \PHPYAM\core\Core as Core;
 	<meta http-equiv="Expires" content="-1" />
 	<title><?=Core::html(TITLE)?></title>
 	<meta name="description" content="<?=Core::html(TITLE)?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
