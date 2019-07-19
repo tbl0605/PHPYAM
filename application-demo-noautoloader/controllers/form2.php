@@ -1,8 +1,8 @@
 <?php
-use \PHPYAM\core\Controller as Controller;
-use \PHPYAM\core\Core as Core;
-use \PHPYAM\libs\IntelliForm as IntelliForm;
-use \PHPYAM\libs\Assert as Assert;
+use PHPYAM\core\Controller as Controller;
+use PHPYAM\core\Core as Core;
+use PHPYAM\libs\IntelliForm as IntelliForm;
+use PHPYAM\libs\Assert as Assert;
 
 /**
  * Class Form2

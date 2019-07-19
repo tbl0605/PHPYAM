@@ -1,5 +1,5 @@
 <?php
-use \PHPYAM\core\Controller as Controller;
+use PHPYAM\core\Controller as Controller;
 
 /**
  * Class Choice
