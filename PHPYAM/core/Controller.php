@@ -59,6 +59,7 @@ abstract class Controller
 
     /**
      * Open the database connections with the credentials from {SYS_APP}/security/{SECURITY_POLICY}.php
+     * or from an autoloaded {SECURITY_POLICY} resource.
      */
     protected function openDatabaseConnections()
     {
@@ -69,6 +70,7 @@ abstract class Controller
 
     /**
      * Close the database connections with the credentials from {SYS_APP}/security/{SECURITY_POLICY}.php
+     * or from an autoloaded {SECURITY_POLICY} resource.
      */
     protected function closeDatabaseConnections()
     {
@@ -84,7 +86,7 @@ abstract class Controller
      *
      * Note that $modelName is case-insensitive (e.g. SongModel) but the model's filename should be written
      * in lowercase letters (e.g. models/songmodel.php). This behavior can be redefined
-     * in {@link \PHPYAM\core\interfaces\IRouter::loadResource($pathName, $resourceName)}.
+     * in {@link \PHPYAM\core\interfaces\IRouter::loadResource($type, $resourceName, $throwException)}.
      *
      * @param string $modelName
      *            The model name (case-insensitive)

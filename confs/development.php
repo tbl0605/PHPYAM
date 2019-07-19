@@ -68,13 +68,13 @@ define('SYS_PUB', __DIR__ . '/../public-demo/');
 /**
  * Full path of the "application" directory.
  * Necessary to the router to determinate the base directory for a resource
- * that has to be checked by {@link PHPYAM\core\interfaces\IRouter::isResource($pathName, $resourceName)}
- * or loaded by {@link PHPYAM\core\interfaces\IRouter::loadResource($pathName, $resourceName)}.<br />
- * Note: the value of SYS_APP will always be ended by a "/".
+ * that has to be loaded by {@link \PHPYAM\core\interfaces\IRouter::loadResource($type,$resourceName,$throwException)}.<br />
+ * Note: the value of SYS_APP will always be ended by a "/" and is only used
+ * by method {@link \PHPYAM\core\interfaces\IRouter::getResourceFileName($type,$resourceName)}.
  *
  * @var string
  */
-define('SYS_APP', __DIR__ . '/../application-demo/');
+define('SYS_APP', __DIR__ . '/../application-demo-noautoloader/');
 
 /**
  * Defines how PHPYAM should store the parameters extracted

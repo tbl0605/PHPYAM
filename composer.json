@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPYAM\\": "PHPYAM/"
+            "PHPYAM\\": "PHPYAM/",
+            "PHPYAM\\demo\\application\\": "application-demo-autoloader/"
         }
     }
 }
