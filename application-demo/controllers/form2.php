@@ -71,7 +71,7 @@ class Form2 extends Controller
                     // form not submitted, restore a previous form
                     IntelliForm::restore($formKey);
                 }
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 IntelliForm::restore($formKey);
             }
         }
