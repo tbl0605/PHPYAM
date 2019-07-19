@@ -49,8 +49,8 @@ class LoggerUtils
     public final static function configure($log4phpConfiguration)
     {
         \Logger::configure($log4phpConfiguration);
-        set_error_handler('\PHPYAM\libs\LoggerUtils::errorHandler');
-        set_exception_handler('\PHPYAM\libs\LoggerUtils::exceptionHandler');
+        set_error_handler('\\PHPYAM\\libs\\LoggerUtils::errorHandler');
+        set_exception_handler('\\PHPYAM\\libs\\LoggerUtils::exceptionHandler');
         // TODO: add register_shutdown_function() for non-catchable errors?
         // http://phpfunk.com/php/capture-fatal-php-errors-for-logging/
     }
@@ -146,7 +146,7 @@ class LoggerUtils
     /**
      * Error handler used by {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)}.
      *
-     * @param Exception $exception
+     * @param \Exception $exception
      *            exception object that was thrown
      */
     public final static function exceptionHandler(\Exception $exception)
