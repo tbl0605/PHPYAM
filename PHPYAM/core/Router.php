@@ -1,12 +1,12 @@
 <?php
 namespace PHPYAM\core;
 
-use \PHPYAM\core\interfaces\IRouter as IRouter;
-use \PHPYAM\core\Core as Core;
-use \PHPYAM\libs\IntelliForm as IntelliForm;
-use \PHPYAM\libs\Assert as Assert;
-use \PHPYAM\libs\RouterException as RouterException;
-use \PHPYAM\libs\StringUtils as StringUtils;
+use PHPYAM\core\interfaces\IRouter as IRouter;
+use PHPYAM\core\Core as Core;
+use PHPYAM\libs\IntelliForm as IntelliForm;
+use PHPYAM\libs\Assert as Assert;
+use PHPYAM\libs\RouterException as RouterException;
+use PHPYAM\libs\StringUtils as StringUtils;
 
 /**
  * Class used to translate the URL of a web request into a call to a class and a method
@@ -36,7 +36,7 @@ use \PHPYAM\libs\StringUtils as StringUtils;
  * @since 01/01/2014
  * @copyright 2014-2016 Thierry BLIND
  */
-final class Router implements IRouter
+class Router implements IRouter
 {
 
     /**
@@ -109,8 +109,7 @@ final class Router implements IRouter
         // Create array with URL parts in $url.
         $this->splitUrl();
 
-        $this->loadResource(SYS_APP . '/security', SECURITY_POLICY);
-        $authenticationClassName = SECURITY_POLICY;
+        $authenticationClassName = $this->loadResource('security', SECURITY_POLICY, true);
         $this->authentication = new $authenticationClassName();
 
         // We check that the header() statements have been taken into account,
@@ -276,11 +275,21 @@ final class Router implements IRouter
     /**
      * (non-PHPdoc)
      *
-     * @see \PHPYAM\core\interfaces\IRouter::isResource()
+     * @see \PHPYAM\core\interfaces\IRouter::getResourceFileName()
      */
-    public final function isResource($pathName, $resourceName)
+    public function getResourceFileName($type, $resourceName)
     {
-        return file_exists($pathName . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php');
+        return SYS_APP . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \PHPYAM\core\interfaces\IRouter::getClassName()
+     */
+    public function getClassName($type, $resourceName)
+    {
+        return $resourceName;
     }
 
     /**
@@ -288,10 +297,30 @@ final class Router implements IRouter
      *
      * @see \PHPYAM\core\interfaces\IRouter::loadResource()
      */
-    public final function loadResource($pathName, $resourceName)
+    public function loadResource($type, $resourceName, $throwException)
     {
-        Assert::isTrue($this->isResource($pathName, $resourceName), StringUtils::gettext("The resource '%s' cannot be found in '%s'."), $resourceName, $pathName);
-        require_once $pathName . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
+        $resourceFile = $this->getResourceFileName($type, $resourceName);
+        // Resource file is optional.
+        if ($resourceFile !== null) {
+            $isReadable = is_readable($resourceFile);
+            if ($throwException) {
+                Assert::isTrue($isReadable, StringUtils::gettext("The resource '%s' of type '%s' cannot be read as file '%s'."), $resourceName, $type, $resourceFile);
+            }
+            if ($isReadable) {
+                require_once $resourceFile;
+            } else {
+                return null;
+            }
+        }
+        $resourceClassName = $this->getClassName($type, $resourceName);
+        if ($throwException) {
+            Assert::isFalse($resourceClassName === null || ! class_exists($resourceClassName), StringUtils::gettext("The resource '%s' of type '%s' cannot be found as class '%s'."), $resourceName, $type, $resourceClassName);
+        } else {
+            if ($resourceClassName === null || ! class_exists($resourceClassName)) {
+                return null;
+            }
+        }
+        return $resourceClassName;
     }
 
     /**
@@ -304,20 +333,20 @@ final class Router implements IRouter
         Assert::isTrue(is_string($urlController), StringUtils::gettext('The parameter %s is not of type string.'), $urlController);
         Assert::isTrue(is_string($urlAction), StringUtils::gettext('The parameter %s is not of type string.'), $urlAction);
 
-        if ($this->isResource(SYS_APP . '/controllers', $urlController)) {
-            // If so, then load this file and create this controller.
-            // Example: if controller would be "car", then this line would translate into: $controller = new car($this);
-            $this->loadResource(SYS_APP . '/controllers', $urlController);
+        // If so, then load this file and create this controller.
+        // Example: if controller would be "car", then this line would translate into: $controller = new car($this);
+        $controllerClassName = $this->loadResource('controllers', $urlController, false);
 
+        if ($controllerClassName !== null) {
             $controller = null;
 
             // Check for class: does such a class exist (and does it have a callable constructor)?
-            if (method_exists($urlController, '__construct') && is_callable(array(
-                $urlController,
+            if (method_exists($controllerClassName, '__construct') && is_callable(array(
+                $controllerClassName,
                 '__construct'
             ), true)) {
                 // Call the class constructor and pass the reference to this router object.
-                $controller = new $urlController($this);
+                $controller = new $controllerClassName($this);
             }
 
             // Check for method: does such a method exist (and is it callable) in the controller?

@@ -20,30 +20,46 @@ interface IRouter
     public function getAuthentication();
 
     /**
-     * Checks if the resource $resourceName exists in the directory $pathName.
-     * The resource name should either be a class name or a PHP file name without the ".php" suffix
-     * (useful when looking for a "view" file that contains no PHP class).
+     * Translates the resource $resourceName as its corresponding file name, depending on its type.
      *
-     * @param string $pathName
-     *            directory where to look for the resource
+     * @param string $type
+     *            resource type, either 'controllers', 'models' or 'security'
      * @param string $resourceName
      *            resource name
-     * @return boolean TRUE when resource exists, FALSE otherwise
+     * @return string|null NULL when resource doesn't exist or doesn't need to be load later by the router, non-NULL otherwise
      */
-    public function isResource($pathName, $resourceName);
+    public function getResourceFileName($type, $resourceName);
 
     /**
-     * Used to load the resource $resourceName from the directory $pathName.
-     * The resource name should either be a class name or a PHP file name without the ".php" suffix
-     * (useful when looking for a "view" file that contains no PHP class).
+     * Translates the resource $resourceName as its corresponding fully-qualified class name, depending on its type.
      *
-     * @param string $pathName
-     *            directory where to look for the resource
+     * @param string $type
+     *            resource type, either 'controllers', 'models' or 'security'
      * @param string $resourceName
      *            resource name
-     * @throws \PHPYAM\libs\AssertException exception thrown on invalid resource (i.e. \PHPYAM\core\interfaces\IRouter::isResource($pathName, $resourceName) returns FALSE)
+     * @return string|null NULL when class name couldn't be computed, non-NULL otherwise
      */
-    public function loadResource($pathName, $resourceName);
+    public function getClassName($type, $resourceName);
+
+    /**
+     * Used to load the resource $resourceName.
+     * The resource name could either be a non-qualified class name or a PHP file name without the ".php" suffix
+     * that will be translated to a fully-qualified class name using method IRouter::getClassName($type, $resourceName).
+     * Note that this method first calls method IRouter::getResourceFileName($type, $resourceName) and tries to load
+     * the required file (when the computed file name is non-null).
+     *
+     * @param string $type
+     *            resource type, either 'controllers', 'models' or 'security'
+     * @param string $resourceName
+     *            resource name
+     * @param boolean $throwException
+     *            throw an exception on invalid file path (when non-null)
+     *            or on invalid class name <b>only when $throwException is true</b>
+     * @return string|null fully-qualified class name, null when something went wrong
+     * @throws \PHPYAM\libs\AssertException exception thrown on invalid file name (when non-null) or on invalid class name
+     *         <b>when parameter $throwException is true</b>
+     */
+    public function loadResource($type, $resourceName, $throwException);
 
     /**
      * Used to call a controller + action (for example from another controller + action).

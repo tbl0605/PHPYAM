@@ -78,27 +78,22 @@ abstract class Controller
     }
 
     /**
-     * Load the model with the given name ($modelClassName) and the database connection(s) from $this->databaseConnections.
+     * Load the model with the given name ($modelName) and the database connection(s) from $this->databaseConnections.
      * $this->loadModel("SongModel") would include {SYS_APP}/models/songmodel.php and create the object in the controller, like this:
      * <code>$songsModel = $this->loadModel('SongsModel');</code>
      *
-     * Note that $modelClassName is case-insensitive (e.g. SongModel) but the model's filename should be written
+     * Note that $modelName is case-insensitive (e.g. SongModel) but the model's filename should be written
      * in lowercase letters (e.g. models/songmodel.php). This behavior can be redefined
      * in {@link \PHPYAM\core\interfaces\IRouter::loadResource($pathName, $resourceName)}.
      *
-     * @param string $modelClassName
-     *            The model class name (case-insensitive)
+     * @param string $modelName
+     *            The model name (case-insensitive)
      * @return object model
-     * @throws \PHPYAM\libs\AssertException exception thrown on invalid resource $modelClassName
+     * @throws \PHPYAM\libs\AssertException exception thrown on invalid resource $modelName
      */
-    protected function loadModel($modelClassName)
+    protected function loadModel($modelName)
     {
-        // If the model class is already loaded by PHP (through autoloaders, multiple use of same model, etc...),
-        // no need to retrieve the file name.
-        if (! class_exists($modelClassName, false)) {
-            $this->getRouter()->loadResource(SYS_APP . '/models', $modelClassName);
-        }
-
+        $modelClassName = $this->getRouter()->loadResource('models', $modelName, true);
         return new $modelClassName($this->databaseConnections);
     }
 
