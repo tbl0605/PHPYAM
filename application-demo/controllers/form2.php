@@ -20,7 +20,7 @@ class Form2 extends Controller
 
     /**
      *
-     * @var ModeleForm2
+     * @var \ModeleForm2
      */
     private $myModel;
 

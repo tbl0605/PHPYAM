@@ -1,6 +1,5 @@
 <?php
 use \PHPYAM\core\Controller as Controller;
-use \PHPYAM\core\Core as Core;
 use \PHPYAM\libs\IntelliForm as IntelliForm;
 use \PHPYAM\libs\Assert as Assert;
 
@@ -20,7 +19,7 @@ class Form1 extends Controller
 
     /**
      *
-     * @var ModeleForm1
+     * @var \ModeleForm1
      */
     private $myModel;
 
