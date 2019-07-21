@@ -154,7 +154,7 @@ final class Core
     public final static function htmlize(&$value)
     {
         if (is_array($value)) {
-            array_walk_recursive($value, '\PHPYAM\libs\StringUtils::htmlize', CLIENT_CHARSET);
+            array_walk_recursive($value, '\\PHPYAM\\libs\\StringUtils::htmlize', CLIENT_CHARSET);
         } else {
             \PHPYAM\libs\StringUtils::htmlize($value, null, CLIENT_CHARSET);
         }
@@ -188,7 +188,7 @@ final class Core
     public final static function jsonEncodify(&$value)
     {
         if (is_array($value)) {
-            array_walk_recursive($value, '\PHPYAM\libs\StringUtils::jsonEncode', mb_internal_encoding());
+            array_walk_recursive($value, '\\PHPYAM\\libs\\StringUtils::jsonEncode', mb_internal_encoding());
         } else {
             \PHPYAM\libs\StringUtils::jsonEncode($value, null, mb_internal_encoding());
         }
