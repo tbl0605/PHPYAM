@@ -1,4 +1,5 @@
 <?php
+namespace PHPYAM\demo\confs;
 
 /**
  * Configuration file for the "production" environment.

@@ -6,7 +6,7 @@ namespace PHPYAM\core;
  * Some methods depend on the current project configuration (e.g. certain methods use mb_internal_encoding(),
  * or the constants CLIENT_CHARSET and URL_ASSOCIATIVE_PARAMS).
  *
- * @package PHPYAM.core
+ * @package PHPYAM\core
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014

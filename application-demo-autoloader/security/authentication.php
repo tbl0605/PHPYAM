@@ -52,7 +52,7 @@ class Authentication implements IAuthentication
      */
     public function getLocationId()
     {
-        return isset(\AppConfig::$locations[$this->locationId]) ? $this->locationId : null;
+        return isset(\PHPYAM\demo\confs\AppConfig::$locations[$this->locationId]) ? $this->locationId : null;
     }
 
     /**
@@ -62,7 +62,7 @@ class Authentication implements IAuthentication
      */
     public function getLocationInfos()
     {
-        return isset(\AppConfig::$locations[$this->locationId]) ? \AppConfig::$locations[$this->locationId] : null;
+        return isset(\PHPYAM\demo\confs\AppConfig::$locations[$this->locationId]) ? \PHPYAM\demo\confs\AppConfig::$locations[$this->locationId] : null;
     }
 
     /**
@@ -96,7 +96,7 @@ class Authentication implements IAuthentication
             $this->userId = null;
             return false;
         }
-        if (! array_key_exists($this->locationId, \AppConfig::$locations)) {
+        if (! array_key_exists($this->locationId, \PHPYAM\demo\confs\AppConfig::$locations)) {
             if (USE_LOG4PHP) {
                 \Logger::getLogger(__CLASS__)->debug('User: ' . $this->userId . ', undefined location: ' . $this->locationId);
             }

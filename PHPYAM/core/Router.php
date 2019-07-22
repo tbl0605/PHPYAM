@@ -30,11 +30,11 @@ use PHPYAM\libs\StringUtils as StringUtils;
  * There are some router options available to change its behavior.
  * Those options are coded as PHP constants and are defined in the conf/*.php files.
  *
- * @package PHPYAM.core
+ * @package PHPYAM\core
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2016 Thierry BLIND
+ * @copyright 2014-2019 Thierry BLIND
  */
 class Router implements IRouter
 {

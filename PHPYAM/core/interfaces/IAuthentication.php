@@ -9,7 +9,7 @@ namespace PHPYAM\core\interfaces;
  * <li>user habilitations
  * <ul>
  *
- * @package PHPYAM.core
+ * @package PHPYAM\core\interfaces
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014

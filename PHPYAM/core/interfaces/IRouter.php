@@ -4,7 +4,7 @@ namespace PHPYAM\core\interfaces;
 /**
  * Interface defining the methods required by the router to handle web requests.
  *
- * @package PHPYAM.core
+ * @package PHPYAM\core\interfaces
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014

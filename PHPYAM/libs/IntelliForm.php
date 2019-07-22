@@ -8,7 +8,7 @@ namespace PHPYAM\libs;
  * @author Fabian Schmengler <fschmengler@sgh-it.eu>
  * @author Thierry Blind
  * @see http://www.phpclasses.org/discuss/package/3851/thread/1/
- * @package PHPYAM.libs
+ * @package PHPYAM\libs
  */
 class IntelliForm
 {

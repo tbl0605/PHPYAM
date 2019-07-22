@@ -4,11 +4,11 @@ namespace PHPYAM\libs;
 /**
  * Utility classes.
  *
- * @package PHPYAM.libs
+ * @package PHPYAM\libs
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2016 Thierry BLIND
+ * @copyright 2014-2019 Thierry BLIND
  */
 
 /**
@@ -73,7 +73,10 @@ class StringUtils
      * @see array_walk()
      * @see is_string()
      */
-    public final static function stringEncode(&$value, $key, $charsets = array('from' => 'ISO-8859-1', 'to' => 'UTF-8'))
+    public final static function stringEncode(&$value, $key, $charsets = array(
+        'from' => 'ISO-8859-1',
+        'to' => 'UTF-8'
+    ))
     {
         if (is_string($value)) {
             $value = mb_convert_encoding($value, $charsets['to'], $charsets['from']);

@@ -5,7 +5,7 @@ namespace PHPYAM\core;
  * This is the "base controller class".
  * All other "real" controllers extend this class.
  *
- * @package PHPYAM.core
+ * @package PHPYAM\core
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014

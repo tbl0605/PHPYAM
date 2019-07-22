@@ -4,11 +4,11 @@ namespace PHPYAM\libs;
 /**
  * Utility classes.
  *
- * @package PHPYAM.libs
+ * @package PHPYAM\libs
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2016 Thierry BLIND
+ * @copyright 2014-2019 Thierry BLIND
  */
 
 /**
