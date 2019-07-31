@@ -1,3 +1,2 @@
 - create some PHPUnit tests
 - provide a better README with some project documentation
-- change spelling of controller to controler
