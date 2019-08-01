@@ -1,4 +1,8 @@
 <?php
+namespace PHPYAM\demo\application\views\__templates;
+
+use PHPYAM\core\Core as Core;
+
 /**
  * GOOD PRACTICE FOR VIEWS:
  *
@@ -11,12 +15,15 @@
  * - contain client code for web browsers (html, css, javascript, etc...)
  * - be tested to display data without using any controller
  * A view MUST NOT:
- * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
-?>
+class Header
+{
+
+    public static function render(array $props)
+    {
+        ?>
 <!DOCTYPE html>
 <html lang="<?=CLIENT_LANGUAGE?>">
 <head>
@@ -46,7 +53,16 @@ use PHPYAM\core\Core as Core;
 	<!--<![endif]-->
 </head>
 <body>
-<?php if (isset($_pageTitle)) {?>
-	<h1><?=Core::html($_pageTitle)?></h1>
-<?php }?>
+<?php
 
+        if (isset($props['pageTitle'])) {
+            ?>
+	<h1><?=Core::html($props['pageTitle'])?></h1>
+<?php
+        }
+        ?>
+
+<?php
+    }
+}
+?>

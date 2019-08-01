@@ -1,4 +1,8 @@
 <?php
+namespace PHPYAM\demo\application\views\form2;
+
+use PHPYAM\core\Core as Core;
+
 /**
  * GOOD PRACTICE FOR VIEWS:
  *
@@ -11,16 +15,19 @@
  * - contain client code for web browsers (html, css, javascript, etc...)
  * - be tested to display data without using any controller
  * A view MUST NOT:
- * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
-?>
+class Confirm
+{
+
+    public static function render(array $props)
+    {
+        ?>
 <h2>Confirmation of data entry</h2>
 
 <form id="form-id" name="form-id" method="post"
-	action="<?=URL.'form2/create'?>">
+	action="<?=URL . 'form2/create'?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -32,12 +39,17 @@ use PHPYAM\core\Core as Core;
 			</tr>
 		</thead>
 		<tbody>
-<?php foreach ($_POST as $key => $value) { ?>
+<?php
+
+        foreach ($props['formValues'] as $key => $value) {
+            ?>
 			<tr>
 				<td><?=Core::html($key)?></td>
 				<td><?=Core::html($value)?></td>
 			</tr>
-<?php } ?>
+<?php
+        }
+        ?>
 		</tbody>
 	</table>
 
@@ -73,3 +85,7 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php
+    }
+}
+?>

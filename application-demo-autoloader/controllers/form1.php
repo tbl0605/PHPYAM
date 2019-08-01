@@ -5,6 +5,9 @@ use PHPYAM\core\Controller as Controller;
 use PHPYAM\libs\IntelliForm as IntelliForm;
 use PHPYAM\libs\Assert as Assert;
 use PHPYAM\demo\application\models\ModeleForm1;
+use PHPYAM\demo\application\views\__templates\Header;
+use PHPYAM\demo\application\views\form1\Index;
+use PHPYAM\demo\application\views\__templates\Footer;
 
 /**
  * Class Form1
@@ -12,10 +15,6 @@ use PHPYAM\demo\application\models\ModeleForm1;
  * Please note:
  * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
  * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
- * Also use "require" and not "require_once" to insert templates, or PHP
- * we will not be able to insert a second time templates used before
- * redirection (on error, for example).
  */
 class Form1 extends Controller
 {
@@ -74,11 +73,13 @@ class Form1 extends Controller
 
         //Core::htmlize($_logs);
 
-        // load views.
-        $_pageTitle = 'DEMO FORM 1';
-        require __DIR__ . '/../views/__templates/header.php';
-        require __DIR__ . '/../views/form1/index.php';
-        require __DIR__ . '/../views/__templates/footer.php';
+        Header::render([
+            'pageTitle' => 'DEMO FORM 1'
+        ]);
+        Index::render([
+            'logs' => $_logs
+        ]);
+        Footer::render([]);
     }
 
     public function create()

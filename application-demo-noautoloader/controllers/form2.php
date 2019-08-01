@@ -101,12 +101,9 @@ class Form2 extends Controller
 
     public function confirm()
     {
-        $formValues = array();
         Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
+        $formValues = $_POST;
         Assert::isTrue($this->checkFormValues($formValues), 'The form data is invalid.');
-
-        $_htmlFormValues = $formValues;
-        Core::htmlize($_htmlFormValues);
 
         // load views.
         $_pageTitle = 'CONFIRMATION OF DATA ENTRY';
@@ -117,8 +114,8 @@ class Form2 extends Controller
 
     public function create()
     {
-        $formValues = array();
         Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
+        $formValues = array();
         Assert::isTrue($this->checkFormValues($formValues) && $this->processForm($formValues), 'The form data has not been processed correctly.');
 
         // Back to homepage...

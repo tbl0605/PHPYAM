@@ -2,10 +2,13 @@
 namespace PHPYAM\demo\application\controllers;
 
 use PHPYAM\core\Controller as Controller;
-use PHPYAM\core\Core as Core;
 use PHPYAM\libs\IntelliForm as IntelliForm;
 use PHPYAM\libs\Assert as Assert;
 use PHPYAM\demo\application\models\ModeleForm2;
+use PHPYAM\demo\application\views\__templates\Header;
+use PHPYAM\demo\application\views\form2\Index;
+use PHPYAM\demo\application\views\__templates\Footer;
+use PHPYAM\demo\application\views\form2\Confirm;
 
 /**
  * Class Form2
@@ -13,10 +16,6 @@ use PHPYAM\demo\application\models\ModeleForm2;
  * Please note:
  * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
  * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
- * Also use "require" and not "require_once" to insert templates, or PHP
- * we will not be able to insert a second time templates used before
- * redirection (on error, for example).
  */
 class Form2 extends Controller
 {
@@ -89,11 +88,13 @@ class Form2 extends Controller
 
         //Core::htmlize($_logs);
 
-        // load views.
-        $_pageTitle = 'DEMO FORM 2';
-        require __DIR__ . '/../views/__templates/header.php';
-        require __DIR__ . '/../views/form2/index.php';
-        require __DIR__ . '/../views/__templates/footer.php';
+        Header::render([
+            'pageTitle' => 'DEMO FORM 2'
+        ]);
+        Index::render([
+            'logs' => $_logs
+        ]);
+        Footer::render([]);
     }
 
     public function ajaxValidate()
@@ -104,24 +105,23 @@ class Form2 extends Controller
 
     public function confirm()
     {
-        $formValues = array();
         Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
+        $formValues = $_POST;
         Assert::isTrue($this->checkFormValues($formValues), 'The form data is invalid.');
 
-        $_htmlFormValues = $formValues;
-        Core::htmlize($_htmlFormValues);
-
-        // load views.
-        $_pageTitle = 'CONFIRMATION OF DATA ENTRY';
-        require __DIR__ . '/../views/__templates/header.php';
-        require __DIR__ . '/../views/form2/confirm.php';
-        require __DIR__ . '/../views/__templates/footer.php';
+        Header::render([
+            'pageTitle' => 'CONFIRMATION OF DATA ENTRY'
+        ]);
+        Confirm::render([
+            'formValues' => $formValues
+        ]);
+        Footer::render([]);
     }
 
     public function create()
     {
-        $formValues = array();
         Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
+        $formValues = array();
         Assert::isTrue($this->checkFormValues($formValues) && $this->processForm($formValues), 'The form data has not been processed correctly.');
 
         // Back to homepage...
