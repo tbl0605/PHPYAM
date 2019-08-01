@@ -6,7 +6,6 @@ use PHPYAM\core\Core as Core;
 use PHPYAM\libs\IntelliForm as IntelliForm;
 use PHPYAM\libs\Assert as Assert;
 use PHPYAM\libs\RouterException as RouterException;
-use PHPYAM\libs\StringUtils as StringUtils;
 
 /**
  * Class used to translate the URL of a web request into a call to a class and a method
@@ -93,7 +92,11 @@ class Router implements IRouter
         // They will *always* send Ajax requests encoded with the UTF-8 charset.
         // We must therefore re-encode the received query data ($_POST, $_GET, ...) using the server&client charset:
         if (self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
-            array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], '\\PHPYAM\\libs\\StringUtils::stringEncode', array(
+            array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], function (&$paramValue, $paramKey, $paramEncodingFrom) {
+                if (is_string($paramValue)) {
+                    $paramValue = mb_convert_encoding($paramValue, $paramEncodingFrom['to'], $paramEncodingFrom['from']);
+                }
+            }, array(
                 'from' => 'UTF-8',
                 'to' => CLIENT_CHARSET
             ));
@@ -114,10 +117,10 @@ class Router implements IRouter
 
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
-        Assert::isFalse(headers_sent(), StringUtils::gettext('HTTP headers have already been sent.'));
+        Assert::isFalse(headers_sent(), Core::gettext('HTTP headers have already been sent.'));
 
         // We check that all non-critical resources have been successfully set (or loaded) once the security policy was set.
-        Assert::isTrue($locale !== false, StringUtils::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
+        Assert::isTrue($locale !== false, Core::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
 
         ob_start();
     }
@@ -304,7 +307,7 @@ class Router implements IRouter
         if ($resourceFile !== null) {
             $isReadable = is_readable($resourceFile);
             if ($throwException) {
-                Assert::isTrue($isReadable, StringUtils::gettext("The resource '%s' of type '%s' cannot be read as file '%s'."), $resourceName, $type, $resourceFile);
+                Assert::isTrue($isReadable, Core::gettext("The resource '%s' of type '%s' cannot be read as file '%s'."), $resourceName, $type, $resourceFile);
             }
             if ($isReadable) {
                 require_once $resourceFile;
@@ -314,7 +317,7 @@ class Router implements IRouter
         }
         $resourceClassName = $this->getClassName($type, $resourceName);
         if ($throwException) {
-            Assert::isFalse($resourceClassName === null || ! class_exists($resourceClassName), StringUtils::gettext("The resource '%s' of type '%s' cannot be found as class '%s'."), $resourceName, $type, $resourceClassName);
+            Assert::isFalse($resourceClassName === null || ! class_exists($resourceClassName), Core::gettext("The resource '%s' of type '%s' cannot be found as class '%s'."), $resourceName, $type, $resourceClassName);
         } else {
             if ($resourceClassName === null || ! class_exists($resourceClassName)) {
                 return null;
@@ -330,8 +333,8 @@ class Router implements IRouter
      */
     public final function call($urlController, $urlAction, array $urlParameters = array())
     {
-        Assert::isTrue(is_string($urlController), StringUtils::gettext('The parameter %s is not of type string.'), $urlController);
-        Assert::isTrue(is_string($urlAction), StringUtils::gettext('The parameter %s is not of type string.'), $urlAction);
+        Assert::isTrue(is_string($urlController), Core::gettext('The parameter %s is not of type string.'), $urlController);
+        Assert::isTrue(is_string($urlAction), Core::gettext('The parameter %s is not of type string.'), $urlAction);
 
         // If so, then load this file and create this controller.
         // Example: if controller would be "car", then this line would translate into: $controller = new car($this);
@@ -361,7 +364,7 @@ class Router implements IRouter
         }
 
         // Invalid URL.
-        throw new RouterException(StringUtils::gettext('URL is invalid.'));
+        throw new RouterException(Core::gettext('URL is invalid.'));
     }
 
     /**
@@ -380,7 +383,7 @@ class Router implements IRouter
 
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
-        Assert::isFalse(headers_sent(), StringUtils::gettext('HTTP headers have already been sent.'));
+        Assert::isFalse(headers_sent(), Core::gettext('HTTP headers have already been sent.'));
 
         header('location:' . Core::url($urlController, $urlAction, $urlParameters));
     }
@@ -407,7 +410,7 @@ class Router implements IRouter
             $this->initRouter();
 
             if (! $this->authentication->authenticate($this->urlController, $this->urlAction, $this->urlParameters)) {
-                throw new RouterException(StringUtils::gettext('You are not authorized to access this page.'));
+                throw new RouterException(Core::gettext('You are not authorized to access this page.'));
             }
 
             $this->call($this->urlController, $this->urlAction, $this->urlParameters);
@@ -422,7 +425,7 @@ class Router implements IRouter
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
             $this->endRouterOnError(array(
-                StringUtils::gettext('Internal error. Please restart the application.'),
+                Core::gettext('Internal error. Please restart the application.'),
                 $ex
             ));
             $this->cleanupOnFatalError();

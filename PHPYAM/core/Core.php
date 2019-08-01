@@ -142,70 +142,58 @@ final class Core
     }
 
     /**
-     * Protects a value (or a list of values), that should be integrated into an HTML page,
-     * with {@link \PHPYAM\libs\StringUtils::htmlize()}.
-     * Uses the charset <code>CLIENT_CHARSET</code> to try to encode $value.
+     * Returns a translated gettext message.
+     *
+     * @param string $message
+     *            message to translate (from the PHPYAM domain)
+     * @param string $decodingTo
+     *            Default value : CLIENT_CHARSET. Charset used to encode the translated gettext message.
+     * @return string translated message
+     */
+    public final static function gettext($message, $decodingTo = CLIENT_CHARSET)
+    {
+        return mb_convert_encoding(dgettext('PHPYAM', $message), $decodingTo, 'UTF-8');
+    }
+
+    /**
+     * Protects a value (or a list of values), that should be integrated into an HTML page.
+     * By default, uses the charset <code>CLIENT_CHARSET</code> to try to encode $value.
      * Note: if $value is a list of values, the keys stay unchanged (and therefore unprotected).
      * IMPORTANT: the value (or the list of values) $value will be converted as string(s).
+     * Warning: be aware that any input string containing an invalid code unit sequence within
+     * the given charset will be converted as an empty string.
      *
      * @param mixed|array|null $value
      *            value passed by reference (or list of values passed by reference), protected and then converted into string(s)
+     * @param string $encodingFrom
+     *            Default value : CLIENT_CHARSET. Charset encoding of $value.
      */
-    public final static function htmlize(&$value)
+    public final static function htmlize(&$value, $encodingFrom = CLIENT_CHARSET)
     {
         if (is_array($value)) {
-            array_walk_recursive($value, '\\PHPYAM\\libs\\StringUtils::htmlize', CLIENT_CHARSET);
+            array_walk_recursive($value, function (&$paramValue, $paramKey, $paramEncodingFrom) {
+                $paramValue = htmlentities((string) $paramValue, ENT_QUOTES, $paramEncodingFrom);
+            }, $encodingFrom);
         } else {
-            \PHPYAM\libs\StringUtils::htmlize($value, null, CLIENT_CHARSET);
+            $value = htmlentities((string) $value, ENT_QUOTES, $encodingFrom);
         }
     }
 
     /**
      * Escapes a string by converting the characters that have a special meaning in HTML 4.01.
-     * Uses the charset <code>CLIENT_CHARSET</code> to try to encode $value.
+     * By default, uses the charset <code>CLIENT_CHARSET</code> to try to encode $value.
      * IMPORTANT: The value will be converted into a string.
+     * Warning: be aware that any value containing an invalid code unit sequence within
+     * the given charset will be converted as an empty string.
      *
      * @param string|null $value
      *            value to be protected
+     * @param string $encodingFrom
+     *            Default value : CLIENT_CHARSET. Charset encoding of $value.
      * @return string protected value or empty string if the encoding failed
      */
-    public final static function html($value)
+    public final static function html($value, $encodingFrom = CLIENT_CHARSET)
     {
-        \PHPYAM\libs\StringUtils::htmlize($value, null, CLIENT_CHARSET);
-        return $value;
-    }
-
-    /**
-     * Protects a value (or a list of values), that should be integrated into an HTML page,
-     * with {@link \PHPYAM\libs\StringUtils::jsonEncode()}.
-     * Uses the charset {@link PHP_MANUAL#mb_internal_encoding()} to try to encode $value.
-     * Note: if $value is a list of values, the keys stay unchanged (and therefore unprotected).
-     * IMPORTANT: the value (or the list of values) $value will be converted as string(s).
-     *
-     * @param mixed|array|null $value
-     *            value passed by reference (or list of values passed by reference), protected and then converted into string(s)
-     */
-    public final static function jsonEncodify(&$value)
-    {
-        if (is_array($value)) {
-            array_walk_recursive($value, '\\PHPYAM\\libs\\StringUtils::jsonEncode', mb_internal_encoding());
-        } else {
-            \PHPYAM\libs\StringUtils::jsonEncode($value, null, mb_internal_encoding());
-        }
-    }
-
-    /**
-     * Escapes a string by converting the characters that have a special meaning in Javascript.
-     * Uses the charset {@link PHP_MANUAL#mb_internal_encoding()} to try to encode $value.
-     * IMPORTANT: The value will be converted into a string.
-     *
-     * @param string|null $value
-     *            value to be protected
-     * @return string protected value or empty string if the encoding failed
-     */
-    public final static function jsonEncode($value)
-    {
-        \PHPYAM\libs\StringUtils::jsonEncode($value, null, mb_internal_encoding());
-        return $value;
+        return htmlentities((string) $value, ENT_QUOTES, $encodingFrom);
     }
 }
