@@ -26,8 +26,7 @@ class Confirm
         ?>
 <h2>Confirmation of data entry</h2>
 
-<form id="form-id" name="form-id" method="post"
-	action="<?=URL . 'form2/create'?>">
+<form id="form-id" name="form-id" method="post" action="<?=$props['urlCreateAction']?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 

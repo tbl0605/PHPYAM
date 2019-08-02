@@ -19,8 +19,7 @@ use PHPYAM\core\Core as Core;
 ?>
 <h2>Form input</h2>
 
-<form id="form-id" name="form-id" method="post"
-	action="<?=URL.'form2/index'?>">
+<form id="form-id" name="form-id" method="post" action="<?=URL . 'form2/index'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -91,7 +90,7 @@ $(document).ready(function() {
 		// Send the data using post and put the results in a div
 		$.ajax({
 			// The link we are accessing
-			url: "<?=URL.'form2/ajaxValidate'?>",
+			url: "<?=URL . 'form2/ajaxValidate'?>",
 			// The type of request
 			type: "post",
 			// Get values from elements in the form

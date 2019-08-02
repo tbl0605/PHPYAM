@@ -26,8 +26,7 @@ class Index
         ?>
 <h2>Form input</h2>
 
-<form id="form-id" name="form-id" method="post"
-	action="<?=URL . 'form1/create'?>">
+<form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
