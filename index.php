@@ -34,7 +34,7 @@ class DemoRouter extends \PHPYAM\core\Router
      * then to be defined in the global namespace</b>.
      *
      * To control the class naming & loading feature of PHPYAM, extend the class \PHPYAM\core\Router and
-     * override its \PHPYAM\core\Router::getResourceFileName($type, $resourceName) and
+     * implement its \PHPYAM\core\Router::getResourceFileName($type, $resourceName) and
      * \PHPYAM\core\Router::getClassName($type, $resourceName) methods depending on your needs.
      *
      * @var bool try the autoloader demo version when true, the non-autoloader demo version otherwise
@@ -43,18 +43,22 @@ class DemoRouter extends \PHPYAM\core\Router
 
     public function getResourceFileName($type, $resourceName)
     {
-        if (! $this->useApplicationAutoLoader) {
-            return parent::getResourceFileName($type, $resourceName);
+        if ($this->useApplicationAutoLoader) {
+            // Resource will be autoloaded when necessary, so no need to load it manually
+            // and no need to know its location!
+            return null;
         }
-        return null;
+        // Return file location:
+        return __DIR__ . DIRECTORY_SEPARATOR . 'application-demo-noautoloader' . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
     }
 
     public function getClassName($type, $resourceName)
     {
-        if (! $this->useApplicationAutoLoader) {
-            return parent::getClassName($type, $resourceName);
+        if ($this->useApplicationAutoLoader) {
+            return '\\PHPYAM\\demo\\application\\' . $type . '\\' . strtolower($resourceName);
         }
-        return '\\PHPYAM\\demo\\application\\' . $type . '\\' . strtolower($resourceName);
+        // In this demo, all classes are in global scope:
+        return '\\' . $resourceName;
     }
 }
 

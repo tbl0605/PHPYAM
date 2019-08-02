@@ -58,7 +58,7 @@ abstract class Controller
     }
 
     /**
-     * Open the database connections with the credentials from {SYS_APP}/security/{SECURITY_POLICY}.php
+     * Open the database connections with the credentials from security resource {SECURITY_POLICY}
      * or from an autoloaded {SECURITY_POLICY} resource.
      */
     protected function openDatabaseConnections()
@@ -69,7 +69,7 @@ abstract class Controller
     }
 
     /**
-     * Close the database connections with the credentials from {SYS_APP}/security/{SECURITY_POLICY}.php
+     * Close the database connections with the credentials from security resource {SECURITY_POLICY}
      * or from an autoloaded {SECURITY_POLICY} resource.
      */
     protected function closeDatabaseConnections()
@@ -81,7 +81,7 @@ abstract class Controller
 
     /**
      * Load the model with the given name ($modelName) and the database connection(s) from $this->databaseConnections.
-     * $this->loadModel("SongModel") would include {SYS_APP}/models/songmodel.php and create the object in the controller, like this:
+     * $this->loadModel("SongModel") would include model resource {songmodel} and create the object in the controller, like this:
      * <code>$songsModel = $this->loadModel('SongsModel');</code>
      *
      * Note that $modelName is case-insensitive (e.g. SongModel) but the model's filename should be written

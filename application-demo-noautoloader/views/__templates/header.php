@@ -16,6 +16,7 @@
  *   because the calling controller is responsible for that!
  */
 use PHPYAM\core\Core as Core;
+use PHPYAM\demo\confs\AppConfig;
 ?>
 <!DOCTYPE html>
 <html lang="<?=CLIENT_LANGUAGE?>">
@@ -31,22 +32,28 @@ use PHPYAM\core\Core as Core;
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
+	<link rel="stylesheet" type="text/css" href="<?=AppConfig::URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
 
 	<!-- local -->
-	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/common.css" />
+	<link rel="stylesheet" type="text/css" href="<?=AppConfig::URL_PUB?>css/common.css" />
 
 	<!-- javaScript -->
 	<!-- jQuery -->
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.12.4/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=AppConfig::URL_PUB?>js/jquery/1.12.4/jquery<?=YAM_MIN?>.js"></script>
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.2.4/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=AppConfig::URL_PUB?>js/jquery/2.2.4/jquery<?=YAM_MIN?>.js"></script>
 	<!--<![endif]-->
 </head>
 <body>
-<?php if (isset($_pageTitle)) {?>
+<?php
+
+if (isset($_pageTitle)) {
+    ?>
 	<h1><?=Core::html($_pageTitle)?></h1>
-<?php }?>
+<?php
+
+}
+?>
 

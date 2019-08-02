@@ -2,6 +2,7 @@
 namespace PHPYAM\demo\application\views\__templates;
 
 use PHPYAM\core\Core as Core;
+use PHPYAM\demo\confs\AppConfig;
 
 /**
  * GOOD PRACTICE FOR VIEWS:
@@ -33,23 +34,23 @@ class Header
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-	<title><?=Core::html(TITLE)?></title>
-	<meta name="description" content="<?=Core::html(TITLE)?>">
+	<title><?=Core::html(AppConfig::TITLE)?></title>
+	<meta name="description" content="<?=Core::html(AppConfig::TITLE)?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
+	<link rel="stylesheet" type="text/css" href="<?=AppConfig::URL_PUB?>css/jquery-loading/1.2.0/jquery.loading<?=YAM_MIN?>.css" />
 
 	<!-- local -->
-	<link rel="stylesheet" type="text/css" href="<?=URL_PUB?>css/common.css" />
+	<link rel="stylesheet" type="text/css" href="<?=AppConfig::URL_PUB?>css/common.css" />
 
 	<!-- javaScript -->
 	<!-- jQuery -->
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/1.12.4/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=AppConfig::URL_PUB?>js/jquery/1.12.4/jquery<?=YAM_MIN?>.js"></script>
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
-	<script type="text/javascript" src="<?=URL_PUB?>js/jquery/2.2.4/jquery<?=YAM_MIN?>.js"></script>
+	<script type="text/javascript" src="<?=AppConfig::URL_PUB?>js/jquery/2.2.4/jquery<?=YAM_MIN?>.js"></script>
 	<!--<![endif]-->
 </head>
 <body>

@@ -49,35 +49,6 @@ if (USE_LOG4PHP) {
 define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
 
 /**
- * URL to this application "public" directory.<br />
- * Note: the value of URL_PUB will always be ended by a "/".
- * Warning: be careful to update your htaccess file accordingly
- * (when using them) if you change the location of the "public" directory.
- *
- * @var string
- */
-define('URL_PUB', URL . 'public-demo/');
-
-/**
- * Full path of this application "public" directory.<br />
- * Note: the value of SYS_PUB will always be ended by a "/".
- *
- * @var string
- */
-define('SYS_PUB', __DIR__ . '/../public-demo/');
-
-/**
- * Full path of the "application" directory.
- * Necessary to the router to determinate the base directory for a resource
- * that has to be loaded by {@link \PHPYAM\core\interfaces\IRouter::loadResource($type,$resourceName,$throwException)}.<br />
- * Note: the value of SYS_APP will always be ended by a "/" and is only used
- * by method {@link \PHPYAM\core\interfaces\IRouter::getResourceFileName($type,$resourceName)}.
- *
- * @var string
- */
-define('SYS_APP', __DIR__ . '/../application-demo-noautoloader/');
-
-/**
  * Defines how PHPYAM should store the parameters extracted
  * from an URL.
  * Example of URL to decode:
@@ -126,7 +97,6 @@ define('DROP_SESSION_ON_FATAL_ERROR', true);
 
 /**
  * Name of the class used for user authentication.
- * This class must be located in the directory "{SYS_APP}/security".
  *
  * @var string
  */
@@ -190,13 +160,6 @@ define('CLIENT_CHARSET', 'ISO-8859-1');
 define('CLIENT_LANGUAGE', 'en_GB');
 
 /**
- * Title of all web pages (if used).
- *
- * @var string
- */
-define('TITLE', 'DEMO application MVC');
-
-/**
  * Configuration for: database.
  * This is the place where you define your database credentials, database type, etc...
  * Better put all those in a class with static members and properties...
@@ -207,6 +170,31 @@ define('TITLE', 'DEMO application MVC');
  */
 class AppConfig
 {
+
+    /**
+     * URL to this application "public" directory.<br />
+     * Note: the value of URL_PUB will always be ended by a "/".
+     * Warning: be careful to update your htaccess file accordingly
+     * (when using them) if you change the location of the "public" directory.
+     *
+     * @var string
+     */
+    const URL_PUB = URL . 'public-demo/';
+
+    /**
+     * Full path of this application "public" directory.<br />
+     * Note: the value of SYS_PUB will always be ended by a "/".
+     *
+     * @var string
+     */
+    const SYS_PUB = __DIR__ . '/../public-demo/';
+
+    /**
+     * Title of all web pages (if used).
+     *
+     * @var string
+     */
+    const TITLE = 'DEMO application MVC';
 
     public static $locations = array(
         'east' => array(

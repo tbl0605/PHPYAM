@@ -35,7 +35,7 @@ use PHPYAM\libs\RouterException as RouterException;
  * @since 01/01/2014
  * @copyright 2014-2019 Thierry BLIND
  */
-class Router implements IRouter
+abstract class Router implements IRouter
 {
 
     /**
@@ -278,29 +278,9 @@ class Router implements IRouter
     /**
      * (non-PHPdoc)
      *
-     * @see \PHPYAM\core\interfaces\IRouter::getResourceFileName()
-     */
-    public function getResourceFileName($type, $resourceName)
-    {
-        return SYS_APP . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
-    }
-
-    /**
-     * (non-PHPdoc)
-     *
-     * @see \PHPYAM\core\interfaces\IRouter::getClassName()
-     */
-    public function getClassName($type, $resourceName)
-    {
-        return $resourceName;
-    }
-
-    /**
-     * (non-PHPdoc)
-     *
      * @see \PHPYAM\core\interfaces\IRouter::loadResource()
      */
-    public function loadResource($type, $resourceName, $throwException)
+    public final function loadResource($type, $resourceName, $throwException)
     {
         $resourceFile = $this->getResourceFileName($type, $resourceName);
         // Resource file is optional.
