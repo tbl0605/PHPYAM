@@ -21,7 +21,11 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPYAM\\": "PHPYAM/",
+            "PHPYAM\\": "PHPYAM/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "PHPYAM\\demo\\application\\": "application-demo-autoloader/"
         }
     }
