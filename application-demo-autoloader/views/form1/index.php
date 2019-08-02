@@ -1,4 +1,8 @@
 <?php
+namespace PHPYAM\demo\application\views\form1;
+
+use PHPYAM\core\Core as Core;
+
 /**
  * GOOD PRACTICE FOR VIEWS:
  *
@@ -11,16 +15,18 @@
  * - contain client code for web browsers (html, css, javascript, etc...)
  * - be tested to display data without using any controller
  * A view MUST NOT:
- * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
-?>
+class Index
+{
+
+    public static function render(array $props)
+    {
+        ?>
 <h2>Form input</h2>
 
-<form id="form-id" name="form-id" method="post"
-	action="<?=URL.'form1/create'?>">
+<form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
 	<fieldset style="margin-bottom: 6px;">
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -48,8 +54,8 @@ use PHPYAM\core\Core as Core;
 	<input type="submit" name="submit-button" id="submit-button-id"
 		value="Validate and submit">
 
-	<div style="display: <?=$_logs !== '' ? 'block' : 'none'?>;">
-		<div id="feedback-panel-id"><?=$_logs?></div>
+	<div style="display: <?=$props['logs'] !== '' ? 'block' : 'none'?>;">
+		<div id="feedback-panel-id"><?=$props['logs']?></div>
 	</div>
 </form>
 
@@ -82,3 +88,7 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php
+    }
+}
+?>

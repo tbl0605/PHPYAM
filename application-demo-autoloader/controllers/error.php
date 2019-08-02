@@ -2,6 +2,9 @@
 namespace PHPYAM\demo\application\controllers;
 
 use PHPYAM\core\Controller as Controller;
+use PHPYAM\demo\application\views\__templates\Header;
+use PHPYAM\demo\application\views\__templates\Footer;
+use PHPYAM\demo\application\views\__templates\Error as ErrorView;
 
 /**
  * Class Error
@@ -9,10 +12,6 @@ use PHPYAM\core\Controller as Controller;
  * Please note:
  * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
  * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
- * Also use "require" and not "require_once" to insert templates, or PHP
- * we will not be able to insert a second time templates used before
- * redirection (on error, for example).
  */
 class Error extends Controller
 {
@@ -31,11 +30,13 @@ class Error extends Controller
      */
     public function index($_listOfErrors = array())
     {
-        $_pageTitle = 'ERROR';
-        // load views.
-        require __DIR__ . '/../views/__templates/header.php';
-        require __DIR__ . '/../views/__templates/error.php';
-        require __DIR__ . '/../views/__templates/footer.php';
+        Header::render([
+            'pageTitle' => 'ERROR'
+        ]);
+        ErrorView::render([
+            'listOfErrors' => $_listOfErrors
+        ]);
+        Footer::render([]);
     }
 
     /**
@@ -44,7 +45,8 @@ class Error extends Controller
      */
     public function indexAjax($_listOfErrors = array())
     {
-        // load view.
-        require __DIR__ . '/../views/__templates/error.php';
+        ErrorView::render([
+            'listOfErrors' => $_listOfErrors
+        ]);
     }
 }

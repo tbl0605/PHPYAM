@@ -5,6 +5,9 @@ use PHPYAM\core\Controller as Controller;
 use PHPYAM\libs\IntelliForm as IntelliForm;
 use PHPYAM\libs\Assert as Assert;
 use PHPYAM\demo\application\models\ModeleForm1;
+use PHPYAM\demo\application\views\__templates\Header;
+use PHPYAM\demo\application\views\form1\Index;
+use PHPYAM\demo\application\views\__templates\Footer;
 
 /**
  * Class Form1
@@ -12,10 +15,6 @@ use PHPYAM\demo\application\models\ModeleForm1;
  * Please note:
  * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
  * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
- * Also use "require" and not "require_once" to insert templates, or PHP
- * we will not be able to insert a second time templates used before
- * redirection (on error, for example).
  */
 class Form1 extends Controller
 {
@@ -35,16 +34,8 @@ class Form1 extends Controller
         $this->myModel = $this->loadModel('ModeleForm1');
     }
 
-    private function checkFormValues()
+    private function checkFormValues(array $formValues)
     {
-        return true;
-    }
-
-    private function processForm()
-    {
-        /*
-         * DEVELOPERS CAN PROCESS THE FORM HERE...
-         */
         return true;
     }
 
@@ -59,7 +50,8 @@ class Form1 extends Controller
         $goToCreate = false;
 
         if (IntelliForm::submitted(false)) {
-            if ($this->checkFormValues()) {
+            $formValues = $_POST;
+            if ($this->checkFormValues($formValues)) {
                 $goToCreate = true;
             }
         }
@@ -68,23 +60,34 @@ class Form1 extends Controller
         ob_end_clean();
 
         if ($goToCreate) {
-            $this->getRouter()->call('form1', 'create');
+            // Remove hidden IntelliForm key from our available form values
+            unset($formValues[IntelliForm::ANTZ_KEY]);
+            // Same as: $this->create($formValues);
+            $this->getRouter()->call('form1', 'create', $formValues);
             return;
         }
 
         //Core::htmlize($_logs);
 
-        // load views.
-        $_pageTitle = 'DEMO FORM 1';
-        require __DIR__ . '/../views/__templates/header.php';
-        require __DIR__ . '/../views/form1/index.php';
-        require __DIR__ . '/../views/__templates/footer.php';
+        Header::render([
+            'pageTitle' => 'DEMO FORM 1'
+        ]);
+        Index::render([
+            'logs' => $_logs
+        ]);
+        Footer::render([]);
     }
 
-    public function create()
+    public function create($formValues)
     {
-        Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted.');
-        Assert::isTrue($this->checkFormValues() && $this->processForm(), 'The form data has not been processed correctly.');
+        Assert::isTrue(IntelliForm::submitted(true), 'The form was not submitted. Page was probably reloaded.');
+        // NB: the router analyzed the request URL and stored all GET values in $formValues.
+        // At this point, we have only one POST value, i.e. $_POST[IntelliForm::ANTZ_KEY]
+        Assert::isTrue($this->checkFormValues($formValues), 'The form data is invalid.');
+
+        /*
+         * DEVELOPERS CAN PROCESS THE FORM VALUES HERE...
+         */
 
         // Back to homepage...
         $this->getRouter()->forward(DEFAULT_CONTROLLER, DEFAULT_ACTION);
