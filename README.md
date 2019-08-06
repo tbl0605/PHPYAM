@@ -1,4 +1,7 @@
+# PHPYAM
+
 Really simple, yet easily extendable, MVC framework for PHP developers.
+
 Based on Mini, rewritten to add following features:
 - URL forwarding support
 - ajax requests support
@@ -9,7 +12,15 @@ Based on Mini, rewritten to add following features:
 - session support
 - output buffering support
 - user authentication support
-- internationalization of the PHPYam error messages
+- internationalization of the PHPYAM error messages
 
 PHPYam doesn't do yet:
 - form validation
+
+## Installation
+
+It's recommended that you use [Composer](https://getcomposer.org/) to install PHPYAM.
+
+```bash
+composer require tbl0605/phpyam:1.*
+```
