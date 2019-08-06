@@ -1,4 +1,7 @@
+# Slim Framework
+
 Really simple, yet easily extendable, MVC framework for PHP developers.
+
 Based on Mini, rewritten to add following features:
 - URL forwarding support
 - ajax requests support
@@ -13,3 +16,11 @@ Based on Mini, rewritten to add following features:
 
 PHPYam doesn't do yet:
 - form validation
+
+## Installation
+
+It's recommended that you use Composer to install PHPYAM.
+
+```bash
+composer require tbl0605/phpyam:1.*
+```
