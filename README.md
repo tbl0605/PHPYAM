@@ -1,4 +1,4 @@
-# Slim Framework
+# PHPYAM
 
 Really simple, yet easily extendable, MVC framework for PHP developers.
 
