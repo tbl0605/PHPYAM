@@ -16,7 +16,7 @@ use PHPYAM\demo\confs\AppConfig;
  * - be tested to display data without using any controller
  * A view MUST NOT:
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
- * because the calling controller is responsible for that!
+ *   because the calling controller is responsible for that!
  */
 class Footer
 {
