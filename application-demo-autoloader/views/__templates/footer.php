@@ -34,8 +34,7 @@ class Footer
 <!-- <script type="text/javascript" charset="UTF-8"
 	src="<?=AppConfig::URL_PUB?>js/jquery-validation/1.15.1/localization/messages_fr.js"></script> -->
 </body>
-</html>
-<?php
+</html><?php
     }
 }
 ?>
