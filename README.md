@@ -22,5 +22,5 @@ PHPYam doesn't do yet:
 It's recommended that you use [Composer](https://getcomposer.org/) to install PHPYAM.
 
 ```bash
-composer require tbl0605/phpyam:~1.*
+composer require tbl0605/phpyam:~1.0
 ```
