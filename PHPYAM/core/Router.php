@@ -63,6 +63,13 @@ abstract class Router implements IRouter
     private $authentication = null;
 
     /**
+     * Define additional headers that will be sent to the client.
+     */
+    protected function initAdditionalHeaders()
+    {
+    }
+
+    /**
      * \PHPYAM\core\Router initialization
      */
     private function initRouter()
@@ -87,11 +94,13 @@ abstract class Router implements IRouter
         // Useful for Ajax requests (JQuery).
         header('Content-Type: text/html; charset=' . CLIENT_CHARSET);
 
+        $this->initAdditionalHeaders();
+
         // The Ajax directive 'contentType: "application/x-www-form-urlencoded;charset=" . CLIENT_CHARSET'
         // is ignored by mostly every web browser (and should therefore not be used).
         // They will *always* send Ajax requests encoded with the UTF-8 charset.
         // We must therefore re-encode the received query data ($_POST, $_GET, ...) using the server&client charset:
-        if (self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
+        if (CLIENT_CHARSET !== 'UTF-8' && self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
             array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], function (&$paramValue, $paramKey, $paramEncodingFrom) {
                 if (is_string($paramValue)) {
                     $paramValue = mb_convert_encoding($paramValue, $paramEncodingFrom['to'], $paramEncodingFrom['from']);
@@ -169,8 +178,11 @@ abstract class Router implements IRouter
                 // page itself contains errors!
                 if (USE_LOG4PHP) {
                     \Logger::getLogger(__CLASS__)->error($ex);
+                    if ($ex instanceof RouterException) {
+                        // Keep track of the original error and print some useful informations.
+                        \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
+                    }
                 }
-                echo $ex;
             }
             return;
         }
@@ -187,8 +199,11 @@ abstract class Router implements IRouter
             // page itself contains errors!
             if (USE_LOG4PHP) {
                 \Logger::getLogger(__CLASS__)->error($ex);
+                if ($ex instanceof RouterException) {
+                    // Keep track of the original error and print some useful informations.
+                    \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
+                }
             }
-            echo $ex;
         }
     }
 
