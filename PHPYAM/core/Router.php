@@ -100,7 +100,7 @@ abstract class Router implements IRouter
         // is ignored by mostly every web browser (and should therefore not be used).
         // They will *always* send Ajax requests encoded with the UTF-8 charset.
         // We must therefore re-encode the received query data ($_POST, $_GET, ...) using the server&client charset:
-        if (self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
+        if (CLIENT_CHARSET !== 'UTF-8' && self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
             array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], function (&$paramValue, $paramKey, $paramEncodingFrom) {
                 if (is_string($paramValue)) {
                     $paramValue = mb_convert_encoding($paramValue, $paramEncodingFrom['to'], $paramEncodingFrom['from']);
