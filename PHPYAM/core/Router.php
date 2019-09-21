@@ -63,6 +63,13 @@ abstract class Router implements IRouter
     private $authentication = null;
 
     /**
+     * Define additional headers that will be sent to the client.
+     */
+    protected function initAdditionalHeaders()
+    {
+    }
+
+    /**
      * \PHPYAM\core\Router initialization
      */
     private function initRouter()
@@ -86,6 +93,8 @@ abstract class Router implements IRouter
 
         // Useful for Ajax requests (JQuery).
         header('Content-Type: text/html; charset=' . CLIENT_CHARSET);
+
+        $this->initAdditionalHeaders();
 
         // The Ajax directive 'contentType: "application/x-www-form-urlencoded;charset=" . CLIENT_CHARSET'
         // is ignored by mostly every web browser (and should therefore not be used).
@@ -169,8 +178,11 @@ abstract class Router implements IRouter
                 // page itself contains errors!
                 if (USE_LOG4PHP) {
                     \Logger::getLogger(__CLASS__)->error($ex);
+                    if ($ex instanceof RouterException) {
+                        // Keep track of the original error and print some useful informations.
+                        \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
+                    }
                 }
-                echo $ex;
             }
             return;
         }
@@ -187,8 +199,11 @@ abstract class Router implements IRouter
             // page itself contains errors!
             if (USE_LOG4PHP) {
                 \Logger::getLogger(__CLASS__)->error($ex);
+                if ($ex instanceof RouterException) {
+                    // Keep track of the original error and print some useful informations.
+                    \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
+                }
             }
-            echo $ex;
         }
     }
 
