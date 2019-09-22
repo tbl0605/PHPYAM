@@ -158,12 +158,12 @@ abstract class Router implements IRouter
      */
     private function endRouterOnError(array $msgs)
     {
+        // http_response_code() is called before ob_end_clean()
+        // to ensure that the code 500 will always be sent to the client
+        // (even if ob_end_clean() subsequently fails).
+        http_response_code(500);
+
         if ($this->isAjaxCall()) {
-            // Will call the client-side method $.ajax({error:function(){...}}).
-            // http_response_code() is called before ob_end_clean()
-            // to ensure that the code 500 will always be sent to the client
-            // (even if ob_end_clean() subsequently fails).
-            http_response_code(500);
             // We empty all buffers.
             while (ob_get_level() > 0) {
                 ob_end_clean();
