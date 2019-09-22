@@ -170,36 +170,18 @@ abstract class Router implements IRouter
         // (even if ob_end_clean() subsequently fails).
         http_response_code(500);
 
-        if ($this->isAjaxCall()) {
-            // We empty all buffers.
-            while (ob_get_level() > 0) {
-                ob_end_clean();
-            }
-            // We send a HTML error message that can be retrieved client-side
-            // by the Ajax error manager.
-            try {
-                $this->call(ERROR_CONTROLLER, ERROR_AJAX_ACTION, $msgs);
-            } catch (\Exception $ex) {
-                // Do not send this exception, simply print it.
-                // We're on the error page, there's not much to do when the error
-                // page itself contains errors!
-                if (USE_LOG4PHP) {
-                    \Logger::getLogger(__CLASS__)->error($ex);
-                    if ($ex instanceof RouterException) {
-                        // Keep track of the original error and print some useful informations.
-                        \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
-                    }
-                }
-            }
-            return;
-        }
-
         // We empty all buffers.
         while (ob_get_level() > 0) {
             ob_end_clean();
         }
         try {
-            $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
+            if ($this->isAjaxCall()) {
+                // We send a HTML error message that can be retrieved client-side
+                // by the Ajax error manager.
+                $this->call(ERROR_CONTROLLER, ERROR_AJAX_ACTION, $msgs);
+            } else {
+                $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
+            }
         } catch (\Exception $ex) {
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
