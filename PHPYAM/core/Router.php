@@ -99,13 +99,20 @@ abstract class Router implements IRouter
         // The Ajax directive 'contentType: "application/x-www-form-urlencoded;charset=" . CLIENT_CHARSET'
         // is ignored by mostly every web browser (and should therefore not be used).
         // They will *always* send Ajax requests encoded with the UTF-8 charset.
-        // We must therefore re-encode the received query data ($_POST, $_GET, ...) using the server&client charset:
-        if (CLIENT_CHARSET !== 'UTF-8' && self::isAjaxCall() && is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
-            array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], function (&$paramValue, $paramKey, $paramEncodingFrom) {
+        // We must therefore re-encode the received query data ($_REQUEST, $_POST, $_GET, ...) using the server&client charset:
+        if (CLIENT_CHARSET !== 'UTF-8' && self::isAjaxCall()) {
+            $conversionFunction = function (&$paramValue, $paramKey, $paramEncodingFrom) {
                 if (is_string($paramValue)) {
                     $paramValue = mb_convert_encoding($paramValue, $paramEncodingFrom['to'], $paramEncodingFrom['from']);
                 }
-            }, array(
+            };
+            if (is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
+                array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], $conversionFunction, array(
+                    'from' => 'UTF-8',
+                    'to' => CLIENT_CHARSET
+                ));
+            }
+            array_walk_recursive($_REQUEST, $conversionFunction, array(
                 'from' => 'UTF-8',
                 'to' => CLIENT_CHARSET
             ));
