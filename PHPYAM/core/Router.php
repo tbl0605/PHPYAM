@@ -111,7 +111,7 @@ abstract class Router implements IRouter
                     'from' => 'UTF-8',
                     'to' => CLIENT_CHARSET
                 ));
-                $_REQUEST = array_merge($_REQUEST, $GLOBALS['_' . $_SERVER['REQUEST_METHOD']]);
+                $_REQUEST = array_replace($_REQUEST, $GLOBALS['_' . $_SERVER['REQUEST_METHOD']]);
             }
         }
 
