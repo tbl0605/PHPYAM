@@ -158,7 +158,7 @@ class IntelliForm
         } elseif (isset($_SESSION['antz_post'])) {
             $_POST = $_SESSION['antz_post'];
             $_FILES = $_SESSION['antz_files'];
-            $_REQUEST = array_merge($_REQUEST, $_POST);
+            $_REQUEST = array_replace($_REQUEST, $_POST);
             unset($_SESSION['antz_post']);
         }
     }
