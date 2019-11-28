@@ -160,6 +160,15 @@ class IntelliForm
             $_FILES = $_SESSION['antz_files'];
             $_REQUEST = array_replace($_REQUEST, $_POST);
             unset($_SESSION['antz_post']);
+
+            if (defined('ANTZ_DEBUG') && ANTZ_DEBUG) {
+                if (! isset($_SESSION['antz_debug'])) {
+                    $_SESSION['antz_debug'] = array(
+                        'post_count' => 0
+                    );
+                }
+                $_SESSION['antz_debug']['post_count'] ++;
+            }
         }
     }
 
@@ -171,6 +180,8 @@ class IntelliForm
      * @param string $id
      *            namespace
      * @return bool $isSubmitted
+     * @throws \Exception on usage mistake, but only when
+     *         constant ANTZ_DEBUG is defined and set to true
      */
     public static function submitted($del = true, $id = 'default')
     {
@@ -179,6 +190,22 @@ class IntelliForm
         }
 
         $seed = $_POST[self::ANTZ_KEY];
+
+        if (defined('ANTZ_DEBUG') && ANTZ_DEBUG) {
+            $msg = null;
+            if (! isset($_SESSION['antz_debug']['post_count'])) {
+                $msg = '\\IntelliForm::antiRepost() must be called before calling the \\IntelliForm::submitted() method.';
+            } elseif ($_SESSION['antz_debug']['post_count'] === 1 && ! isset($_SESSION[self::ANTZ_KEY])) {
+                $msg = "IntelliForm: the seed '{$seed}' was found but the user session related to this seed has been destroyed meanwhile. You must create a new seed before calling the \\IntelliForm::submitted() method.";
+            }
+            if ($msg !== null) {
+                if (defined('USE_LOG4PHP') && USE_LOG4PHP) {
+                    \Logger::getLogger(__CLASS__)->error($msg);
+                }
+                $exceptionCode = defined('ANTZ_DEBUG_EXCEPTION_CODE') ? (int) ANTZ_DEBUG_EXCEPTION_CODE : 0;
+                throw new \Exception($msg, $exceptionCode);
+            }
+        }
 
         if (! isset($_SESSION[self::ANTZ_KEY]) || ! is_array($_SESSION[self::ANTZ_KEY])) {
             $_SESSION[self::ANTZ_KEY] = array();
