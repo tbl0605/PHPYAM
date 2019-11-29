@@ -44,7 +44,7 @@ interface IAuthentication
     public function newDatabaseConnections();
 
     /**
-     * Returns a resource, a list of resources or an object created by {@link \PHPYAM\core\interfaces\IAuthentication::newDatabaseConnections()}.
+     * Closes a resource, a list of resources or an object created by {@link \PHPYAM\core\interfaces\IAuthentication::newDatabaseConnections()}.
      *
      * @param mixed $db
      *            a resource, a list of resources or an object created by \PHPYAM\core\interfaces\IAuthentication::newDatabaseConnections()

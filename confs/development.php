@@ -160,6 +160,14 @@ define('CLIENT_CHARSET', 'ISO-8859-1');
 define('CLIENT_LANGUAGE', 'en_GB');
 
 /**
+ * Enable IntelliForm debug options.
+ * When enabled, IntelliForm will throw exceptions on IntelliForm usage problems.
+ *
+ * @var boolean
+ */
+define('ANTZ_DEBUG', true);
+
+/**
  * Configuration for: database.
  * This is the place where you define your database credentials, database type, etc...
  * Better put all those in a class with static members and properties...
