@@ -36,7 +36,7 @@ final class Core
      * <ul>
      * <li>before encoding a parameter, trailing blanks are automatically deleted
      * <li>before encoding, an empty parameter is replaced by a (single) space character
-     * <li>after encoding a parameter, the character strings "_", "+" and "%" are respectively transformed into "_5F", "_20" and "_"
+     * <li>after encoding a parameter, the character strings "-", "+" and "%" are respectively transformed into "-2D", "-20" and "-"
      * </ul>
      *
      * @param string|null $param
@@ -56,13 +56,13 @@ final class Core
         // Because str_replace() replaces left to right, it might replace a previously
         // inserted value when doing multiple replacements.
         return str_replace(array(
-            '_',
+            '-',
             '+',
             '%'
         ), array(
-            '%5F',
+            '%2D',
             '%20',
-            '_'
+            '-'
         ), urlencode($str));
     }
 
@@ -71,7 +71,7 @@ final class Core
      * This method uses the PHP function {@link PHP_MANUAL#urldecode}, but also performs the following actions to work around
      * the limitations imposed by Apache and URL-rewriting:
      * <ul>
-     * <li>before decoding the parameter, strings "_5F" and "_" are respectively converted into "%5F" and "%"
+     * <li>before decoding the parameter, strings "-2D" and "-" are respectively converted into "%2D" and "%"
      * <li>after decoding the parameter, trailing blanks are removed
      * </ul>
      *
@@ -88,10 +88,10 @@ final class Core
         // Because str_replace() replaces left to right, it might replace a previously
         // inserted value when doing multiple replacements.
         return rtrim(urldecode(str_replace(array(
-            '_5F',
-            '_'
+            '-2D',
+            '-'
         ), array(
-            '%5F',
+            '%2D',
             '%'
         ), (string) $param)));
     }
