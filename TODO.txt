@@ -1,2 +1,4 @@
 - create some PHPUnit tests
 - provide a better README with some project documentation
+- prefix all constants by YAM_ or create a Config class to store
+  and retrieve all application settings

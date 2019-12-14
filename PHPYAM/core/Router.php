@@ -74,13 +74,17 @@ abstract class Router implements IRouter
      */
     private function initRouter()
     {
-        // We set a session name based on the "baseurl"
-        // to not mix the session data of different web applications
-        // on a same webserver domain.
-        session_name('SESS' . md5($_SERVER['HTTP_HOST'] . URL));
-        // Must be run asap by the router!
-        if (session_id() === '') {
-            session_start();
+        $createSession = ! defined('CREATE_SESSION') || CREATE_SESSION;
+
+        if ($createSession) {
+            // We set a session name based on the "baseurl"
+            // to not mix the session data of different web applications
+            // on a same webserver domain.
+            session_name('SESS' . md5($_SERVER['HTTP_HOST'] . URL));
+            // Must be run asap by the router!
+            if (session_id() === '') {
+                session_start();
+            }
         }
 
         // We set the language used for the PHPYAM messages.
@@ -115,12 +119,14 @@ abstract class Router implements IRouter
             }
         }
 
-        // Prevent accidental submitting by refresh or back-button.
-        // Use after session_start() and before any output to the browser (it uses header redirection).
-        IntelliForm::antiRepost($_SERVER['REQUEST_URI']);
+        if ($createSession) {
+            // Prevent accidental submitting by refresh or back-button.
+            // Use after session_start() and before any output to the browser (it uses header redirection).
+            IntelliForm::antiRepost($_SERVER['REQUEST_URI']);
 
-        // Clear expired form data.
-        IntelliForm::purge();
+            // Clear expired form data.
+            IntelliForm::purge();
+        }
 
         // Create array with URL parts in $url.
         $this->splitUrl();
@@ -183,7 +189,7 @@ abstract class Router implements IRouter
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
-            if (USE_LOG4PHP) {
+            if (constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
                 if ($ex instanceof RouterException) {
                     // Keep track of the original error and print some useful informations.
@@ -201,17 +207,21 @@ abstract class Router implements IRouter
      */
     private function cleanupOnFatalError()
     {
+        $dropOdbcConnectionsOnError = ! defined('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR') || DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR;
+        $createSession = ! defined('CREATE_SESSION') || CREATE_SESSION;
+        $dropSessionOnError = ! defined('DROP_SESSION_ON_FATAL_ERROR') || DROP_SESSION_ON_FATAL_ERROR;
+
         // Persistent connections created with odbc_connect() are never released,
         // even when they become unusable (after that a database was restarted, for example).
         // An exception would then be thrown at each database access attempt, preventing subsequent
         // browsing within this application until the web server is restarted!
         // To avoid this situation, we try to reset all ODBC connections after each "fatal" error.
-        if (DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR && @function_exists('odbc_close_all')) {
+        if ($dropOdbcConnectionsOnError && @function_exists('odbc_close_all')) {
             @odbc_close_all();
         }
 
         // Similarly, we destroy the session data, to avoid working on "corrupt" data.
-        if (DROP_SESSION_ON_FATAL_ERROR && @session_id() !== '') {
+        if ($createSession && $dropSessionOnError && @session_id() !== '') {
             if (@ini_get('session.use_cookies')) {
                 $params = @session_get_cookie_params();
                 if (is_array($params)) {
@@ -249,7 +259,7 @@ abstract class Router implements IRouter
             array_shift($url);
             $this->urlAction = isset($url[0]) && $url[0] !== '' ? $url[0] : DEFAULT_ACTION;
             array_shift($url);
-            if (URL_ASSOCIATIVE_PARAMS) {
+            if (! defined('URL_ASSOCIATIVE_PARAMS') || URL_ASSOCIATIVE_PARAMS) {
                 $params = array();
                 while (count($url)) {
                     $key = array_shift($url);
@@ -402,7 +412,7 @@ abstract class Router implements IRouter
                 $ex->getMessage()
             ));
         } catch (\Exception $ex) {
-            if (USE_LOG4PHP) {
+            if (constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
             $this->endRouterOnError(array(
