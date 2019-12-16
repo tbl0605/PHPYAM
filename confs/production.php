@@ -106,6 +106,7 @@ define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
  * Note: current PHP session will never be dropped when a \PHPYAM\core\RouterException was thrown.
  * Such \PHPYAM\core\RouterException should only be thrown by the developer in case of legitimate errors
  * (the router throws \PHPYAM\core\RouterExceptions to signal invalid URLs for example).
+ * Note: setting DROP_SESSION_ON_FATAL_ERROR to true will have no effect if CREATE_SESSION is set to false.
  *
  * <b>Creating this constant is optional</b>,
  * not creating it will be the same as defining DROP_SESSION_ON_FATAL_ERROR to true.
