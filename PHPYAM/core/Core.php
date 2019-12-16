@@ -109,9 +109,10 @@ final class Core
      */
     public final static function url($urlController, $urlAction, array $urlParameters = array())
     {
+        $useAssociativeParams = ! defined('URL_ASSOCIATIVE_PARAMS') || URL_ASSOCIATIVE_PARAMS;
         $params = '';
         foreach ($urlParameters as $key => $value) {
-            if (URL_ASSOCIATIVE_PARAMS) {
+            if ($useAssociativeParams) {
                 $params .= '/' . self::encodeUrlParameter($key) . '/' . self::encodeUrlParameter($value);
             } else {
                 $params .= '/' . self::encodeUrlParameter($value);

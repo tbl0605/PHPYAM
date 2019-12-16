@@ -25,7 +25,8 @@ ini_set('display_errors', 1);
  * <li>router fatal errors (in the \PHPYAM\core\Core class) will be outputted to an error page, but there will be no additional logging
  * </ul>
  *
- * By default, USE_LOG4PHP is set to true.
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining USE_LOG4PHP to false.
  *
  * @var boolean
  */
@@ -60,12 +61,29 @@ define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
  * With URL_ASSOCIATIVE_PARAMS = false, we will retrieve following parameters:
  * <code>array(0 => "param1", 1 => "param2", 2 => "param3", 3 => "param4", 4 => "param5")</code>
  *
- * By default, URL_ASSOCIATIVE_PARAMS is set to true.
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining URL_ASSOCIATIVE_PARAMS to true.
  *
  * @var boolean
  * @see \PHPYAM\core\Router::splitUrl()
  */
-define('URL_ASSOCIATIVE_PARAMS', true);
+//define('URL_ASSOCIATIVE_PARAMS', true);
+
+/**
+ * Should this router start (or resume) PHP sessions?
+ * Note: in most case, this constant should be set to true,
+ * except for (stateless) REST API applications.
+ * Disabling PHP sessions will also disable the Intelliform anti-repost feature,
+ * because this feature needs to store and retrieve data in $_SESSION to work correctly.
+ *
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining CREATE_SESSION to true.
+ *
+ * @var boolean
+ * @see \PHPYAM\core\Router::initRouter()
+ * @see \PHPYAM\core\Router::cleanupOnFatalError()
+ */
+//define('CREATE_SESSION', true);
 
 /**
  * Should we drop all ODBC connections when an exception occurred while
@@ -74,12 +92,13 @@ define('URL_ASSOCIATIVE_PARAMS', true);
  * Such \PHPYAM\core\RouterException should only be thrown by the developer in case of legitimate errors
  * (the router throws \PHPYAM\core\RouterExceptions to signal invalid URLs for example).
  *
- * By default, DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR is set to true.
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR to true.
  *
  * @var boolean
  * @see \PHPYAM\core\Router::cleanupOnFatalError()
  */
-define('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR', true);
+//define('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR', true);
 
 /**
  * Should we unset and destroy current PHP session when an exception occurred while
@@ -87,13 +106,15 @@ define('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR', true);
  * Note: current PHP session will never be dropped when a \PHPYAM\core\RouterException was thrown.
  * Such \PHPYAM\core\RouterException should only be thrown by the developer in case of legitimate errors
  * (the router throws \PHPYAM\core\RouterExceptions to signal invalid URLs for example).
+ * Note: setting DROP_SESSION_ON_FATAL_ERROR to true will have no effect if CREATE_SESSION is set to false.
  *
- * By default, DROP_SESSION_ON_FATAL_ERROR is set to true.
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining DROP_SESSION_ON_FATAL_ERROR to true.
  *
  * @var boolean
  * @see \PHPYAM\core\Router::cleanupOnFatalError()
  */
-define('DROP_SESSION_ON_FATAL_ERROR', true);
+//define('DROP_SESSION_ON_FATAL_ERROR', true);
 
 /**
  * Name of the class used for user authentication.
@@ -162,6 +183,9 @@ define('CLIENT_LANGUAGE', 'en_GB');
 /**
  * Enable IntelliForm debug options.
  * When enabled, IntelliForm will throw exceptions on IntelliForm usage problems.
+ *
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining ANTZ_DEBUG to false.
  *
  * @var boolean
  */

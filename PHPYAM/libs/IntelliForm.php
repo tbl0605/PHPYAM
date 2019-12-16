@@ -161,7 +161,7 @@ class IntelliForm
             $_REQUEST = array_replace($_REQUEST, $_POST);
             unset($_SESSION['antz_post']);
 
-            if (defined('ANTZ_DEBUG') && ANTZ_DEBUG) {
+            if (constant('ANTZ_DEBUG')) {
                 if (! isset($_SESSION['antz_debug'])) {
                     $_SESSION['antz_debug'] = array(
                         'post_count' => 0
@@ -191,7 +191,7 @@ class IntelliForm
 
         $seed = $_POST[self::ANTZ_KEY];
 
-        if (defined('ANTZ_DEBUG') && ANTZ_DEBUG) {
+        if (constant('ANTZ_DEBUG')) {
             $msg = null;
             if (! isset($_SESSION['antz_debug']['post_count'])) {
                 $msg = '\\IntelliForm::antiRepost() must be called before calling the \\IntelliForm::submitted() method.';
@@ -199,7 +199,7 @@ class IntelliForm
                 $msg = "IntelliForm: the seed '{$seed}' was found but the user session related to this seed has been destroyed meanwhile. You must create a new seed before calling the \\IntelliForm::submitted() method.";
             }
             if ($msg !== null) {
-                if (defined('USE_LOG4PHP') && USE_LOG4PHP) {
+                if (constant('USE_LOG4PHP')) {
                     \Logger::getLogger(__CLASS__)->error($msg);
                 }
                 $exceptionCode = defined('ANTZ_DEBUG_EXCEPTION_CODE') ? (int) ANTZ_DEBUG_EXCEPTION_CODE : 0;
