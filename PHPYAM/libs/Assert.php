@@ -1,8 +1,6 @@
 <?php
 namespace PHPYAM\libs;
 
-use PHPYAM\libs\AssertException as AssertException;
-
 /**
  * Utility classes.
  *
