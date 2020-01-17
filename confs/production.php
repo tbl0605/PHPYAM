@@ -101,7 +101,7 @@ define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
 //define('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR', true);
 
 /**
- * Should we unset and destroy current PHP session when an exception occurred while
+ * Should we unset and destroy current PHP session when a "Throwable" occurred while
  * using PHPYAM?
  * Note: current PHP session will never be dropped when a \PHPYAM\core\RouterException was thrown.
  * Such \PHPYAM\core\RouterException should only be thrown by the developer in case of legitimate errors
@@ -115,6 +115,21 @@ define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
  * @see \PHPYAM\core\Router::cleanupOnFatalError()
  */
 //define('DROP_SESSION_ON_FATAL_ERROR', true);
+
+/**
+ * Let PHPYAM try to handle (or not) "internal PHP errors" like it does with any other kind of "throwable fatal error".
+ * When this constant is undefined or set to false, the function defined by \set_exception_handler()
+ * will be used to handle "internal PHP errors", i.e. all errors inheriting from base class \Error.
+ * Note: defining a custom error handler through \set_exception_handler() in addition to PHPYAM's own handler is always
+ * a good idea, to be sure to catch "internal PHP errors" that could have escaped the vigilance of PHPYAM.
+ *
+ * <b>Creating this constant is optional</b>,
+ * not creating it will be the same as defining PHPYAM_CATCH_INTERNAL_PHP_ERRORS to false.
+ *
+ * @var boolean
+ * @see \set_exception_handler()
+ */
+//define('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
 
 /**
  * Name of the class used for user authentication.

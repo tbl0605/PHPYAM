@@ -1,11 +1,10 @@
 <?php
 namespace PHPYAM\core;
 
-use PHPYAM\core\interfaces\IRouter as IRouter;
-use PHPYAM\core\Core as Core;
-use PHPYAM\libs\IntelliForm as IntelliForm;
-use PHPYAM\libs\Assert as Assert;
-use PHPYAM\libs\RouterException as RouterException;
+use PHPYAM\core\interfaces\IRouter;
+use PHPYAM\libs\Assert;
+use PHPYAM\libs\IntelliForm;
+use PHPYAM\libs\RouterException;
 
 /**
  * Class used to translate the URL of a web request into a call to a class and a method
@@ -185,7 +184,10 @@ abstract class Router implements IRouter
             } else {
                 $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
             }
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
+            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
+                throw $ex;
+            }
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
@@ -411,7 +413,10 @@ abstract class Router implements IRouter
             $this->endRouterOnError(array(
                 $ex->getMessage()
             ));
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
+            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
+                throw $ex;
+            }
             if (constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
