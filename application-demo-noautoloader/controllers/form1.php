@@ -1,7 +1,7 @@
 <?php
-use PHPYAM\core\Controller as Controller;
-use PHPYAM\libs\IntelliForm as IntelliForm;
-use PHPYAM\libs\Assert as Assert;
+use PHPYAM\core\Controller;
+use PHPYAM\libs\Assert;
+use PHPYAM\libs\IntelliForm;
 
 /**
  * Class Form1

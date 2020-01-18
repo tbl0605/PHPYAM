@@ -1,7 +1,7 @@
 <?php
 namespace PHPYAM\demo\application\controllers;
 
-use PHPYAM\core\Controller as Controller;
+use PHPYAM\core\Controller;
 
 /**
  * Class Home

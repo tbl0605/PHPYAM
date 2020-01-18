@@ -15,7 +15,7 @@
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
+use PHPYAM\core\Core;
 use PHPYAM\demo\confs\AppConfig;
 ?>
 <!DOCTYPE html>
@@ -27,8 +27,8 @@ use PHPYAM\demo\confs\AppConfig;
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="-1" />
-	<title><?=Core::html(TITLE)?></title>
-	<meta name="description" content="<?=Core::html(TITLE)?>">
+	<title><?=Core::html(AppConfig::TITLE)?></title>
+	<meta name="description" content="<?=Core::html(AppConfig::TITLE)?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 	<!-- css -->
@@ -53,7 +53,6 @@ if (isset($_pageTitle)) {
     ?>
 	<h1><?=Core::html($_pageTitle)?></h1>
 <?php
-
 }
 ?>
 

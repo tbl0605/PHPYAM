@@ -1,15 +1,15 @@
 <?php
 namespace PHPYAM\demo\application\controllers;
 
-use PHPYAM\core\Controller as Controller;
-use PHPYAM\libs\IntelliForm as IntelliForm;
-use PHPYAM\libs\Assert as Assert;
-use PHPYAM\demo\application\models\ModeleForm2;
-use PHPYAM\demo\application\views\__templates\Header;
-use PHPYAM\demo\application\views\form2\Index;
-use PHPYAM\demo\application\views\__templates\Footer;
-use PHPYAM\demo\application\views\form2\Confirm;
+use PHPYAM\core\Controller;
 use PHPYAM\core\Core;
+use PHPYAM\demo\application\models\ModeleForm2;
+use PHPYAM\demo\application\views\__templates\Footer;
+use PHPYAM\demo\application\views\__templates\Header;
+use PHPYAM\demo\application\views\form2\Confirm;
+use PHPYAM\demo\application\views\form2\Index;
+use PHPYAM\libs\Assert;
+use PHPYAM\libs\IntelliForm;
 
 /**
  * Class Form2

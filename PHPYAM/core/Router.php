@@ -185,7 +185,7 @@ abstract class Router implements IRouter
                 $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
             }
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
+            if ($ex instanceof \Error && ! constant(PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
                 throw $ex;
             }
             // Do not send this exception, simply print it.
@@ -414,7 +414,7 @@ abstract class Router implements IRouter
                 $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
+            if ($ex instanceof \Error && ! constant(PHPYAM_CATCH_INTERNAL_PHP_ERRORS)) {
                 throw $ex;
             }
             if (constant('USE_LOG4PHP')) {

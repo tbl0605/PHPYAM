@@ -1,10 +1,10 @@
 <?php
 namespace PHPYAM\demo\application\controllers;
 
-use PHPYAM\core\Controller as Controller;
+use PHPYAM\core\Controller;
+use PHPYAM\demo\application\views\__templates\Footer;
 use PHPYAM\demo\application\views\__templates\Header;
 use PHPYAM\demo\application\views\choice\Index;
-use PHPYAM\demo\application\views\__templates\Footer;
 
 /**
  * Class Choice
