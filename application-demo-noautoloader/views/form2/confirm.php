@@ -15,7 +15,7 @@
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
+use PHPYAM\core\Core;
 ?>
 <h2>Confirmation of data entry</h2>
 

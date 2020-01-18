@@ -1,7 +1,7 @@
 <?php
 namespace PHPYAM\demo\application\views\form1;
 
-use PHPYAM\core\Core as Core;
+use PHPYAM\core\Core;
 
 /**
  * GOOD PRACTICE FOR VIEWS:

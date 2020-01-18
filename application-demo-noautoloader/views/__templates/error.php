@@ -15,20 +15,20 @@
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core as Core;
+use PHPYAM\core\Core;
 ?>
 <div>
 	<ul>
 		<?php
-		if (is_array($_listOfErrors)) {
-			foreach($_listOfErrors as $error) {
-				if ($error instanceof Exception) {
-					echo '<li><span>' . preg_replace('/\\r\\n?|\\n/', '<br />', Core::html($error)) . '</span></li>';
-				} else {
-					echo '<li><span>' . Core::html($error) . '</span></li>';
-				}
-			}
-		}
-		?>
+if (is_array($_listOfErrors)) {
+    foreach ($_listOfErrors as $error) {
+        if ($error instanceof Exception) {
+            echo '<li><span>' . preg_replace('/\\r\\n?|\\n/', '<br />', Core::html($error)) . '</span></li>';
+        } else {
+            echo '<li><span>' . Core::html($error) . '</span></li>';
+        }
+    }
+}
+?>
 	</ul>
 </div>

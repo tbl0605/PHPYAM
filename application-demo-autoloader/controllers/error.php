@@ -1,10 +1,10 @@
 <?php
 namespace PHPYAM\demo\application\controllers;
 
-use PHPYAM\core\Controller as Controller;
-use PHPYAM\demo\application\views\__templates\Header;
-use PHPYAM\demo\application\views\__templates\Footer;
+use PHPYAM\core\Controller;
 use PHPYAM\demo\application\views\__templates\Error as ErrorView;
+use PHPYAM\demo\application\views\__templates\Footer;
+use PHPYAM\demo\application\views\__templates\Header;
 
 /**
  * Class Error

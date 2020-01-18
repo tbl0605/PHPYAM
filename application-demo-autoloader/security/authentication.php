@@ -1,7 +1,7 @@
 <?php
 namespace PHPYAM\demo\application\security;
 
-use PHPYAM\core\interfaces\IAuthentication as IAuthentication;
+use PHPYAM\core\interfaces\IAuthentication;
 
 /**
  * Implementation of interface IAuthentication to manage:
