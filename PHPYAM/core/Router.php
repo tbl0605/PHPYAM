@@ -185,13 +185,13 @@ abstract class Router implements IRouter
                 $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
             }
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
+            if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
                 throw $ex;
             }
             // Do not send this exception, simply print it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
-            if (constant('USE_LOG4PHP')) {
+            if (@constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
                 if ($ex instanceof RouterException) {
                     // Keep track of the original error and print some useful informations.
@@ -414,10 +414,10 @@ abstract class Router implements IRouter
                 $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
+            if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
                 throw $ex;
             }
-            if (constant('USE_LOG4PHP')) {
+            if (@constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
             $this->endRouterOnError(array(
