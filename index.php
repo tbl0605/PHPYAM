@@ -23,7 +23,8 @@ class DemoRouter extends \PHPYAM\core\Router
 {
 
     /**
-     * In this demo, you can try 2 different ways to load the PHPYAM MVC framework and all aplication resources, like controller, model or security policy classes.<br>
+     * In this demo, you can try 2 different ways to load the PHPYAM MVC framework and all aplication resources,
+     * like controller, model or security policy classes.<br>
      * For this purpose, all aplication resources were duplicated in 2 different directories.<br>
      * You can either let the \PHPYAM\core\Router class load the user MVC classes
      * (inside the application-demo-noautoloader directory),
