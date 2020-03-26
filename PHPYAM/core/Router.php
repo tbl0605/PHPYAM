@@ -1,6 +1,7 @@
 <?php
 namespace PHPYAM\core;
 
+use PHPYAM\core\interfaces\IKeepRouterException;
 use PHPYAM\core\interfaces\IRouter;
 use PHPYAM\libs\Assert;
 use PHPYAM\libs\IntelliForm;
@@ -411,7 +412,7 @@ abstract class Router implements IRouter
             $this->endRouter();
         } catch (RouterException $ex) {
             $this->endRouterOnError(array(
-                $ex->getMessage()
+                $ex instanceof IKeepRouterException ? $ex : $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
             if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
