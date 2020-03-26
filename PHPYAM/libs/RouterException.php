@@ -15,13 +15,5 @@ namespace PHPYAM\libs;
  */
 class RouterException extends \Exception
 {
-
-    /*
-     * (non-PHPdoc) @see \Exception::__construct()
-     */
-    public function __construct($message = null, $code = null)
-    {
-        parent::__construct($message, $code);
-    }
 }
 ?>
