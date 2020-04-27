@@ -4,6 +4,7 @@ namespace PHPYAM\core;
 use PHPYAM\core\interfaces\IKeepRouterException;
 use PHPYAM\core\interfaces\IRouter;
 use PHPYAM\libs\Assert;
+use PHPYAM\libs\BufferUtils;
 use PHPYAM\libs\IntelliForm;
 use PHPYAM\libs\RouterException;
 
@@ -33,7 +34,7 @@ use PHPYAM\libs\RouterException;
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2019 Thierry BLIND
+ * @copyright 2014-2020 Thierry BLIND
  */
 abstract class Router implements IRouter
 {
@@ -150,9 +151,7 @@ abstract class Router implements IRouter
     private function endRouter()
     {
         // We "flush" all buffers to output remaining data.
-        while (ob_get_level() > 0) {
-            ob_end_flush();
-        }
+        BufferUtils::closeOutputBuffers(0, true);
     }
 
     /**
@@ -174,9 +173,7 @@ abstract class Router implements IRouter
         http_response_code(500);
 
         // We empty all buffers.
-        while (ob_get_level() > 0) {
-            ob_end_clean();
-        }
+        BufferUtils::closeOutputBuffers(0, false);
         try {
             if ($this->isAjaxCall()) {
                 // We send a HTML error message that can be retrieved client-side
@@ -370,9 +367,7 @@ abstract class Router implements IRouter
     {
         if ($clearOutputBuffersBeforeRedirect) {
             // We empty all buffers.
-            while (ob_get_level() > 0) {
-                ob_end_clean();
-            }
+            BufferUtils::closeOutputBuffers(0, false);
         }
 
         // We check that the header() statements have been taken into account,

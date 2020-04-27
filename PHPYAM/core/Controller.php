@@ -9,7 +9,7 @@ namespace PHPYAM\core;
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014 Thierry BLIND
+ * @copyright 2014-2020 Thierry BLIND
  */
 abstract class Controller
 {

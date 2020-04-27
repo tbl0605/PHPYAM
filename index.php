@@ -17,7 +17,7 @@ require_once __DIR__ . '/confs/' . YAM_ENVIRONNEMENT . '.php';
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2019 Thierry BLIND
+ * @copyright 2014-2020 Thierry BLIND
  */
 class DemoRouter extends \PHPYAM\core\Router
 {
