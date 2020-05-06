@@ -175,6 +175,9 @@ abstract class Router implements IRouter
         // We empty all buffers.
         BufferUtils::closeOutputBuffers(0, false);
         try {
+            // We start a new buffer to avoid leaking error informations
+            // when the error handler itself has problems.
+            ob_start();
             if ($this->isAjaxCall()) {
                 // We send a HTML error message that can be retrieved client-side
                 // by the Ajax error manager.
@@ -182,7 +185,9 @@ abstract class Router implements IRouter
             } else {
                 $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
             }
+            BufferUtils::closeOutputBuffers(0, true);
         } catch (\Throwable $ex) {
+            BufferUtils::closeOutputBuffers(0, false);
             if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
                 throw $ex;
             }
