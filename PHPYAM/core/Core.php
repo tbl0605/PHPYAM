@@ -153,7 +153,11 @@ final class Core
      */
     public final static function gettext($message, $decodingTo = CLIENT_CHARSET)
     {
-        return mb_convert_encoding(dgettext('PHPYAM', $message), $decodingTo, 'UTF-8');
+        $text = dgettext('PHPYAM', $message);
+        if ($decodingTo !== 'UTF-8') {
+            return mb_convert_encoding($text, $decodingTo, 'UTF-8');
+        }
+        return $text;
     }
 
     /**
