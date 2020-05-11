@@ -1,5 +1,5 @@
 <?php
-namespace PHPYAM\libs;
+namespace PHPYAM\extra;
 
 /**
  * Utility classes.
@@ -13,8 +13,11 @@ namespace PHPYAM\libs;
 
 /**
  * Utility class for advanced log4php configuration.
- * Just call {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)} and it
+ * Just call {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)} and it
  * provides a fully and elegant logging system to catch all PHP errors and exceptions.
+ *
+ * This class is provided as a minimalist implementation, it is not internally used
+ * by PHPAM so it can be replaced by your own implementation if necessary.
  *
  * @author Thierry BLIND
  */
@@ -49,14 +52,13 @@ class LoggerUtils
     public final static function configure($log4phpConfiguration)
     {
         \Logger::configure($log4phpConfiguration);
-        set_error_handler('\\PHPYAM\\libs\\LoggerUtils::errorHandler');
-        set_exception_handler('\\PHPYAM\\libs\\LoggerUtils::exceptionHandler');
-        // TODO: add register_shutdown_function() for non-catchable errors?
-        // http://phpfunk.com/php/capture-fatal-php-errors-for-logging/
+        set_error_handler('\\PHPYAM\\extra\\LoggerUtils::errorHandler');
+        set_exception_handler('\\PHPYAM\\extra\\LoggerUtils::exceptionHandler');
+        register_shutdown_function('\\PHPYAM\\extra\\LoggerUtils::shutdownHandler');
     }
 
     /**
-     * Error handler used by {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)}.
+     * Error handler used by {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)}.
      *
      * @param int $errno
      *            contains the level of the error raised
@@ -88,6 +90,8 @@ class LoggerUtils
         case E_CORE_ERROR:
         case E_COMPILE_ERROR:
         case E_PARSE:
+            http_response_code(500);
+
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
@@ -97,6 +101,8 @@ class LoggerUtils
 
         case E_USER_ERROR:
         case E_RECOVERABLE_ERROR:
+            http_response_code(500);
+
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
@@ -144,13 +150,15 @@ class LoggerUtils
     }
 
     /**
-     * Error handler used by {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)}.
+     * Error handler used by {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)}.
      *
      * @param \Exception $exception
      *            exception object that was thrown
      */
     public final static function exceptionHandler(\Exception $exception)
     {
+        http_response_code(500);
+
         $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
         $bo = (PHP_SAPI == 'cli') ? '[' : '<b>';
         $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
@@ -159,5 +167,36 @@ class LoggerUtils
             echo "{$bo}Uncaught exception " . $exception->getCode() . "{$bc}$eol" . $exception->getMessage() . $eol . 'at ' . $exception->getFile() . '(' . $exception->getLine() . ")$eol" . preg_replace('/\\r?\\n/', $eol, $exception->getTraceAsString()) . $eol;
         }
         \Logger::getLogger(__CLASS__)->fatal($exception);
+    }
+
+    /**
+     * Method executed after script execution finishes or exit() is called ("shutdown function").
+     * Intended to handle fatal errors that cannot be "catched" by self::errorHandler(), such as memory allocation errors or timeouts.
+     * This is the very last chance to log errors that have occurred.
+     * Note that the shutdown functions will not be executed if the process is killed by a SIGTERM or SIGKILL signal.
+     */
+    public final static function shutdownHandler()
+    {
+        $error = error_get_last();
+        if ($error !== null && $error['type'] === E_ERROR) {
+            http_response_code(500);
+
+            $errno = $error['type'];
+            $errstr = $error['message'];
+            $errfile = $error['file'];
+            $errline = $error['line'];
+
+            $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
+            $bo = (PHP_SAPI == 'cli') ? '[' : '<b>';
+            $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
+            $errDesc = self::$errLevel[$errno];
+
+            $displayError = ! ! ini_get('display_errors');
+
+            if ($displayError) {
+                echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
+            }
+            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
+        }
     }
 }
