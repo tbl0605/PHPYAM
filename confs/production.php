@@ -21,7 +21,7 @@ ini_set('display_errors', 1);
  * but he has then to fully implement it's own logging system if he needs one.
  * By setting this constant to false, be also aware that:
  * <ul>
- * <li>class \PHPYAM\libs\LoggerUtils will become useless
+ * <li>class \PHPYAM\extra\LoggerUtils will become useless
  * <li>router fatal errors (in the \PHPYAM\core\Core class) will be outputted to an error page, but there will be no additional logging
  * </ul>
  *
@@ -33,7 +33,7 @@ ini_set('display_errors', 1);
 define('USE_LOG4PHP', true);
 
 if (USE_LOG4PHP) {
-    \PHPYAM\libs\LoggerUtils::configure(__DIR__ . '/log4php-production.xml');
+    \PHPYAM\extra\LoggerUtils::configure(__DIR__ . '/log4php-production.xml');
 }
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace PHPYAM\libs;
+namespace PHPYAM\extra;
 
 /**
  * Utility classes.
@@ -13,8 +13,11 @@ namespace PHPYAM\libs;
 
 /**
  * Utility class for advanced log4php configuration.
- * Just call {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)} and it
+ * Just call {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)} and it
  * provides a fully and elegant logging system to catch all PHP errors and exceptions.
+ *
+ * This class is provided as a minimalist implementation, it is not internally used
+ * by PHPAM so it can be replaced by your own implementation if necessary.
  *
  * @author Thierry BLIND
  */
@@ -49,13 +52,13 @@ class LoggerUtils
     public final static function configure($log4phpConfiguration)
     {
         \Logger::configure($log4phpConfiguration);
-        set_error_handler('\\PHPYAM\\libs\\LoggerUtils::errorHandler');
-        set_exception_handler('\\PHPYAM\\libs\\LoggerUtils::exceptionHandler');
-        register_shutdown_function('\\PHPYAM\\libs\\LoggerUtils::shutdownHandler');
+        set_error_handler('\\PHPYAM\\extra\\LoggerUtils::errorHandler');
+        set_exception_handler('\\PHPYAM\\extra\\LoggerUtils::exceptionHandler');
+        register_shutdown_function('\\PHPYAM\\extra\\LoggerUtils::shutdownHandler');
     }
 
     /**
-     * Error handler used by {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)}.
+     * Error handler used by {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)}.
      *
      * @param int $errno
      *            contains the level of the error raised
@@ -147,7 +150,7 @@ class LoggerUtils
     }
 
     /**
-     * Error handler used by {@link \PHPYAM\libs\LoggerUtils::configure($log4phpConfiguration)}.
+     * Error handler used by {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)}.
      *
      * @param \Exception $exception
      *            exception object that was thrown
