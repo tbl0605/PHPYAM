@@ -24,3 +24,22 @@ It's recommended that you use [Composer](https://getcomposer.org/) to install PH
 ```bash
 composer require tbl0605/phpyam:~1.0
 ```
+
+## Easy way to test the provided demo
+
+```bash
+$ php -S localhost:8000 index.php
+```
+
+And open [localhost:8000](http://localhost:8000).
+
+For further testings, you can also adjust value of property `\PHPYAM\demo\DemoRouter::$useApplicationAutoLoader`
+inside the `index.php` file:
+
+```
+class DemoRouter extends \PHPYAM\core\Router
+{
+    public $useApplicationAutoLoader = true;
+    ...
+}
+```
