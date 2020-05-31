@@ -28,7 +28,8 @@ composer require tbl0605/phpyam:~1.0
 ## Easy way to test the provided demo
 
 ```bash
-$ php -S localhost:8000 index.php
+cd demo
+php -S localhost:8000 index.php
 ```
 
 And open [localhost:8000](http://localhost:8000).
