@@ -34,7 +34,7 @@ $ php -S localhost:8000 index.php
 And open [localhost:8000](http://localhost:8000).
 
 For further testings, you can also adjust value of property `\PHPYAM\demo\DemoRouter::$useApplicationAutoLoader`
-inside the `index.php` file.
+inside the `index.php` file:
 
 ```
 class DemoRouter extends \PHPYAM\core\Router

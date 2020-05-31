@@ -26,18 +26,19 @@ require_once __DIR__ . '/confs/' . YAM_ENVIRONNEMENT . '.php';
  * because php built-in web servers are not able to create $_GET['route'] by themselves,
  * like Apache would do using the .htaccess file provided with this demo.
  */
-if (php_sapi_name() === 'cli-server' && substr($_SERVER['REQUEST_URI'], 0, 1) === '/') {
-    if (strpos($_SERVER['REQUEST_URI'], '.js', - 3) !== false) {
+if (php_sapi_name() === 'cli-server') {
+    $path = pathinfo($_SERVER['SCRIPT_FILENAME']);
+    if ($path['extension'] === 'js') {
         header('Content-Type: text/javascript');
-        readfile(__DIR__ . $_SERVER['REQUEST_URI']);
+        readfile($_SERVER['SCRIPT_FILENAME']);
         exit();
     }
-    if (strpos($_SERVER['REQUEST_URI'], '.css', - 4) !== false) {
+    if ($path['extension'] === 'css') {
         header('Content-Type: text/css');
-        readfile(__DIR__ . $_SERVER['REQUEST_URI']);
+        readfile($_SERVER['SCRIPT_FILENAME']);
         exit();
     }
-    $_GET['route'] = substr($_SERVER['REQUEST_URI'], 1);
+    $_GET['route'] = ltrim($_SERVER['REQUEST_URI'], '/');
 }
 
 /**
