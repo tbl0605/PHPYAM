@@ -226,7 +226,7 @@ class AppConfig
      *
      * @var string
      */
-    const URL_PUB = URL . 'public-demo/';
+    const URL_PUB = URL . 'public/';
 
     /**
      * Full path of this application "public" directory.<br />
@@ -234,7 +234,7 @@ class AppConfig
      *
      * @var string
      */
-    const SYS_PUB = __DIR__ . '/../public-demo/';
+    const SYS_PUB = __DIR__ . '/../public/';
 
     /**
      * Title of all web pages (if used).
