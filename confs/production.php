@@ -47,7 +47,7 @@ if (USE_LOG4PHP) {
  * @var string
  * @see the htaccess file
  */
-define('URL', getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
+define('URL', php_sapi_name() === 'cli-server' ? '/' : getenv('REDIRECT_HTTP_YAM_REWRITEBASE'));
 
 /**
  * Defines how PHPYAM should store the parameters extracted

@@ -1,6 +1,15 @@
 <?php
 namespace PHPYAM\demo;
 
+// Immediatly turn output buffering on (DemoRouter will later also start a new output buffer),
+// so the \PHPYAM\extra\LoggerUtils instance can gracefully handle (or discard) early error messages.
+if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+    // Use compression when possible.
+    ob_start('ob_gzhandler');
+} else {
+    ob_start();
+}
+
 // Load the server config.
 require_once 'server-conf.php';
 
@@ -9,6 +18,27 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Load application config depending on the server config (for database connections, ...).
 require_once __DIR__ . '/confs/' . YAM_ENVIRONNEMENT . '.php';
+
+/*
+ * !!! You do not need this code part on a real web server !!!
+ * Following hack is only necessary to make this demo work with a php built-in web server through
+ * php -S localhost:8000 index.php
+ * because php built-in web servers are not able to create $_GET['route'] by themselves,
+ * like Apache would do using the .htaccess file provided with this demo.
+ */
+if (php_sapi_name() === 'cli-server' && substr($_SERVER['REQUEST_URI'], 0, 1) === '/') {
+    if (strpos($_SERVER['REQUEST_URI'], '.js', - 3) !== false) {
+        header('Content-Type: text/javascript');
+        readfile(__DIR__ . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+    if (strpos($_SERVER['REQUEST_URI'], '.css', - 4) !== false) {
+        header('Content-Type: text/css');
+        readfile(__DIR__ . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+    $_GET['route'] = substr($_SERVER['REQUEST_URI'], 1);
+}
 
 /**
  * Customized router to launch the application demo.
