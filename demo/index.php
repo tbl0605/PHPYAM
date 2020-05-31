@@ -5,7 +5,9 @@ namespace PHPYAM\demo;
 // so the \PHPYAM\extra\LoggerUtils instance can gracefully handle (or discard) early error messages.
 if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
     // Use compression when possible.
-    ob_start('ob_gzhandler');
+    if (! ob_start('ob_gzhandler')) {
+        ob_start();
+    }
 } else {
     ob_start();
 }
