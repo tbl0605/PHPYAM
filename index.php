@@ -1,7 +1,7 @@
 <?php
 namespace PHPYAM\demo;
 
-// Immediatly turn output buffering on (DemoRouter will later also start a new output buffer),
+// Immediately turn output buffering on (DemoRouter will later also start a new output buffer),
 // so the \PHPYAM\extra\LoggerUtils instance can gracefully handle (or discard) early error messages.
 if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
     // Use compression when possible.
