@@ -56,7 +56,7 @@ inside the `demo/index.php` file:
 ```
 class DemoRouter extends \PHPYAM\core\Router
 {
-    public $useApplicationAutoLoader = true;
-    ...
+	public $useApplicationAutoLoader = true;
+	...
 }
 ```
