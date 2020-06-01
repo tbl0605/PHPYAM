@@ -67,6 +67,11 @@ input[type='text'], input[type='email'], input[type='url'], select, textarea {
 	box-sizing: border-box;
 }
 
+input[type='text']:focus, [type='email']:focus, input[type='url']:focus, textarea:focus {
+	outline: none;
+	padding: 0 0 0.875em 0;
+}
+
 input[type='submit'], input[type='button'] {
 	background: none;
 	border: solid 2px #474544;
