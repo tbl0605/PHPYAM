@@ -26,7 +26,8 @@ form {
 
 fieldset {
 	border: solid 3px #474544;
-	margin: 60px auto;
+	margin: 0 auto;
+	margin-bottom: 60px;
 }
 
 button, input, select, textarea {
