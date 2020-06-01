@@ -24,9 +24,8 @@ class Confirm
     public static function render(array $props)
     {
         ?>
-<h2>Confirmation of data entry</h2>
-
-<form id="form-id" name="form-id" method="post" action="<?=$props['urlCreateAction']?>">
+<form id="form-id" name="form-id" method="post"
+	action="<?=$props['urlCreateAction']?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -53,9 +52,9 @@ class Confirm
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Cancel" onclick="location.href='<?=URL?>'"> <input
-		type="submit" name="submit-button" id="submit-button-id"
-		value="Submit">
+		value="Cancel" onclick="location.href='<?=URL?>'" class="width-auto">
+	<input type="submit" name="submit-button" id="submit-button-id"
+		value="Submit" class="width-auto">
 </form>
 
 <script type="text/javascript">

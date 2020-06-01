@@ -17,31 +17,21 @@
  */
 use PHPYAM\core\Core;
 ?>
-<h2>Form input</h2>
-
-<form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
-	<fieldset style="margin-bottom: 6px;">
+<form id="form-id" name="form-id" method="post"
+	action="<?=URL . 'form1/index'?>">
+	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
 		<legend>Please provide your name, email address (won't be published)
 			and a comment</legend>
 
-		<p>
-			<label for="cname">Name (required, at least 2 characters)</label> <input
-				id="cname" name="name" minlength="2" type="text" required />
-		</p>
-		<p>
-			<label for="cemail">E-Mail (required)</label> <input id="cemail"
-				type="email" name="email" required />
-		</p>
-		<p>
-			<label for="curl">URL (optional)</label> <input id="curl" type="url"
-				name="url" />
-		</p>
-		<p>
-			<label for="ccomment">Your comment (required)</label>
-			<textarea id="ccomment" name="comment" required></textarea>
-		</p>
+		<input placeholder="Name (required, at least 2 characters)" id="cname"
+			name="name" minlength="2" type="text" required /> <input
+			placeholder="E-Mail (required)" id="cemail" type="email" name="email"
+			required /> <input placeholder="URL (optional)" id="curl" type="url"
+			name="url" />
+		<textarea placeholder="Your comment (required)" id="ccomment"
+			name="comment" required></textarea>
 	</fieldset>
 
 	<input type="submit" name="submit-button" id="submit-button-id"
@@ -52,7 +42,7 @@ use PHPYAM\core\Core;
 	</div>
 </form>
 
-<div style="position: fixed; bottom: 0;">
+<div style="position: fixed; bottom: 0; margin: 10px;">
 	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
 		home page</a>
 </div>

@@ -38,7 +38,7 @@ And open [localhost:8000](http://localhost:8000).
 
 #### Use Apache
 
-Add the demo/ path to the `httpd.conf` or virtual host configuration file
+Add the demo/ path to the `httpd.conf` or some dedicated virtual host configuration file
 
 ```
 <Directory "/path/to/your/PHPYAM/demo">

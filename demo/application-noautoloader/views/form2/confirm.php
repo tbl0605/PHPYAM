@@ -17,9 +17,8 @@
  */
 use PHPYAM\core\Core;
 ?>
-<h2>Confirmation of data entry</h2>
-
-<form id="form-id" name="form-id" method="post" action="<?=$_urlCreateAction?>">
+<form id="form-id" name="form-id" method="post"
+	action="<?=$_urlCreateAction?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -46,9 +45,9 @@ foreach ($formValues as $key => $value) {
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Cancel" onclick="location.href='<?=URL?>'"> <input
-		type="submit" name="submit-button" id="submit-button-id"
-		value="Submit">
+		value="Cancel" onclick="location.href='<?=URL?>'" class="width-auto">
+	<input type="submit" name="submit-button" id="submit-button-id"
+		value="Submit" class="width-auto">
 </form>
 
 <script type="text/javascript">
