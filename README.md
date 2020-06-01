@@ -19,7 +19,7 @@ PHPYam doesn't do yet:
 
 ## Installation
 
-It's recommended that you use [Composer](https://getcomposer.org/) to install PHPYAM.
+It's recommended that you use [Composer](https://getcomposer.org/) to install PHPYAM:
 
 ```bash
 composer require tbl0605/phpyam:~1.0
@@ -38,7 +38,7 @@ And open [localhost:8000](http://localhost:8000).
 
 #### Use Apache
 
-Add the demo/ path to the `httpd.conf` or some dedicated virtual host configuration file
+Add the `demo/` path to the `httpd.conf` file or to some dedicated virtual host configuration file:
 
 ```
 <Directory "/path/to/your/PHPYAM/demo">
