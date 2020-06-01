@@ -27,7 +27,6 @@ composer require tbl0605/phpyam:~1.0
 
 ## Easy way to test the provided demo
 
-
 #### Use php built-in web server
 
 ```bash
