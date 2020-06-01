@@ -25,10 +25,14 @@ use PHPYAM\core\Core;
 			and a comment</legend>
 
 		<input placeholder="Name (required, at least 2 characters)" id="cname"
-			name="name" minlength="2" type="text" required /> <input
-			placeholder="E-Mail (required)" id="cemail" type="email" name="email"
-			required /> <input placeholder="URL (optional)" id="curl" type="url"
-			name="url" />
+			name="name" minlength="2" type="text" required />
+
+		<input placeholder="E-Mail (required)" id="cemail"
+			name="email" type="email" required />
+
+		<input placeholder="URL (optional)" id="curl"
+			name="url" type="url" />
+
 		<textarea placeholder="Your comment (required)" id="ccomment"
 			name="comment" required></textarea>
 	</fieldset>
