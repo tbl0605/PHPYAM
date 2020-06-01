@@ -22,7 +22,7 @@ use PHPYAM\core\Core;
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
-	<table border="1" style="margin-bottom: 6px;">
+	<table>
 		<thead>
 			<tr>
 				<th>Key</th>

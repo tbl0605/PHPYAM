@@ -84,3 +84,22 @@ input[type='submit']:hover, input[type='button']:hover {
 	background: #474544;
 	color: #F2F3EB;
 }
+
+table {
+	width: 100%;
+	margin-bottom: 60px;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 15px;
+	text-align: left;
+}
+
+table, th, td {
+	border: solid 3px #474544;
+}
+
+th {
+	background-color: #F2F2F2;
+}
