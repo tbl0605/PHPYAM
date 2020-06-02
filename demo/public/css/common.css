@@ -2,6 +2,18 @@
 	opacity: 0.95;
 }
 
+.text-break {
+	word-break: break-all;
+	overflow-wrap: break-word;
+}
+
+legend {
+	box-sizing: border-box; /* IE9-11 & Edge 12-13 */
+	display: table; /* IE8-11 */
+	max-width: 100%; /* Patch for IE9-11 & Edge 12-13 */
+	white-space: normal; /* IE8-11 */
+}
+
 label.error {
 	color: red;
 }
@@ -83,6 +95,8 @@ input[type='submit'], input[type='button'] {
 	font-weight: bold;
 	outline: none;
 	padding: 20px 35px;
+	margin: 2px;
+	white-space: normal;
 }
 
 input[type='submit']:hover, input[type='button']:hover {

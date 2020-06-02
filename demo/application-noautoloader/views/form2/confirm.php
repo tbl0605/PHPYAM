@@ -36,7 +36,7 @@ foreach ($formValues as $key => $value) {
     ?>
 			<tr>
 				<td><?=Core::html($key)?></td>
-				<td><?=Core::html($value)?></td>
+				<td class="text-break"><?=Core::html($value)?></td>
 			</tr>
 <?php
 }
