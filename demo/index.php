@@ -30,17 +30,34 @@ require_once __DIR__ . '/confs/' . YAM_ENVIRONNEMENT . '.php';
  */
 if (php_sapi_name() === 'cli-server') {
     $path = pathinfo($_SERVER['SCRIPT_FILENAME']);
-    if ($path['extension'] === 'js') {
-        header('Content-Type: text/javascript');
-        readfile($_SERVER['SCRIPT_FILENAME']);
+    $isCurrentFileName = $path['basename'] === basename(__FILE__);
+    // Does $_SERVER['SCRIPT_FILENAME'] contain "/index.php"?
+    if ($path['dirname'] === __DIR__ && $isCurrentFileName) {
+        // Translate /path/to/controller/method to /index.php?route=path/to/controller/method
+        $_GET['route'] = ltrim($_SERVER['REQUEST_URI'], '/');
+    } else {
+        if (strpos($path['dirname'], __DIR__) !== 0 ||
+        // $_SERVER['SCRIPT_FILENAME'] contains "index.php" when the request URI
+        // doesn't match with a file on local filesystem.
+        ($path['dirname'] === '.' && $isCurrentFileName)) {
+            // Access forbidden.
+            http_response_code(403);
+            exit();
+        }
+        if ($path['extension'] === 'js') {
+            header('Content-Type: text/javascript');
+            readfile($_SERVER['SCRIPT_FILENAME']);
+            exit();
+        }
+        if ($path['extension'] === 'css') {
+            header('Content-Type: text/css');
+            readfile($_SERVER['SCRIPT_FILENAME']);
+            exit();
+        }
+        // We don't support any other kind of files for this demo.
+        http_response_code(403);
         exit();
     }
-    if ($path['extension'] === 'css') {
-        header('Content-Type: text/css');
-        readfile($_SERVER['SCRIPT_FILENAME']);
-        exit();
-    }
-    $_GET['route'] = ltrim($_SERVER['REQUEST_URI'], '/');
 }
 
 /**
