@@ -2,7 +2,7 @@
 namespace PHPYAM\demo\confs;
 
 /**
- * Configuration file for the "development" environment.
+ * Configuration file for the "production" environment.
  *
  * For more info about constants please @see http://php.net/manual/en/function.define.php
  * If you want to know why we use "define" instead of "const" @see http://stackoverflow.com/q/2447791/1114320
@@ -33,7 +33,7 @@ ini_set('display_errors', 1);
 define('USE_LOG4PHP', true);
 
 if (USE_LOG4PHP) {
-    \PHPYAM\extra\LoggerUtils::configure(__DIR__ . '/log4php-development.xml');
+    \PHPYAM\extra\LoggerUtils::configure(__DIR__ . '/log4php-production.xml');
 }
 
 /**
@@ -204,7 +204,7 @@ define('CLIENT_LANGUAGE', 'en_GB');
  *
  * @var boolean
  */
-define('ANTZ_DEBUG', true);
+define('ANTZ_DEBUG', false);
 
 /**
  * Configuration for: database.
@@ -226,7 +226,7 @@ class AppConfig
      *
      * @var string
      */
-    const URL_PUB = URL . 'public-demo/';
+    const URL_PUB = URL . 'public/';
 
     /**
      * Full path of this application "public" directory.<br />
@@ -234,7 +234,7 @@ class AppConfig
      *
      * @var string
      */
-    const SYS_PUB = __DIR__ . '/../public-demo/';
+    const SYS_PUB = __DIR__ . '/../public/';
 
     /**
      * Title of all web pages (if used).
@@ -245,16 +245,16 @@ class AppConfig
 
     public static $locations = array(
         'east' => array(
-            'ODBC_DSN' => 'serverdev1',
-            'ODBC_USER' => 'userdev1',
+            'ODBC_DSN' => 'serverprod1',
+            'ODBC_USER' => 'userprod1',
             'ODBC_PWD' => 'password1',
-            'ODBC_DESCRIPTION' => 'SERVER DEV 1'
+            'ODBC_DESCRIPTION' => 'SERVER PROD 1'
         ),
         'west' => array(
-            'ODBC_DSN' => 'serverdev2',
-            'ODBC_USER' => 'userdev2',
+            'ODBC_DSN' => 'serverprod2',
+            'ODBC_USER' => 'userprod2',
             'ODBC_PWD' => 'password2',
-            'ODBC_DESCRIPTION' => 'SERVER DEV 2'
+            'ODBC_DESCRIPTION' => 'SERVER PROD 2'
         )
     );
 }

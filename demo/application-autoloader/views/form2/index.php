@@ -1,4 +1,8 @@
 <?php
+namespace PHPYAM\demo\application\views\form2;
+
+use PHPYAM\core\Core;
+
 /**
  * GOOD PRACTICE FOR VIEWS:
  *
@@ -11,48 +15,44 @@
  * - contain client code for web browsers (html, css, javascript, etc...)
  * - be tested to display data without using any controller
  * A view MUST NOT:
- * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-use PHPYAM\core\Core;
-?>
-<h2>Form input</h2>
+class Index
+{
 
+    public static function render(array $props)
+    {
+        ?>
 <form id="form-id" name="form-id" method="post" action="<?=URL . 'form2/index'?>">
-	<fieldset style="margin-bottom: 6px;">
+	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
 		<legend>Please provide your name, email address (won't be published)
 			and a comment</legend>
 
-		<p>
-			<label for="cname">Name (required, at least 2 characters)</label> <input
-				id="cname" name="name" minlength="2" type="text" required />
-		</p>
-		<p>
-			<label for="cemail">E-Mail (required)</label> <input id="cemail"
-				type="email" name="email" required />
-		</p>
-		<p>
-			<label for="curl">URL (optional)</label> <input id="curl" type="url"
-				name="url" />
-		</p>
-		<p>
-			<label for="ccomment">Your comment (required)</label>
-			<textarea id="ccomment" name="comment" required></textarea>
-		</p>
+		<input placeholder="Name (required, at least 2 characters)" id="cname"
+			name="name" minlength="2" type="text" required />
+
+		<input placeholder="E-Mail (required)" id="cemail"
+			name="email" type="email" required />
+
+		<input placeholder="URL (optional)" id="curl"
+			name="url" type="url" />
+
+		<textarea placeholder="Your comment (required)" id="ccomment"
+			name="comment" required></textarea>
 	</fieldset>
 
 	<input type="submit" name="submit-button" id="submit-button-id"
 		value="Validate">
 
-	<div style="display: <?=$_logs !== '' ? 'block' : 'none'?>;">
-		<div id="feedback-panel-id"><?=$_logs?></div>
+	<div style="display: <?=$props['logs'] !== '' ? 'block' : 'none'?>;">
+		<div id="feedback-panel-id"><?=$props['logs']?></div>
 	</div>
 </form>
 
-<div style="position: fixed; bottom: 0;">
+<div style="position: fixed; bottom: 0; margin: 10px;">
 	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
 		home page</a>
 </div>
@@ -123,3 +123,7 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php
+    }
+}
+?>

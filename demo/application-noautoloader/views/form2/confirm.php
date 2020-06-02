@@ -1,8 +1,4 @@
 <?php
-namespace PHPYAM\demo\application\views\form2;
-
-use PHPYAM\core\Core;
-
 /**
  * GOOD PRACTICE FOR VIEWS:
  *
@@ -15,22 +11,18 @@ use PHPYAM\core\Core;
  * - contain client code for web browsers (html, css, javascript, etc...)
  * - be tested to display data without using any controller
  * A view MUST NOT:
+ * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
  *   because the calling controller is responsible for that!
  */
-class Confirm
-{
-
-    public static function render(array $props)
-    {
-        ?>
-<h2>Confirmation of data entry</h2>
-
-<form id="form-id" name="form-id" method="post" action="<?=$props['urlCreateAction']?>">
+use PHPYAM\core\Core;
+?>
+<form id="form-id" name="form-id" method="post"
+	action="<?=$_urlCreateAction?>">
 
 	<?=\PHPYAM\libs\IntelliForm::seed()?>
 
-	<table border="1" style="margin-bottom: 6px;">
+	<table>
 		<thead>
 			<tr>
 				<th>Key</th>
@@ -40,22 +32,22 @@ class Confirm
 		<tbody>
 <?php
 
-        foreach ($props['formValues'] as $key => $value) {
-            ?>
+foreach ($formValues as $key => $value) {
+    ?>
 			<tr>
 				<td><?=Core::html($key)?></td>
-				<td><?=Core::html($value)?></td>
+				<td class="text-break"><?=Core::html($value)?></td>
 			</tr>
 <?php
-        }
-        ?>
+}
+?>
 		</tbody>
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Cancel" onclick="location.href='<?=URL?>'"> <input
-		type="submit" name="submit-button" id="submit-button-id"
-		value="Submit">
+		value="Cancel" onclick="location.href='<?=URL?>'" class="width-auto">
+	<input type="submit" name="submit-button" id="submit-button-id"
+		value="Submit" class="width-auto">
 </form>
 
 <script type="text/javascript">
@@ -84,7 +76,3 @@ $(document).ready(function() {
 	});
 });
 </script>
-<?php
-    }
-}
-?>
