@@ -22,7 +22,7 @@ class AssertException extends \Exception
     /*
      * (non-PHPdoc) @see \Exception::__construct()
      */
-    public function __construct($message = null, $code = null)
+    public function __construct($message = null, $code = 0)
     {
         parent::__construct($message, $code);
     }
