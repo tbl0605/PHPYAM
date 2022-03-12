@@ -20,7 +20,7 @@
         "apache/log4php": "^2.3.0"
     },
     "repositories": {
-        "log4php": {
+        "apache/log4php": {
             "type": "vcs",
             "url": "https://github.com/tbl0605/logging-log4php"
         }
