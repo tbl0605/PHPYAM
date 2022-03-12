@@ -51,10 +51,10 @@ class UrlUtils
 
             // Was the URL passed as an argument?
             if (func_num_args() == 2 && func_get_arg(1)) {
-                $uri = func_get_arg(1);
+                $uri = (string) func_get_arg(1);
             } else
                 if (func_num_args() == 3 && func_get_arg(2)) {
-                    $uri = func_get_arg(2);
+                    $uri = (string) func_get_arg(2);
                 } else {
                     $uri = $_SERVER['REQUEST_URI'];
                 }
@@ -62,7 +62,7 @@ class UrlUtils
 
             // Was the URL passed as an argument?
             if (func_num_args() == 3 && func_get_arg(2)) {
-                $uri = func_get_arg(2);
+                $uri = (string) func_get_arg(2);
             } else {
                 $uri = $_SERVER['REQUEST_URI'];
             }

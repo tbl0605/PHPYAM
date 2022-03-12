@@ -77,7 +77,11 @@ class Authentication implements IAuthentication
 
     private function getNTLMUser()
     {
-        return isset($_SERVER['REMOTE_USER']) ? mb_strtolower(trim(substr($_SERVER['REMOTE_USER'], strrpos($_SERVER['REMOTE_USER'], "\\") + 1))) : self::ANONYMOUS;
+        if (isset($_SERVER['REMOTE_USER'])) {
+            $pos = strrpos($_SERVER['REMOTE_USER'], "\\");
+            return $pos !== false ? substr($_SERVER['REMOTE_USER'], $pos + 1) : $_SERVER['REMOTE_USER'];
+        }
+        return self::ANONYMOUS;
     }
 
     /**

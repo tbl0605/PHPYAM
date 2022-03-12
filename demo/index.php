@@ -100,13 +100,13 @@ class DemoRouter extends \PHPYAM\core\Router
             return null;
         }
         // Return file location:
-        return __DIR__ . DIRECTORY_SEPARATOR . 'application-noautoloader' . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . strtolower($resourceName) . '.php';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'application-noautoloader' . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . strtolower((string) $resourceName) . '.php';
     }
 
     public function getClassName($type, $resourceName)
     {
         if ($this->useApplicationAutoLoader) {
-            return '\\PHPYAM\\demo\\application\\' . $type . '\\' . strtolower($resourceName);
+            return '\\PHPYAM\\demo\\application\\' . $type . '\\' . strtolower((string) $resourceName);
         }
         // In this demo, all classes are in global scope:
         return '\\' . $resourceName;

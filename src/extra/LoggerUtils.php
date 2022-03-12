@@ -74,7 +74,8 @@ class LoggerUtils
         if (! (error_reporting() & $errno)) {
             // This error code is not included in error_reporting.
             // Execute PHP internal error handler (ie. return FALSE) only if 'track_errors' is set.
-            return ! ini_get('track_errors');
+            // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+            return version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors');
         }
 
         $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
@@ -83,7 +84,8 @@ class LoggerUtils
         $errDesc = self::$errLevel[$errno];
 
         // Display error only if PHP internal error handler is NOT called afterwards.
-        $displayError = ! ! ini_get('display_errors') && ! ini_get('track_errors');
+        // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+        $displayError = ! ! ini_get('display_errors') && (version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors'));
 
         switch ($errno) {
         case E_ERROR:
@@ -146,7 +148,8 @@ class LoggerUtils
         }
 
         // Execute PHP internal error handler (ie. return FALSE) only if 'track_errors' is set.
-        return ! ini_get('track_errors');
+        // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+        return version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors');
     }
 
     /**
