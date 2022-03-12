@@ -17,7 +17,13 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "apache/log4php": "2.3.0"
+        "apache/log4php": "dev-master"
+    },
+    "repositories": {
+        "log4php": {
+            "type": "vcs",
+            "url": "https://github.com/tbl0605/logging-log4php"
+        }
     },
     "autoload": {
         "psr-4": {
