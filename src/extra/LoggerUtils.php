@@ -4,7 +4,7 @@ namespace PHPYAM\extra;
 /**
  * Utility classes.
  *
- * @package PHPYAM\libs
+ * @package PHPYAM\extra
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
