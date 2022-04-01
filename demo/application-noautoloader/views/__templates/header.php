@@ -13,7 +13,7 @@
  * A view MUST NOT:
  * - contain "$this" or "self", i.e. no direct reference to methods and properties of the calling controller!
  * - directly access to the context of the web application (variables $_GET, $_POST, $_SESSION, $GLOBALS, etc...),
- * because the calling controller is responsible for that!
+ *   because the calling controller is responsible for that!
  */
 use PHPYAM\core\Core;
 use PHPYAM\demo\confs\AppConfig;
