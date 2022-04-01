@@ -16,7 +16,9 @@
         "source": "https://github.com/tbl0605/PHPYAM"
     },
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
         "apache/log4php": "^2.3.0"
     },
     "repositories": {

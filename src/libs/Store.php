@@ -82,7 +82,7 @@ class Store
         $value = null;
         if (self::$configuration === null) {
             // When no configuration object exists, PHYAM first
-            // loofs after global constants (for backward compatibility)
+            // loofs after global constants (for backward compatibility with PHPYAM 1.1)
             // before throwing an exception.
             if (defined($key)) {
                 $value = constant($key);
@@ -105,6 +105,9 @@ class Store
     {
         if (self::$configuration !== null) {
             self::$configuration->logError($data);
+        } elseif (defined('USE_LOG4PHP') && constant('USE_LOG4PHP') && class_exists('\\Logger')) {
+            // Backward compatibility with PHPYAM 1.1
+            \Logger::getLogger(__CLASS__)->error($data);
         }
     }
 }
