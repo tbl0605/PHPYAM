@@ -91,7 +91,7 @@ class Store
             $value = self::$configuration->get($key, null);
         }
         if ($value === null) {
-            throw new \RuntimeException(Core::gettext("The required configuration property '%s' is missing."));
+            throw new \RuntimeException(sprintf(Core::gettext("The required configuration property '%s' is missing."), $key));
         }
         return $value;
     }
