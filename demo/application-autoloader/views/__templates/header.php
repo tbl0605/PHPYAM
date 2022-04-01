@@ -3,6 +3,7 @@ namespace PHPYAM\demo\application\views\__templates;
 
 use PHPYAM\core\Core;
 use PHPYAM\demo\confs\AppConfig;
+use PHPYAM\libs\Store;
 
 /**
  * GOOD PRACTICE FOR VIEWS:
@@ -26,10 +27,10 @@ class Header
     {
         ?>
 <!DOCTYPE html>
-<html lang="<?=CLIENT_LANGUAGE?>">
+<html lang="<?=Store::getRequired('CLIENT_LANGUAGE')?>">
 <head>
-	<meta charset="<?=CLIENT_CHARSET?>">
-	<meta http-equiv="Content-Type" content="text/html; charset=<?=CLIENT_CHARSET?>">
+	<meta charset="<?=Store::getRequired('CLIENT_CHARSET')?>">
+	<meta http-equiv="Content-Type" content="text/html; charset=<?=Store::getRequired('CLIENT_CHARSET')?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />

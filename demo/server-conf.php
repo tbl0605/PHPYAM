@@ -51,4 +51,4 @@ define('YAM_MIN', '');
  *
  * @var string $YAM_ENVIRONNEMENT
  */
-define('YAM_ENVIRONNEMENT', 'development');
+define('YAM_ENVIRONNEMENT', 'development-appconfig-only');

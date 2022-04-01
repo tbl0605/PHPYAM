@@ -1,6 +1,8 @@
 <?php
 namespace PHPYAM\demo;
 
+use PHPYAM\demo\confs\AppConfig;
+
 // Immediately turn output buffering on (DemoRouter will later also start a new output buffer),
 // so the \PHPYAM\extra\LoggerUtils instance can gracefully handle (or discard) early error messages.
 if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
@@ -114,4 +116,4 @@ class DemoRouter extends \PHPYAM\core\Router
 }
 
 // Start the application.
-new DemoRouter();
+new DemoRouter(new AppConfig());

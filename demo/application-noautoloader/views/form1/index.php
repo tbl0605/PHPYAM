@@ -16,6 +16,7 @@
  *   because the calling controller is responsible for that!
  */
 use PHPYAM\core\Core;
+use PHPYAM\libs\Store;
 ?>
 <form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
 	<fieldset>
@@ -46,7 +47,7 @@ use PHPYAM\core\Core;
 </form>
 
 <div style="position: fixed; bottom: 0; margin: 10px;">
-	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
+	<a href="<?=Core::url(Store::getRequired('DEFAULT_CONTROLLER'), Store::getRequired('DEFAULT_ACTION'))?>">Go back to
 		home page</a>
 </div>
 
