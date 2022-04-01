@@ -91,7 +91,7 @@ class Store
             $value = self::$configuration->get($key, null);
         }
         if ($value === null) {
-            throw new \RuntimeException(Core::gettext('Internal error. Please restart the application.'));
+            throw new \RuntimeException(Core::gettext("The required configuration property '%s' is missing."));
         }
         return $value;
     }
