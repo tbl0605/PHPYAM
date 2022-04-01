@@ -188,16 +188,16 @@ abstract class Router implements IRouter
             BufferUtils::closeOutputBuffers(0, true);
         } catch (\Throwable $ex) {
             BufferUtils::closeOutputBuffers(0, false);
-            if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
+            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS'))) {
                 throw $ex;
             }
-            // Do not send this exception, simply print it.
+            // Do not send this exception, simply log it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
-            if (@constant('USE_LOG4PHP')) {
+            if (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
                 if ($ex instanceof RouterException) {
-                    // Keep track of the original error and print some useful informations.
+                    // Keep track of the original error and log some useful informations.
                     \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
                 }
             }
@@ -415,10 +415,10 @@ abstract class Router implements IRouter
                 $ex instanceof IKeepRouterException ? $ex : $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! @constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS')) {
+            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS'))) {
                 throw $ex;
             }
-            if (@constant('USE_LOG4PHP')) {
+            if (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
                 \Logger::getLogger(__CLASS__)->error($ex);
             }
             $this->endRouterOnError(array(
