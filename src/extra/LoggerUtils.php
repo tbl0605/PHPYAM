@@ -154,10 +154,10 @@ class LoggerUtils
     /**
      * Error handler used by {@link \PHPYAM\extra\LoggerUtils::configure($log4phpConfiguration)}.
      *
-     * @param \Exception $exception
-     *            exception object that was thrown
+     * @param \Throwable $t
+     *            exception or error object that was thrown
      */
-    public final static function exceptionHandler(\Exception $exception)
+    public final static function exceptionHandler(/*\Throwable*/ $t)
     {
         http_response_code(500);
 
@@ -166,9 +166,9 @@ class LoggerUtils
         $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
         $displayError = ! ! ini_get('display_errors');
         if ($displayError) {
-            echo "{$bo}Uncaught exception " . $exception->getCode() . "{$bc}$eol" . $exception->getMessage() . $eol . 'at ' . $exception->getFile() . '(' . $exception->getLine() . ")$eol" . preg_replace('/\\r?\\n/', $eol, $exception->getTraceAsString()) . $eol;
+            echo "{$bo}Uncaught exception " . $t->getCode() . "{$bc}$eol" . $t->getMessage() . $eol . 'at ' . $t->getFile() . '(' . $t->getLine() . ")$eol" . preg_replace('/\\r?\\n/', $eol, $t->getTraceAsString()) . $eol;
         }
-        \Logger::getLogger(__CLASS__)->fatal($exception);
+        \Logger::getLogger(__CLASS__)->fatal($t);
     }
 
     /**
