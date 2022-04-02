@@ -37,6 +37,7 @@ class Configuration implements IConfiguration
     }
 
     /**
+     * NB: can be overridden if the log4php library should not be used.
      *
      * {@inheritdoc}
      * @see \PHPYAM\core\interfaces\IConfiguration::logError()
