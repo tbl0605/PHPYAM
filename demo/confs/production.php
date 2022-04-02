@@ -176,7 +176,7 @@ define('CLIENT_CHARSET', 'ISO-8859-1');
  *
  * @var string
  */
-define('CLIENT_LANGUAGE', 'en-GB');
+define('CLIENT_LANGUAGE', 'eng');
 
 /**
  * Enable IntelliForm debug options.

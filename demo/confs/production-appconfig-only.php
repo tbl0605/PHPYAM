@@ -179,7 +179,7 @@ class AppConfig extends Configuration
      *
      * @var string
      */
-    const CLIENT_LANGUAGE = 'en-GB';
+    const CLIENT_LANGUAGE = 'eng';
 
     /**
      * Enable IntelliForm debug options.
