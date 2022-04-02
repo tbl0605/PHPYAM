@@ -27,7 +27,7 @@ class Configuration implements IConfiguration
             return $classConstants[$key];
         }
         if (property_exists($this, $key)) {
-            return $this->${$key};
+            return $this->{$key};
         }
         if (defined($key)) {
             return constant($key);
