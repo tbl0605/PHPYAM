@@ -8,7 +8,6 @@ use PHPYAM\core\interfaces\IConfiguration;
  *
  * @package PHPYAM\extra
  * @author Thierry BLIND
- * @version 1.0.0
  * @since 01/04/2022
  * @copyright 2014-2022 Thierry BLIND
  */

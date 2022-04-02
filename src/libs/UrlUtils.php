@@ -6,7 +6,6 @@ namespace PHPYAM\libs;
  *
  * @package PHPYAM\libs
  * @author Thierry BLIND
- * @version 1.0.0
  * @since 01/01/2014
  * @copyright 2014-2020 Thierry BLIND
  */

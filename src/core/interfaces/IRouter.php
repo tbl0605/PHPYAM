@@ -6,7 +6,6 @@ namespace PHPYAM\core\interfaces;
  *
  * @package PHPYAM\core\interfaces
  * @author Thierry BLIND
- * @version 1.0.0
  * @since 01/01/2014
  * @copyright 2014-2020 Thierry BLIND
  */
