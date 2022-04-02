@@ -23,6 +23,7 @@ class Store
 
     /**
      * TODO comment.
+     * Singleton.
      *
      * @var \PHPYAM\core\interfaces\IConfiguration|null
      */
