@@ -124,7 +124,7 @@ final class Core
 
     /**
      * Adds a random value (known as "anti-cache") to prevent URL caching in the web browser.
-     * Example :<br />
+     * Example:<br />
      * <code>
      * echo \PHPYAM\core\Core::antiCache('my/url#my_anchor') . '\n';
      * echo \PHPYAM\core\Core::antiCache('my/url#my_anchor') . '\n';
@@ -148,7 +148,7 @@ final class Core
      * @param string $message
      *            message to translate (from the PHPYAM domain)
      * @param string $decodingTo
-     *            Default value : CLIENT_CHARSET. Charset used to encode the translated gettext message.
+     *            Default value: CLIENT_CHARSET. Charset used to encode the translated gettext message.
      * @return string translated message
      */
     public final static function gettext($message, $decodingTo = CLIENT_CHARSET)
@@ -171,7 +171,7 @@ final class Core
      * @param mixed|array|null $value
      *            value passed by reference (or list of values passed by reference), protected and then converted into string(s)
      * @param string $encodingFrom
-     *            Default value : CLIENT_CHARSET. Charset encoding of $value.
+     *            Default value: CLIENT_CHARSET. Charset encoding of $value.
      */
     public final static function htmlize(&$value, $encodingFrom = CLIENT_CHARSET)
     {
@@ -194,7 +194,7 @@ final class Core
      * @param string|null $value
      *            value to be protected
      * @param string $encodingFrom
-     *            Default value : CLIENT_CHARSET. Charset encoding of $value.
+     *            Default value: CLIENT_CHARSET. Charset encoding of $value.
      * @return string protected value or empty string if the encoding failed
      */
     public final static function html($value, $encodingFrom = CLIENT_CHARSET)
