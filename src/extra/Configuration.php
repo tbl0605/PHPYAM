@@ -26,8 +26,13 @@ class Configuration implements IConfiguration
         if (array_key_exists($key, $classConstants)) {
             return $classConstants[$key];
         }
-        if (property_exists($this, $key)) {
-            return $this->{$key};
+        $objectProperties = get_object_vars($this);
+        if (array_key_exists($key, $objectProperties)) {
+            return $objectProperties[$key];
+        }
+        $classStaticProperties = $classReflexion->getStaticProperties();
+        if (array_key_exists($key, $classStaticProperties)) {
+            return $classStaticProperties[$key];
         }
         if (defined($key)) {
             return constant($key);
