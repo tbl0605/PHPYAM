@@ -25,7 +25,7 @@ class Index
     public static function render(array $props)
     {
         ?>
-<form id="form-id" name="form-id" method="post" action="<?=URL . 'form2/index'?>">
+<form id="form-id" name="form-id" method="post" action="<?=Store::getRequired('URL') . 'form2/index'?>">
 	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -91,7 +91,7 @@ $(document).ready(function() {
 		// Send the data using post and put the results in a div
 		$.ajax({
 			// The link we are accessing
-			url: "<?=URL . 'form2/ajaxValidate'?>",
+			url: "<?=Store::getRequired('URL') . 'form2/ajaxValidate'?>",
 			// The type of request
 			type: "post",
 			// Get values from elements in the form

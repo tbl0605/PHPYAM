@@ -2,6 +2,7 @@
 namespace PHPYAM\demo\application\views\form2;
 
 use PHPYAM\core\Core;
+use PHPYAM\libs\Store;
 
 /**
  * GOOD PRACTICE FOR VIEWS:
@@ -52,7 +53,7 @@ class Confirm
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Cancel" onclick="location.href='<?=URL?>'" class="width-auto">
+		value="Cancel" onclick="location.href='<?=Store::getRequired('URL')?>'" class="width-auto">
 	<input type="submit" name="submit-button" id="submit-button-id"
 		value="Submit" class="width-auto">
 </form>

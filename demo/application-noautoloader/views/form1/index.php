@@ -18,7 +18,7 @@
 use PHPYAM\core\Core;
 use PHPYAM\libs\Store;
 ?>
-<form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
+<form id="form-id" name="form-id" method="post" action="<?=Store::getRequired('URL') . 'form1/index'?>">
 	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 

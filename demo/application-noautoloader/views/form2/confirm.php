@@ -16,6 +16,7 @@
  *   because the calling controller is responsible for that!
  */
 use PHPYAM\core\Core;
+use PHPYAM\libs\Store;
 ?>
 <form id="form-id" name="form-id" method="post"
 	action="<?=$_urlCreateAction?>">
@@ -45,7 +46,7 @@ foreach ($formValues as $key => $value) {
 	</table>
 
 	<input type="button" name="cancel-button" id="cancel-button-id"
-		value="Cancel" onclick="location.href='<?=URL?>'" class="width-auto">
+		value="Cancel" onclick="location.href='<?=Store::getRequired('URL')?>'" class="width-auto">
 	<input type="submit" name="submit-button" id="submit-button-id"
 		value="Submit" class="width-auto">
 </form>

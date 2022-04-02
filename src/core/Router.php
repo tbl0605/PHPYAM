@@ -78,12 +78,13 @@ abstract class Router implements IRouter
         $createSession = Store::get('CREATE_SESSION', true);
         $clientCharset = Store::getRequired('CLIENT_CHARSET');
         $clientLanguage = Store::getRequired('CLIENT_LANGUAGE');
+        $baseUrl = Store::getRequired('URL');
 
         if ($createSession) {
             // We set a session name based on the "baseurl"
             // to not mix the session data of different web applications
             // on a same webserver domain.
-            session_name('SESS' . md5($_SERVER['HTTP_HOST'] . URL));
+            session_name('SESS' . md5($_SERVER['HTTP_HOST'] . $baseUrl));
             // Must be run asap by the router!
             if (session_id() === '') {
                 session_start();
