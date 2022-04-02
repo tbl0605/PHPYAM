@@ -73,7 +73,7 @@ class LoggerUtils
         if (! (error_reporting() & $errno)) {
             // This error code is not included in error_reporting.
             // Execute PHP internal error handler (ie. return FALSE) only if 'track_errors' is set.
-            // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+            // PHP >= 8.0.0: the track_errors ini directive has been removed.
             return version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors');
         }
 
@@ -83,7 +83,7 @@ class LoggerUtils
         $errDesc = self::$errLevel[$errno];
 
         // Display error only if PHP internal error handler is NOT called afterwards.
-        // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+        // PHP >= 8.0.0: the track_errors ini directive has been removed.
         $displayError = ! ! ini_get('display_errors') && (version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors'));
 
         switch ($errno) {
@@ -147,7 +147,7 @@ class LoggerUtils
         }
 
         // Execute PHP internal error handler (ie. return FALSE) only if 'track_errors' is set.
-        // PHP >= 8.0.0 : the track_errors ini directive has been removed.
+        // PHP >= 8.0.0: the track_errors ini directive has been removed.
         return version_compare(PHP_VERSION, '8.0.0') >= 0 || ! ini_get('track_errors');
     }
 
