@@ -75,9 +75,10 @@ abstract class Router implements IRouter
      */
     private function initRouter()
     {
-        $createSession = Store::get('CREATE_SESSION', true);
         $clientCharset = Store::getRequired('CLIENT_CHARSET');
         $clientLanguage = Store::getRequired('CLIENT_LANGUAGE');
+        $securityPolicy = Store::getRequired('SECURITY_POLICY');
+        $createSession = Store::get('CREATE_SESSION', true);
         $baseUrl = Store::getRequired('URL');
 
         if ($createSession) {
@@ -135,7 +136,7 @@ abstract class Router implements IRouter
         // Create array with URL parts in $url.
         $this->splitUrl();
 
-        $authenticationClassName = $this->loadResource('security', Store::getRequired('SECURITY_POLICY'), true);
+        $authenticationClassName = $this->loadResource('security', $securityPolicy, true);
         $this->authentication = new $authenticationClassName();
 
         // We check that the header() statements have been taken into account,
@@ -249,6 +250,9 @@ abstract class Router implements IRouter
      */
     private function splitUrl()
     {
+        $defaultController = Store::getRequired('DEFAULT_CONTROLLER');
+        $defaultAction = Store::getRequired('DEFAULT_ACTION');
+
         if (isset($_GET['route'])) {
             $useAssociativeParams = Store::get('URL_ASSOCIATIVE_PARAMS', true);
 
@@ -266,9 +270,9 @@ abstract class Router implements IRouter
             // Put URL parts into according properties.
             // By the way, the syntax here is just a short form of if/else, called "Ternary Operators".
             // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
-            $this->urlController = isset($url[0]) && $url[0] !== '' ? $url[0] : Store::getRequired('DEFAULT_CONTROLLER');
+            $this->urlController = isset($url[0]) && $url[0] !== '' ? $url[0] : $defaultController;
             array_shift($url);
-            $this->urlAction = isset($url[0]) && $url[0] !== '' ? $url[0] : Store::getRequired('DEFAULT_ACTION');
+            $this->urlAction = isset($url[0]) && $url[0] !== '' ? $url[0] : $defaultAction;
             array_shift($url);
             if ($useAssociativeParams) {
                 $params = array();
@@ -282,8 +286,8 @@ abstract class Router implements IRouter
                 $this->urlParameters = $url;
             }
         } else {
-            $this->urlController = Store::getRequired('DEFAULT_CONTROLLER');
-            $this->urlAction = Store::getRequired('DEFAULT_ACTION');
+            $this->urlController = $defaultController;
+            $this->urlAction = $defaultAction;
             $this->urlParameters = array();
         }
     }
