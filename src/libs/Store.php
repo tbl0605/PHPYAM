@@ -76,6 +76,7 @@ class Store
      *
      * @param string $key
      * @return mixed
+     * @throws \RuntimeException
      */
     public final static function getRequired($key)
     {
