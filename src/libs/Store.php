@@ -99,6 +99,7 @@ class Store
 
     /**
      * TODO comment.
+     * For internal use.
      *
      * @return boolean
      */
