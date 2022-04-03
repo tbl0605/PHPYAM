@@ -76,7 +76,7 @@ class Store
      *
      * @param string $key
      * @return mixed
-     * @throws \RuntimeException
+     * @throws \PHPYAM\libs\AssertException
      */
     public final static function getRequired($key)
     {
@@ -91,9 +91,9 @@ class Store
         } else {
             $value = self::$configuration->get($key, null);
         }
-        if ($value === null) {
-            throw new \RuntimeException(sprintf(Core::gettext("The required configuration property '%s' is missing."), $key));
-        }
+
+        Assert::isTrue($value !== null, Core::gettext("The required configuration property '%s' is missing."), $key);
+
         return $value;
     }
 
