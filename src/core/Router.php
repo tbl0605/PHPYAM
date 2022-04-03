@@ -196,7 +196,7 @@ abstract class Router implements IRouter
             BufferUtils::closeOutputBuffers(0, false);
             if (($ex instanceof \Error && ! $catchInternalErrors) ||
             // No logger is defined, better throw the exception then loose it.
-            Store::getConfiguration() === null) {
+            ! Store::hasLoggingFunctionality()) {
                 throw $ex;
             }
             // Do not send this exception, simply log it.
