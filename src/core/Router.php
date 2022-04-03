@@ -178,10 +178,12 @@ abstract class Router implements IRouter
 
         // We empty all buffers.
         BufferUtils::closeOutputBuffers(0, false);
+        $catchInternalErrors = false;
         try {
             // We start a new buffer to avoid leaking error informations
             // when the error handler itself has problems.
             ob_start();
+            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
             if ($this->isAjaxCall()) {
                 // We send a HTML error message that can be retrieved client-side
                 // by the Ajax error manager.
@@ -192,7 +194,6 @@ abstract class Router implements IRouter
             BufferUtils::closeOutputBuffers(0, true);
         } catch (\Throwable $ex) {
             BufferUtils::closeOutputBuffers(0, false);
-            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
             if (($ex instanceof \Error && ! $catchInternalErrors) ||
             // No logger is defined, better throw the exception then loose it.
             Store::getConfiguration() === null) {
@@ -415,12 +416,15 @@ abstract class Router implements IRouter
      */
     public final function __construct($configuration = null)
     {
+        $catchInternalErrors = false;
         try {
             if ($configuration !== null) {
                 Store::setConfiguration($configuration);
             } else {
                 Store::removeConfiguration();
             }
+
+            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
 
             $this->initRouter();
 
@@ -436,7 +440,6 @@ abstract class Router implements IRouter
                 $ex instanceof IKeepRouterException ? $ex : $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
-            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
             if ($ex instanceof \Error && ! $catchInternalErrors) {
                 throw $ex;
             }
