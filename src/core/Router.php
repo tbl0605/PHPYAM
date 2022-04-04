@@ -199,14 +199,14 @@ abstract class Router implements IRouter
             ! Store::hasLoggingFunctionality()) {
                 throw $ex;
             }
-            // Do not send this exception, simply log it.
-            // We're on the error page, there's not much to do when the error
-            // page itself contains errors!
-            Store::logError($ex);
             if ($ex instanceof RouterException) {
                 // Keep track of the original error and log some useful informations.
                 Store::logError(implode(PHP_EOL, $msgs));
             }
+            // Do not send this exception, simply log it.
+            // We're on the error page, there's not much to do when the error
+            // page itself contains errors!
+            Store::logError($ex);
         }
     }
 

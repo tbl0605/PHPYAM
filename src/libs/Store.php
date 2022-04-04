@@ -105,7 +105,7 @@ class Store
      */
     public final static function hasLoggingFunctionality()
     {
-        return self::$configuration !== null || (defined('USE_LOG4PHP') && constant('USE_LOG4PHP') && class_exists('\\Logger'));
+        return self::$configuration !== null || defined('USE_LOG4PHP');
     }
 
     /**
@@ -117,7 +117,7 @@ class Store
     {
         if (self::$configuration !== null) {
             self::$configuration->logError($data);
-        } elseif (self::hasLoggingFunctionality()) {
+        } elseif (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
             // Backward compatibility with PHPYAM 1.1
             \Logger::getLogger(__CLASS__)->error($data);
         }
