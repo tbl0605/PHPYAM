@@ -195,11 +195,11 @@ abstract class Router implements IRouter
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
             if (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
-                \Logger::getLogger(__CLASS__)->error($ex);
                 if ($ex instanceof RouterException) {
                     // Keep track of the original error and log some useful informations.
                     \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
                 }
+                \Logger::getLogger(__CLASS__)->error($ex);
             }
         }
     }
