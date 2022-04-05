@@ -4,7 +4,12 @@ namespace PHPYAM\extra;
 use PHPYAM\core\interfaces\IConfiguration;
 
 /**
- * TODO comment.
+ * Basic implementation for storing and retrieving the PHPYAM router configuration.
+ * Any class extending this class will be able to store the configuration keys <b>internally</b> as class constants,
+ * static properties or object properties (or ultimately as <b>external</b> global constants).
+ *
+ * When this class is used as is, the configuration keys can only be stored and retrieved <b>externally</b> as global contants,
+ * as for PHPYAM v1.1
  *
  * @package PHPYAM\extra
  * @author Thierry BLIND
@@ -15,6 +20,16 @@ class Configuration implements IConfiguration
 {
 
     /**
+     * Return the value associated with a configuration key.
+     *
+     * For example, this method will try to resolve the configuration key "CONF_KEY"
+     * in following order before defaulting to $defaultValue:<br>
+     * <ul>
+     * <li>look for a class constant in current object: <code>const CONF_KEY=...;</code></li>
+     * <li>look for an object property in current object: <code>$CONF_KEY=...;</code></li>
+     * <li>look for a static class property in current object: <code>static $CONF_KEY=...;</code></li>
+     * <li>look for a global constant: <code>define("CONF_KEY", ...);</code></li>
+     * </ul>
      *
      * {@inheritdoc}
      * @see \PHPYAM\core\interfaces\IConfiguration::get()
