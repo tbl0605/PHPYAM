@@ -51,12 +51,11 @@ class UrlUtils
             // Was the URL passed as an argument?
             if (func_num_args() == 2 && func_get_arg(1)) {
                 $uri = (string) func_get_arg(1);
-            } else
-                if (func_num_args() == 3 && func_get_arg(2)) {
-                    $uri = (string) func_get_arg(2);
-                } else {
-                    $uri = $_SERVER['REQUEST_URI'];
-                }
+            } elseif (func_num_args() == 3 && func_get_arg(2)) {
+                $uri = (string) func_get_arg(2);
+            } else {
+                $uri = $_SERVER['REQUEST_URI'];
+            }
         } else {
 
             // Was the URL passed as an argument?
@@ -87,14 +86,13 @@ class UrlUtils
             $parts = explode('?', $uri, 2);
             $base = $parts[0] . '?';
             $query = $parts[1];
-        } else
-            if (! empty($protocol) || strpos($uri, '=') === FALSE) {
-                $base = $uri . '?';
-                $query = '';
-            } else {
-                $base = '';
-                $query = $uri;
-            }
+        } elseif (! empty($protocol) || strpos($uri, '=') === FALSE) {
+            $base = $uri . '?';
+            $query = '';
+        } else {
+            $base = '';
+            $query = $uri;
+        }
 
         // Parse the query string into an array.
         parse_str($query, $qs);

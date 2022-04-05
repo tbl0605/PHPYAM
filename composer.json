@@ -1,40 +1,45 @@
 {
-    "name": "tbl0605/phpyam",
-    "type": "library",
-    "description": "Really simple, yet easily extendable, MVC framework for PHP developers that helps you quickly write simple yet powerful web applications and APIs.",
-    "keywords": ["framework","micro","api","router"],
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Thierry Blind",
-            "email": "tbl0605@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "issues": "https://github.com/tbl0605/PHPYAM/issues",
-        "source": "https://github.com/tbl0605/PHPYAM"
-    },
-    "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
-        "apache/log4php": "^2.3.0"
-    },
-    "repositories": {
-        "apache/log4php": {
-            "type": "vcs",
-            "url": "https://github.com/tbl0605/logging-log4php"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "PHPYAM\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "PHPYAM\\demo\\application\\": "demo/application-autoloader/"
-        }
-    }
+	"name": "tbl0605/phpyam",
+	"type": "library",
+	"description": "Really simple, yet easily extendable, MVC framework for PHP developers that helps you quickly write simple yet powerful web applications and APIs.",
+	"keywords": [
+		"framework",
+		"micro",
+		"api",
+		"router"
+	],
+	"license": "Apache-2.0",
+	"authors": [
+		{
+			"name": "Thierry Blind",
+			"email": "tbl0605@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/tbl0605/PHPYAM/issues",
+		"source": "https://github.com/tbl0605/PHPYAM"
+	},
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"require-dev": {
+		"apache/log4php": "^2.3.0"
+	},
+	"repositories": {
+		"apache/log4php": {
+			"type": "vcs",
+			"url": "https://github.com/tbl0605/logging-log4php"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"PHPYAM\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"PHPYAM\\demo\\application\\": "demo/application-autoloader/"
+		}
+	}
 }
