@@ -3,6 +3,7 @@ use PHPYAM\core\Controller;
 use PHPYAM\core\Core;
 use PHPYAM\libs\Assert;
 use PHPYAM\libs\IntelliForm;
+use PHPYAM\libs\Store;
 
 /**
  * Class Form2
@@ -126,6 +127,6 @@ class Form2 extends Controller
          */
 
         // Back to homepage...
-        $this->getRouter()->forward(DEFAULT_CONTROLLER, DEFAULT_ACTION);
+        $this->getRouter()->forward(Store::getRequired('DEFAULT_CONTROLLER'), Store::getRequired('DEFAULT_ACTION'));
     }
 }

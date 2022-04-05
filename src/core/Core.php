@@ -1,16 +1,17 @@
 <?php
 namespace PHPYAM\core;
 
+use PHPYAM\libs\Store;
+
 /**
  * Utility class containing methods that can be invoked in any context (model, view or controller).
  * Some methods depend on the current project configuration (e.g. certain methods use mb_internal_encoding(),
- * or the constants CLIENT_CHARSET and URL_ASSOCIATIVE_PARAMS).
+ * or the configuration keys "CLIENT_CHARSET" and "URL_ASSOCIATIVE_PARAMS)".
  *
  * @package PHPYAM\core
  * @author Thierry BLIND
- * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2020 Thierry BLIND
+ * @copyright 2014-2022 Thierry BLIND
  */
 final class Core
 {
@@ -109,7 +110,7 @@ final class Core
      */
     public final static function url($urlController, $urlAction, array $urlParameters = array())
     {
-        $useAssociativeParams = ! defined('URL_ASSOCIATIVE_PARAMS') || URL_ASSOCIATIVE_PARAMS;
+        $useAssociativeParams = Store::get('URL_ASSOCIATIVE_PARAMS', true);
         $params = '';
         foreach ($urlParameters as $key => $value) {
             if ($useAssociativeParams) {
@@ -119,7 +120,7 @@ final class Core
             }
         }
         // Note: the controller name and action are also encoded.
-        return URL . self::encodeUrlParameter($urlController) . '/' . self::encodeUrlParameter($urlAction) . $params;
+        return Store::getRequired('URL') . self::encodeUrlParameter($urlController) . '/' . self::encodeUrlParameter($urlAction) . $params;
     }
 
     /**
@@ -147,12 +148,17 @@ final class Core
      *
      * @param string $message
      *            message to translate (from the PHPYAM domain)
-     * @param string $decodingTo
-     *            Default value: CLIENT_CHARSET. Charset used to encode the translated gettext message.
+     * @param string|null $decodingTo
+     *            Default value (when null): CLIENT_CHARSET. Charset used to encode the translated gettext message.
      * @return string translated message
      */
-    public final static function gettext($message, $decodingTo = CLIENT_CHARSET)
+    public final static function gettext($message, $decodingTo = null)
     {
+        if ($decodingTo === null) {
+            // Store::getRequired('CLIENT_CHARSET') can generate infinite loops inside class Router
+            // when CLIENT_CHARSET is not defined, so we arbitrary set default encoding to 'UTF-8'.
+            $decodingTo = Store::get('CLIENT_CHARSET', 'UTF-8');
+        }
         $text = dgettext('PHPYAM', (string) $message);
         if ($decodingTo !== 'UTF-8') {
             return mb_convert_encoding($text, $decodingTo, 'UTF-8');
@@ -170,11 +176,14 @@ final class Core
      *
      * @param mixed|array|null $value
      *            value passed by reference (or list of values passed by reference), protected and then converted into string(s)
-     * @param string $encodingFrom
-     *            Default value: CLIENT_CHARSET. Charset encoding of $value.
+     * @param string|null $encodingFrom
+     *            Default value (when null): CLIENT_CHARSET. Charset encoding of $value.
      */
-    public final static function htmlize(&$value, $encodingFrom = CLIENT_CHARSET)
+    public final static function htmlize(&$value, $encodingFrom = null)
     {
+        if ($encodingFrom === null) {
+            $encodingFrom = Store::getRequired('CLIENT_CHARSET');
+        }
         if (is_array($value)) {
             array_walk_recursive($value, function (&$paramValue, $paramKey, $paramEncodingFrom) {
                 $paramValue = htmlentities((string) $paramValue, ENT_QUOTES, $paramEncodingFrom);
@@ -193,12 +202,15 @@ final class Core
      *
      * @param string|null $value
      *            value to be protected
-     * @param string $encodingFrom
-     *            Default value: CLIENT_CHARSET. Charset encoding of $value.
+     * @param string|null $encodingFrom
+     *            Default value (when null): CLIENT_CHARSET. Charset encoding of $value.
      * @return string protected value or empty string if the encoding failed
      */
-    public final static function html($value, $encodingFrom = CLIENT_CHARSET)
+    public final static function html($value, $encodingFrom = null)
     {
+        if ($encodingFrom === null) {
+            $encodingFrom = Store::getRequired('CLIENT_CHARSET');
+        }
         return htmlentities((string) $value, ENT_QUOTES, $encodingFrom);
     }
 }

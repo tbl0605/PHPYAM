@@ -7,7 +7,6 @@ namespace PHPYAM\libs;
  * @package PHPYAM\libs
  * @author Thierry BLIND
  * @author Fabien Potencier <fabien@symfony.com>
- * @version 1.0.0
  * @since 27/04/2020
  * @copyright 2020 Thierry BLIND
  */

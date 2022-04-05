@@ -1,6 +1,8 @@
 <?php
 namespace PHPYAM\demo\confs;
 
+use PHPYAM\extra\Configuration;
+
 /**
  * Configuration file for the "production" environment.
  *
@@ -15,26 +17,7 @@ namespace PHPYAM\demo\confs;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-/**
- * Should we use the library log4php to do message logging?
- * By setting this constant to false, the developer will drop all dependencies to the library log4php
- * but he has then to fully implement it's own logging system if he needs one.
- * By setting this constant to false, be also aware that:
- * <ul>
- * <li>class \PHPYAM\extra\LoggerUtils will become useless
- * <li>router fatal errors (in the \PHPYAM\core\Core class) will be outputted to an error page, but there will be no additional logging
- * </ul>
- *
- * <b>Creating this constant is optional</b>,
- * not creating it will be the same as defining USE_LOG4PHP to false.
- *
- * @var boolean
- */
-define('USE_LOG4PHP', true);
-
-if (USE_LOG4PHP) {
-    \PHPYAM\extra\LoggerUtils::configure(__DIR__ . '/log4php-production.xml');
-}
+\PHPYAM\extra\LoggerUtils::configure(__DIR__ . '/log4php-production.xml');
 
 /**
  * URL to this application base directory.<br />
@@ -193,7 +176,7 @@ define('CLIENT_CHARSET', 'ISO-8859-1');
  *
  * @var string
  */
-define('CLIENT_LANGUAGE', 'en-GB');
+define('CLIENT_LANGUAGE', 'eng');
 
 /**
  * Enable IntelliForm debug options.
@@ -215,7 +198,7 @@ define('ANTZ_DEBUG', false);
  * TODO: AppConfig is just an example here how the developer can store global preferences and configurations!
  * You can name your class like you want, core libraries of PHPYAM have no dependencies to it...
  */
-class AppConfig
+class AppConfig extends Configuration
 {
 
     /**

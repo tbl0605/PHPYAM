@@ -7,6 +7,7 @@ use PHPYAM\libs\Assert;
 use PHPYAM\libs\BufferUtils;
 use PHPYAM\libs\IntelliForm;
 use PHPYAM\libs\RouterException;
+use PHPYAM\libs\Store;
 
 /**
  * Class used to translate the URL of a web request into a call to a class and a method
@@ -28,13 +29,12 @@ use PHPYAM\libs\RouterException;
  * Done with minimal code complexity for maximum flexibility and extensibility.
  *
  * There are some router options available to change its behavior.
- * Those options are coded as PHP constants and are defined in the conf/*.php files.
+ * Those options are coded as configuration keys and are defined in the conf/*.php files.
  *
  * @package PHPYAM\core
  * @author Thierry BLIND
- * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2020 Thierry BLIND
+ * @copyright 2014-2022 Thierry BLIND
  */
 abstract class Router implements IRouter
 {
@@ -75,13 +75,17 @@ abstract class Router implements IRouter
      */
     private function initRouter()
     {
-        $createSession = ! defined('CREATE_SESSION') || CREATE_SESSION;
+        $clientCharset = Store::getRequired('CLIENT_CHARSET');
+        $clientLanguage = Store::getRequired('CLIENT_LANGUAGE');
+        $securityPolicy = Store::getRequired('SECURITY_POLICY');
+        $createSession = Store::get('CREATE_SESSION', true);
+        $baseUrl = Store::getRequired('URL');
 
         if ($createSession) {
             // We set a session name based on the "baseurl"
             // to not mix the session data of different web applications
             // on a same webserver domain.
-            session_name('SESS' . md5($_SERVER['HTTP_HOST'] . URL));
+            session_name('SESS' . md5($_SERVER['HTTP_HOST'] . $baseUrl));
             // Must be run asap by the router!
             if (session_id() === '') {
                 session_start();
@@ -91,21 +95,21 @@ abstract class Router implements IRouter
         // We set the language used for the PHPYAM messages.
         // Can be overridden later again, for example
         // in the object constructor of $this->authentication.
-        putenv('LC_ALL=' . CLIENT_LANGUAGE);
-        $locale = setlocale(LC_ALL, CLIENT_LANGUAGE);
+        putenv('LC_ALL=' . $clientLanguage);
+        $locale = setlocale(LC_ALL, $clientLanguage);
         bindtextdomain('PHPYAM', __DIR__ . '/../locales');
-        bind_textdomain_codeset('PHPYAM', CLIENT_CHARSET);
+        bind_textdomain_codeset('PHPYAM', $clientCharset);
 
         // Useful for Ajax requests (JQuery).
-        header('Content-Type: text/html; charset=' . CLIENT_CHARSET);
+        header('Content-Type: text/html; charset=' . $clientCharset);
 
         $this->initAdditionalHeaders();
 
-        // The Ajax directive 'contentType: "application/x-www-form-urlencoded;charset=" . CLIENT_CHARSET'
+        // The Ajax directive 'contentType: "application/x-www-form-urlencoded;charset=" . Store::getRequired("CLIENT_CHARSET")'
         // is ignored by mostly every web browser (and should therefore not be used).
         // They will *always* send Ajax requests encoded with the UTF-8 charset.
         // We must therefore re-encode the received query data ($_REQUEST, $_POST, $_GET, ...) using the server&client charset:
-        if (CLIENT_CHARSET !== 'UTF-8' && self::isAjaxCall()) {
+        if ($clientCharset !== 'UTF-8' && self::isAjaxCall()) {
             $conversionFunction = function (&$paramValue, $paramKey, $paramEncodings) {
                 if (is_string($paramValue)) {
                     $paramValue = mb_convert_encoding($paramValue, $paramEncodings['to'], $paramEncodings['from']);
@@ -114,7 +118,7 @@ abstract class Router implements IRouter
             if (is_array($GLOBALS['_' . $_SERVER['REQUEST_METHOD']])) {
                 array_walk_recursive($GLOBALS['_' . $_SERVER['REQUEST_METHOD']], $conversionFunction, array(
                     'from' => 'UTF-8',
-                    'to' => CLIENT_CHARSET
+                    'to' => $clientCharset
                 ));
                 $_REQUEST = array_replace($_REQUEST, $GLOBALS['_' . $_SERVER['REQUEST_METHOD']]);
             }
@@ -132,7 +136,7 @@ abstract class Router implements IRouter
         // Create array with URL parts in $url.
         $this->splitUrl();
 
-        $authenticationClassName = $this->loadResource('security', SECURITY_POLICY, true);
+        $authenticationClassName = $this->loadResource('security', $securityPolicy, true);
         $this->authentication = new $authenticationClassName();
 
         // We check that the header() statements have been taken into account,
@@ -140,7 +144,7 @@ abstract class Router implements IRouter
         Assert::isFalse(headers_sent(), Core::gettext('HTTP headers have already been sent.'));
 
         // We check that all non-critical resources have been successfully set (or loaded) once the security policy was set.
-        Assert::isTrue($locale !== false, Core::gettext("The locale '%s' could not be set."), CLIENT_LANGUAGE);
+        Assert::isTrue($locale !== false, Core::gettext("The locale '%s' could not be set."), $clientLanguage);
 
         ob_start();
     }
@@ -174,33 +178,35 @@ abstract class Router implements IRouter
 
         // We empty all buffers.
         BufferUtils::closeOutputBuffers(0, false);
+        $catchInternalErrors = false;
         try {
             // We start a new buffer to avoid leaking error informations
             // when the error handler itself has problems.
             ob_start();
+            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
             if ($this->isAjaxCall()) {
                 // We send a HTML error message that can be retrieved client-side
                 // by the Ajax error manager.
-                $this->call(ERROR_CONTROLLER, ERROR_AJAX_ACTION, $msgs);
+                $this->call(Store::getRequired('ERROR_CONTROLLER'), Store::getRequired('ERROR_AJAX_ACTION'), $msgs);
             } else {
-                $this->call(ERROR_CONTROLLER, ERROR_ACTION, $msgs);
+                $this->call(Store::getRequired('ERROR_CONTROLLER'), Store::getRequired('ERROR_ACTION'), $msgs);
             }
             BufferUtils::closeOutputBuffers(0, true);
         } catch (\Throwable $ex) {
             BufferUtils::closeOutputBuffers(0, false);
-            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS'))) {
+            if (($ex instanceof \Error && ! $catchInternalErrors) ||
+            // No logger is defined, better throw the exception then loose it.
+            ! Store::hasLoggingFunctionality()) {
                 throw $ex;
+            }
+            if ($ex instanceof RouterException) {
+                // Keep track of the original error and log some useful informations.
+                Store::logError(implode(PHP_EOL, $msgs));
             }
             // Do not send this exception, simply log it.
             // We're on the error page, there's not much to do when the error
             // page itself contains errors!
-            if (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
-                if ($ex instanceof RouterException) {
-                    // Keep track of the original error and log some useful informations.
-                    \Logger::getLogger(__CLASS__)->error(implode(PHP_EOL, $msgs));
-                }
-                \Logger::getLogger(__CLASS__)->error($ex);
-            }
+            Store::logError($ex);
         }
     }
 
@@ -212,9 +218,9 @@ abstract class Router implements IRouter
      */
     private function cleanupOnFatalError()
     {
-        $dropOdbcConnectionsOnError = ! defined('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR') || DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR;
-        $createSession = ! defined('CREATE_SESSION') || CREATE_SESSION;
-        $dropSessionOnError = ! defined('DROP_SESSION_ON_FATAL_ERROR') || DROP_SESSION_ON_FATAL_ERROR;
+        $dropOdbcConnectionsOnError = Store::get('DROP_ALL_ODBC_CONNECTIONS_ON_FATAL_ERROR', true);
+        $createSession = Store::get('CREATE_SESSION', true);
+        $dropSessionOnError = Store::get('DROP_SESSION_ON_FATAL_ERROR', true);
 
         // Persistent connections created with odbc_connect() are never released,
         // even when they become unusable (after that a database was restarted, for example).
@@ -245,7 +251,12 @@ abstract class Router implements IRouter
      */
     private function splitUrl()
     {
+        $defaultController = Store::getRequired('DEFAULT_CONTROLLER');
+        $defaultAction = Store::getRequired('DEFAULT_ACTION');
+
         if (isset($_GET['route'])) {
+            $useAssociativeParams = Store::get('URL_ASSOCIATIVE_PARAMS', true);
+
             // Split URL.
             $url = rtrim($_GET['route'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
@@ -260,11 +271,11 @@ abstract class Router implements IRouter
             // Put URL parts into according properties.
             // By the way, the syntax here is just a short form of if/else, called "Ternary Operators".
             // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
-            $this->urlController = isset($url[0]) && $url[0] !== '' ? $url[0] : DEFAULT_CONTROLLER;
+            $this->urlController = isset($url[0]) && $url[0] !== '' ? $url[0] : $defaultController;
             array_shift($url);
-            $this->urlAction = isset($url[0]) && $url[0] !== '' ? $url[0] : DEFAULT_ACTION;
+            $this->urlAction = isset($url[0]) && $url[0] !== '' ? $url[0] : $defaultAction;
             array_shift($url);
-            if (! defined('URL_ASSOCIATIVE_PARAMS') || URL_ASSOCIATIVE_PARAMS) {
+            if ($useAssociativeParams) {
                 $params = array();
                 while (count($url)) {
                     $key = array_shift($url);
@@ -276,8 +287,8 @@ abstract class Router implements IRouter
                 $this->urlParameters = $url;
             }
         } else {
-            $this->urlController = DEFAULT_CONTROLLER;
-            $this->urlAction = DEFAULT_ACTION;
+            $this->urlController = $defaultController;
+            $this->urlAction = $defaultAction;
             $this->urlParameters = array();
         }
     }
@@ -397,10 +408,24 @@ abstract class Router implements IRouter
      * Automatically starts the routing by analyzing the elements of the web request URL and by calling
      * the corresponding control + action. Non-catched exceptions redirect the user to an error page
      * (or return the full list of errors + HTTP code 500 when it's an Ajax request).
+     *
+     * @param $configuration \PHPYAM\core\interfaces\IConfiguration|null
+     *            Router's configuration. When no configuration object is provided, PHYAM first
+     *            looks after global constants (for backward compatibility) before applying default hardcoded values.
+     *            <b>Also leaving this parameter to null ensures full backward compatibility with PHPYAM 1.1</b>
      */
-    public final function __construct()
+    public final function __construct($configuration = null)
     {
+        $catchInternalErrors = false;
         try {
+            if ($configuration !== null) {
+                Store::setConfiguration($configuration);
+            } else {
+                Store::removeConfiguration();
+            }
+
+            $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
+
             $this->initRouter();
 
             if (! $this->authentication->authenticate($this->urlController, $this->urlAction, $this->urlParameters)) {
@@ -415,12 +440,10 @@ abstract class Router implements IRouter
                 $ex instanceof IKeepRouterException ? $ex : $ex->getMessage()
             ));
         } catch (\Throwable $ex) {
-            if ($ex instanceof \Error && ! (defined('PHPYAM_CATCH_INTERNAL_PHP_ERRORS') && constant('PHPYAM_CATCH_INTERNAL_PHP_ERRORS'))) {
+            if ($ex instanceof \Error && ! $catchInternalErrors) {
                 throw $ex;
             }
-            if (defined('USE_LOG4PHP') && constant('USE_LOG4PHP')) {
-                \Logger::getLogger(__CLASS__)->error($ex);
-            }
+            Store::logError($ex);
             $this->endRouterOnError(array(
                 Core::gettext('Internal error. Please restart the application.'),
                 $ex

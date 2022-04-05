@@ -16,8 +16,9 @@
  *   because the calling controller is responsible for that!
  */
 use PHPYAM\core\Core;
+use PHPYAM\libs\Store;
 ?>
-<form id="form-id" name="form-id" method="post" action="<?=URL . 'form2/index'?>">
+<form id="form-id" name="form-id" method="post" action="<?=Store::getRequired('URL') . 'form2/index'?>">
 	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -46,7 +47,7 @@ use PHPYAM\core\Core;
 </form>
 
 <div style="position: fixed; bottom: 0; margin: 10px;">
-	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
+	<a href="<?=Core::url(Store::getRequired('DEFAULT_CONTROLLER'), Store::getRequired('DEFAULT_ACTION'))?>">Go back to
 		home page</a>
 </div>
 
@@ -83,7 +84,7 @@ $(document).ready(function() {
 		// Send the data using post and put the results in a div
 		$.ajax({
 			// The link we are accessing
-			url: "<?=URL . 'form2/ajaxValidate'?>",
+			url: "<?=Store::getRequired('URL') . 'form2/ajaxValidate'?>",
 			// The type of request
 			type: "post",
 			// Get values from elements in the form

@@ -2,6 +2,7 @@
 namespace PHPYAM\demo\application\views\form1;
 
 use PHPYAM\core\Core;
+use PHPYAM\libs\Store;
 
 /**
  * GOOD PRACTICE FOR VIEWS:
@@ -24,7 +25,7 @@ class Index
     public static function render(array $props)
     {
         ?>
-<form id="form-id" name="form-id" method="post" action="<?=URL . 'form1/index'?>">
+<form id="form-id" name="form-id" method="post" action="<?=Store::getRequired('URL') . 'form1/index'?>">
 	<fieldset>
 		<?=\PHPYAM\libs\IntelliForm::seed()?>
 
@@ -53,7 +54,7 @@ class Index
 </form>
 
 <div style="position: fixed; bottom: 0; margin: 10px;">
-	<a href="<?=Core::url(DEFAULT_CONTROLLER, DEFAULT_ACTION)?>">Go back to
+	<a href="<?=Core::url(Store::getRequired('DEFAULT_CONTROLLER'), Store::getRequired('DEFAULT_ACTION'))?>">Go back to
 		home page</a>
 </div>
 

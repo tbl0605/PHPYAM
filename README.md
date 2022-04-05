@@ -13,6 +13,7 @@ Based on Mini, rewritten to add following features:
 - output buffering support
 - user authentication support
 - internationalization of the PHPYAM error messages
+- customisation of PHPYAM's settings storage (since v2.0)
 
 PHPYam doesn't do yet:
 - form validation
@@ -22,7 +23,7 @@ PHPYam doesn't do yet:
 It's recommended that you use [Composer](https://getcomposer.org/) to install PHPYAM:
 
 ```bash
-composer require tbl0605/phpyam:~1.0
+composer require tbl0605/phpyam:~2.0
 ```
 
 ## Easy way to test the provided demo
@@ -50,13 +51,17 @@ Add the `demo/` path to the `httpd.conf` file or to some dedicated virtual host 
 
 #### Additional notes
 
-For further testings, you can play with value of property `\PHPYAM\demo\DemoRouter::$useApplicationAutoLoader`
-inside the `demo/index.php` file:
+For further testings, you can play with constants `YAM_DEMO_USE_AUTOLOADER` and `YAM_DEMO_APP_DIR`
+inside the `demo/server-conf.php` file:
 
 ```
-class DemoRouter extends \PHPYAM\core\Router
-{
-	public $useApplicationAutoLoader = true;
-	...
-}
+define('YAM_DEMO_USE_AUTOLOADER', true);
+define('YAM_DEMO_APP_DIR', 'application-autoloader');
+```
+
+or
+
+```
+define('YAM_DEMO_USE_AUTOLOADER', false);
+define('YAM_DEMO_APP_DIR', 'application-noautoloader');
 ```
