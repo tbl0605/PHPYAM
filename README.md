@@ -13,7 +13,7 @@ Based on Mini, rewritten to add following features:
 - output buffering support
 - user authentication support
 - internationalization of the PHPYAM error messages
-- customisation of PHPYAM's settings storage (since v2.0)
+- customization of PHPYAM's settings storage (since v2.0)
 
 PHPYam doesn't do yet:
 - form validation
