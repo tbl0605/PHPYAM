@@ -411,7 +411,7 @@ abstract class Router implements IRouter
      *
      * @param $configuration \PHPYAM\core\interfaces\IConfiguration|null
      *            Router's configuration. When no configuration object is provided, PHYAM first
-     *            loofs after global constants (for backward compatibility) before applying default hardcoded values.
+     *            looks after global constants (for backward compatibility) before applying default hardcoded values.
      *            <b>Also leaving this parameter to null ensures full backward compatibility with PHPYAM 1.1</b>
      */
     public final function __construct($configuration = null)

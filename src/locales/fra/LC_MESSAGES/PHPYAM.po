@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PHPYAM\n"
-"POT-Creation-Date: 2022-04-01 23:04+0200\n"
-"PO-Revision-Date: 2022-04-01 23:05+0200\n"
+"POT-Creation-Date: 2022-04-05 10:43+0200\n"
+"PO-Revision-Date: 2022-04-05 10:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: Thierry Blind <tbl0605@gmail.com>\n"
 "Language: fr_FR\n"
@@ -17,46 +17,52 @@ msgstr ""
 "X-Poedit-SearchPath-1: ../../../core/interfaces\n"
 "X-Poedit-SearchPath-2: ../../../libs\n"
 
-#: ../../../core/Router.php:143 ../../../core/Router.php:386
+#: ../../../core/Router.php:144 ../../../core/Router.php:391
 msgid "HTTP headers have already been sent."
 msgstr "Les en-têtes HTTP ont déjà été envoyées."
 
-#: ../../../core/Router.php:146
+#: ../../../core/Router.php:147
 #, php-format
 msgid "The locale '%s' could not be set."
 msgstr "La locale '%s' n'a pu être définie."
 
-#: ../../../core/Router.php:312
+#: ../../../core/Router.php:317
 #, php-format
 msgid "The resource '%s' of type '%s' cannot be read as file '%s'."
-msgstr "La ressource '%s' de type '%s' n'a pu être lue en tant que fichier '%s'."
+msgstr ""
+"La ressource '%s' de type '%s' n'a pu être lue en tant que fichier '%s'."
 
-#: ../../../core/Router.php:322
+#: ../../../core/Router.php:327
 #, php-format
 msgid "The resource '%s' of type '%s' cannot be found as class '%s'."
-msgstr "La ressource '%s' de type '%s' n'a pu être trouvée en tant que classe '%s'."
+msgstr ""
+"La ressource '%s' de type '%s' n'a pu être trouvée en tant que classe '%s'."
 
-#: ../../../core/Router.php:338 ../../../core/Router.php:339
+#: ../../../core/Router.php:343 ../../../core/Router.php:344
 #, php-format
 msgid "The parameter %s is not of type string."
 msgstr "Le paramètre %s n'est pas de type string."
 
-#: ../../../core/Router.php:369
+#: ../../../core/Router.php:374
 msgid "URL is invalid."
 msgstr "L'URL est invalide."
 
-#: ../../../core/Router.php:424
+#: ../../../core/Router.php:432
 msgid "You are not authorized to access this page."
 msgstr "Vous n'êtes pas autorisé à accéder à cette page."
 
-#: ../../../core/Router.php:441
+#: ../../../core/Router.php:448
 msgid "Internal error. Please restart the application."
 msgstr "Erreur interne. Veuillez redémarrer l'application."
 
-#: ../../../libs/Store.php:94
+#: ../../../libs/Store.php:125
 #, php-format
-msgid "The required configuration property '%s' is missing."
-msgstr "La propriété de configuration '%s' est manquante."
+msgid ""
+"The required configuration property '%s' is missing or the associated value "
+"is null."
+msgstr ""
+"La propriété de configuration '%s' est manquante ou la valeur associée est "
+"null."
 
 #~ msgid "Treatment interrupted. Please restart the application."
 #~ msgstr "Traitement interrompu. Veuillez redémarrer l'application."

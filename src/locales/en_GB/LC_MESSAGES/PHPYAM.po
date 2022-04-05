@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PHPYAM\n"
-"POT-Creation-Date: 2022-04-01 23:08+0200\n"
-"PO-Revision-Date: 2022-04-01 23:12+0200\n"
+"POT-Creation-Date: 2022-04-05 10:46+0200\n"
+"PO-Revision-Date: 2022-04-05 10:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: Thierry Blind <tbl0605@gmail.com>\n"
 "Language: en_GB\n"
@@ -17,46 +17,50 @@ msgstr ""
 "X-Poedit-SearchPath-1: ../../../core/interfaces\n"
 "X-Poedit-SearchPath-2: ../../../libs\n"
 
-#: ../../../core/Router.php:143 ../../../core/Router.php:386
+#: ../../../core/Router.php:144 ../../../core/Router.php:391
 msgid "HTTP headers have already been sent."
 msgstr "HTTP headers have already been sent."
 
-#: ../../../core/Router.php:146
+#: ../../../core/Router.php:147
 #, php-format
 msgid "The locale '%s' could not be set."
 msgstr "The locale '%s' could not be set."
 
-#: ../../../core/Router.php:312
+#: ../../../core/Router.php:317
 #, php-format
 msgid "The resource '%s' of type '%s' cannot be read as file '%s'."
 msgstr "The resource '%s' of type '%s' cannot be read as file '%s'."
 
-#: ../../../core/Router.php:322
+#: ../../../core/Router.php:327
 #, php-format
 msgid "The resource '%s' of type '%s' cannot be found as class '%s'."
 msgstr "The resource '%s' of type '%s' cannot be found as class '%s'."
 
-#: ../../../core/Router.php:338 ../../../core/Router.php:339
+#: ../../../core/Router.php:343 ../../../core/Router.php:344
 #, php-format
 msgid "The parameter %s is not of type string."
 msgstr "The parameter %s is not of type string."
 
-#: ../../../core/Router.php:369
+#: ../../../core/Router.php:374
 msgid "URL is invalid."
 msgstr "URL is invalid."
 
-#: ../../../core/Router.php:424
+#: ../../../core/Router.php:432
 msgid "You are not authorized to access this page."
 msgstr "You are not authorized to access this page."
 
-#: ../../../core/Router.php:441
+#: ../../../core/Router.php:448
 msgid "Internal error. Please restart the application."
 msgstr "Internal error. Please restart the application."
 
-#: ../../../libs/Store.php:94
+#: ../../../libs/Store.php:125
 #, php-format
-msgid "The required configuration property '%s' is missing."
-msgstr "The required configuration property '%s' is missing."
+msgid ""
+"The required configuration property '%s' is missing or the associated value "
+"is null."
+msgstr ""
+"The required configuration property '%s' is missing or the associated value "
+"is null."
 
 #~ msgid "Treatment interrupted. Please restart the application."
 #~ msgstr "Treatment interrupted. Please restart the application."
