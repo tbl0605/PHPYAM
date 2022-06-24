@@ -8,7 +8,7 @@ namespace PHPYAM\extra;
  * @author Thierry BLIND
  * @version 1.0.0
  * @since 01/01/2014
- * @copyright 2014-2020 Thierry BLIND
+ * @copyright 2014-2022 Thierry BLIND
  */
 
 /**
@@ -94,10 +94,10 @@ class LoggerUtils
         case E_PARSE:
             http_response_code(500);
 
+            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
             exit(1);
             break;
 
@@ -105,10 +105,10 @@ class LoggerUtils
         case E_RECOVERABLE_ERROR:
             http_response_code(500);
 
+            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
             exit(2);
             break;
 
@@ -116,34 +116,34 @@ class LoggerUtils
         case E_CORE_WARNING:
         case E_COMPILE_WARNING:
         case E_USER_WARNING:
+            \Logger::getLogger(__CLASS__)->warn("[{$errDesc}] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->warn("[{$errDesc}] $errstr - $errfile:$errline");
             break;
 
         case E_NOTICE:
         case E_USER_NOTICE:
+            \Logger::getLogger(__CLASS__)->info("[{$errDesc}] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->info("[{$errDesc}] $errstr - $errfile:$errline");
             break;
 
         case E_STRICT:
         case E_DEPRECATED:
         case E_USER_DEPRECATED:
+            \Logger::getLogger(__CLASS__)->debug("[{$errDesc}] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->debug("[{$errDesc}] $errstr - $errfile:$errline");
             break;
 
         default:
+            \Logger::getLogger(__CLASS__)->warn("[Unknown error type $errno] $errstr - $errfile:$errline");
             if ($displayError) {
                 echo "{$bo}Unknown error type $errno{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->warn("[Unknown error type $errno] $errstr - $errfile:$errline");
             break;
         }
 
@@ -162,6 +162,8 @@ class LoggerUtils
     {
         http_response_code(500);
 
+        \Logger::getLogger(__CLASS__)->fatal($t);
+
         $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
         $bo = (PHP_SAPI == 'cli') ? '[' : '<b>';
         $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
@@ -169,7 +171,6 @@ class LoggerUtils
         if ($displayError) {
             echo "{$bo}Uncaught exception " . $t->getCode() . "{$bc}$eol" . $t->getMessage() . $eol . 'at ' . $t->getFile() . '(' . $t->getLine() . ")$eol" . preg_replace('/\\r?\\n/', $eol, $t->getTraceAsString()) . $eol;
         }
-        \Logger::getLogger(__CLASS__)->fatal($t);
     }
 
     /**
@@ -194,12 +195,12 @@ class LoggerUtils
             $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
             $errDesc = self::$errLevel[$errno];
 
-            $displayError = ! ! ini_get('display_errors');
+            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
 
+            $displayError = ! ! ini_get('display_errors');
             if ($displayError) {
                 echo "{$bo}{$errDesc}{$bc} $errstr - $errfile:$errline$eol";
             }
-            \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
         }
     }
 }
