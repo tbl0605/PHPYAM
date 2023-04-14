@@ -75,7 +75,7 @@ class IntelliForm
      * Restore form contents from a previous save.
      *
      * @param string $key
-     * @param bool $eraseOnFailure
+     * @param bool $clearOnFailure
      *            if true, clear $_POST when no previous save is available
      */
     public static function restore($key, $clearOnFailure = false)

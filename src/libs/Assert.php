@@ -26,7 +26,7 @@ class Assert
      * The arguments $arg1,... will be passed to the function {@link PHP_MANUAL#sprintf()}
      * and the result will be used as message related to the thrown exception.
      *
-     * @param string $expression
+     * @param boolean $expression
      *            expression to evaluate
      * @param mixed $arg1,...
      *            arguments used to generate the exception's message when $expression is TRUE
@@ -64,7 +64,7 @@ class Assert
      * The arguments $arg1,... will be passed to the function {@link PHP_MANUAL#sprintf()}
      * and the result will be used as message related to the thrown exception.
      *
-     * @param string $expression
+     * @param boolean $expression
      *            expression to evaluate
      * @param mixed $arg1,...
      *            arguments used to generate the exception's message when $expression is FALSE
