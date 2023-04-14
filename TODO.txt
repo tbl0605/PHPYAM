@@ -1,3 +1,4 @@
 - create some PHPUnit tests
 - provide a better README with some project documentation
 - use \ in front of all global functions
+- replace class UrlUtils by class \utilphp\util from library brandonwamboldt/utilphp

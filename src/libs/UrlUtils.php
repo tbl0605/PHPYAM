@@ -19,6 +19,43 @@ class UrlUtils
 {
 
     /**
+     * Returns an array containing all the elements of arr1 after applying
+     * the callback function to each one.
+     *
+     * @param string $callback
+     *            Callback function to run for each
+     *            element in each array
+     * @param array $array
+     *            An array to run through the callback
+     *            function
+     * @param boolean $on_nonscalar
+     *            Whether or not to call the callback
+     *            function on nonscalar values
+     *            (Objects, resources, etc)
+     * @return array
+     */
+    public static function array_map_deep(array $array, $callback, $on_nonscalar = false)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $args = array(
+                    $value,
+                    $callback,
+                    $on_nonscalar
+                );
+                $array[$key] = call_user_func_array(array(
+                    __CLASS__,
+                    __FUNCTION__
+                ), $args);
+            } elseif (is_scalar($value) || $on_nonscalar) {
+                $array[$key] = call_user_func($callback, $value);
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * Retrieve a modified URL query string.
      *
      * You can rebuild the URL and append a new query variable to the URL
