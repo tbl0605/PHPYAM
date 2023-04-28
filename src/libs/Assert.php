@@ -29,7 +29,9 @@ class Assert
      * @param boolean $expression
      *            expression to evaluate
      * @param mixed $arg1,...
-     *            arguments used to generate the exception's message when $expression is TRUE
+     *            arguments used to generate the exception's message when $expression is TRUE.
+     *            When an argument is an anonymous function, this function will be called
+     *            to retrieve the real argument value.
      * @throws \PHPYAM\libs\AssertException
      */
     public final static function isFalse($expression)
@@ -43,6 +45,12 @@ class Assert
         array_shift($args);
         $count --;
         if ($expr) {
+            foreach ($args as &$arg) {
+                // Call anonymous function without any arguments:
+                if ($arg instanceof \Closure) {
+                    $arg = $arg();
+                }
+            }
             switch ($count) {
             case 0:
                 throw new AssertException();
@@ -67,7 +75,9 @@ class Assert
      * @param boolean $expression
      *            expression to evaluate
      * @param mixed $arg1,...
-     *            arguments used to generate the exception's message when $expression is FALSE
+     *            arguments used to generate the exception's message when $expression is FALSE.
+     *            When an argument is an anonymous function, this function will be called
+     *            to retrieve the real argument value.
      * @throws \PHPYAM\libs\AssertException
      */
     public final static function isTrue($expression)
@@ -81,6 +91,12 @@ class Assert
         array_shift($args);
         $count --;
         if (! $expr) {
+            foreach ($args as &$arg) {
+                // Call anonymous function without any arguments:
+                if ($arg instanceof \Closure) {
+                    $arg = $arg();
+                }
+            }
             switch ($count) {
             case 0:
                 throw new AssertException();
