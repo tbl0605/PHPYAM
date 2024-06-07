@@ -137,7 +137,10 @@ abstract class Router implements IRouter
         $this->splitUrl();
 
         $authenticationClassName = $this->loadResource('security', $securityPolicy, true);
-        $this->authentication = new $authenticationClassName();
+        $loadResourceFunction = function ($type, $resourceName, $throwException) {
+            return $this->loadResource($type, $resourceName, $throwException);
+        };
+        $this->authentication = new $authenticationClassName($loadResourceFunction);
 
         // We check that the header() statements have been taken into account,
         // which is only possible if the HTTP headers have not been sent yet.
@@ -168,8 +171,10 @@ abstract class Router implements IRouter
      *
      * @param array $msgs
      *            list of error messages to be displayed
+     * @param $forceLogError boolean
+     *            force the error to be (at least) logged
      */
-    private function endRouterOnError(array $msgs)
+    private function endRouterOnError(array $msgs, $forceLogError = false)
     {
         // http_response_code() is called before ob_end_clean()
         // to ensure that the code 500 will always be sent to the client
@@ -183,6 +188,10 @@ abstract class Router implements IRouter
             // We start a new buffer to avoid leaking error informations
             // when the error handler itself has problems.
             ob_start();
+            if ($forceLogError) {
+                // Keep track of the original error and log some useful informations.
+                Store::logError(implode(PHP_EOL, $msgs));
+            }
             $catchInternalErrors = Store::get('PHPYAM_CATCH_INTERNAL_PHP_ERRORS', false);
             if ($this->isAjaxCall()) {
                 // We send a HTML error message that can be retrieved client-side
@@ -443,11 +452,10 @@ abstract class Router implements IRouter
             if ($ex instanceof \Error && ! $catchInternalErrors) {
                 throw $ex;
             }
-            Store::logError($ex);
             $this->endRouterOnError(array(
                 Core::gettext('Internal error. Please restart the application.'),
                 $ex
-            ));
+            ), true);
             $this->cleanupOnFatalError();
         }
     }
