@@ -59,7 +59,8 @@ class Assert
                 throw new AssertException($args[0]);
                 break;
             default:
-                throw new AssertException(call_user_func_array('sprintf', $args));
+                $callable = Store::get('PHPYAM_SPRINTF_REPLACEMENT', null);
+                throw new AssertException(call_user_func_array(is_callable($callable) ? $callable : 'sprintf', $args));
                 break;
             }
         }
@@ -105,7 +106,8 @@ class Assert
                 throw new AssertException($args[0]);
                 break;
             default:
-                throw new AssertException(call_user_func_array('sprintf', $args));
+                $callable = Store::get('PHPYAM_SPRINTF_REPLACEMENT', null);
+                throw new AssertException(call_user_func_array(is_callable($callable) ? $callable : 'sprintf', $args));
                 break;
             }
         }
