@@ -136,7 +136,7 @@ final class Core
      *
      * @param string $url
      *            URL to protect. If empty, $_SERVER['REQUEST_URI'] will be used as URL.
-     * @return string|boolean URL with its "anti-cache" value
+     * @return string URL with its "anti-cache" value
      */
     public final static function antiCache($url)
     {

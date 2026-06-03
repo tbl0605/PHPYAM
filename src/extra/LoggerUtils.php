@@ -36,7 +36,7 @@ class LoggerUtils
         E_USER_WARNING => 'E_USER_WARNING',
         E_NOTICE => 'E_NOTICE',
         E_USER_NOTICE => 'E_USER_NOTICE',
-        E_STRICT => 'E_STRICT',
+        //E_STRICT => 'E_STRICT', // deprecated since PHP 8.4
         E_DEPRECATED => 'E_DEPRECATED',
         E_USER_DEPRECATED => 'E_USER_DEPRECATED'
     );
@@ -80,7 +80,7 @@ class LoggerUtils
         $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
         $bo = (PHP_SAPI == 'cli') ? '[' : '<b>';
         $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
-        $errDesc = self::$errLevel[$errno];
+        $errDesc = $errno == 2048 ? 'E_STRICT' : self::$errLevel[$errno];
 
         // Display error only if PHP internal error handler is NOT called afterwards.
         // PHP >= 8.0.0: the track_errors ini directive has been removed.
@@ -129,7 +129,7 @@ class LoggerUtils
             }
             break;
 
-        case E_STRICT:
+        case 2048 /*E_STRICT*/:
         case E_DEPRECATED:
         case E_USER_DEPRECATED:
             \Logger::getLogger(__CLASS__)->debug("[{$errDesc}] $errstr - $errfile:$errline");
@@ -192,7 +192,7 @@ class LoggerUtils
             $eol = (PHP_SAPI == 'cli') ? PHP_EOL : '<br />';
             $bo = (PHP_SAPI == 'cli') ? '[' : '<b>';
             $bc = (PHP_SAPI == 'cli') ? ']' : '</b>';
-            $errDesc = self::$errLevel[$errno];
+            $errDesc = $errno == 2048 ? 'E_STRICT' : self::$errLevel[$errno];
 
             \Logger::getLogger(__CLASS__)->fatal("[{$errDesc}] $errstr - $errfile:$errline");
 
