@@ -21,7 +21,9 @@
 		"source": "https://github.com/tbl0605/PHPYAM"
 	},
 	"require": {
-		"php": ">=5.4.0"
+		"php": ">=7.1.0",
+		"ext-mbstring": "*",
+		"ext-gettext": "*"
 	},
 	"require-dev": {
 		"apache/log4php": "dev-master"
